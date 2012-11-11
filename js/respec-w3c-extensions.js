@@ -1,8 +1,100 @@
+// extend the bibliography entries
+var localBibliography = {
+    "JSON-LD": "<cite><a href=\"http://json-ld.org/spec/ED/json-ld-syntax/20120522/\">The JSON-LD Syntax</a></cite> Manu Sporny, Gregg Kellogg, Markus Lanthaler Editors. World Wide Web Consortium (work in progress). 22 May 2012. Editor's Draft. This edition of the JSON-LD Syntax specification is http://json-ld.org/spec/ED/json-ld-syntax/20120522/. The <a href=\"http://json-ld.org/spec/latest/json-ld-syntax/\">latest edition of the JSON-LD Syntax</a> is available at http://json-ld.org/spec/latest/json-ld-syntax/",
+    "JSON-LD-API": "<cite><a href=\"http://json-ld.org/spec/ED/json-ld-api/20120524/\">The JSON-LD API 1.0</a></cite> Manu Sporny, Gregg Kellogg, Dave Longley, Markus Lanthaler, Editors. World Wide Web Consortium (work in progress). 24 May 2012. Editor's Draft. This edition of the JSON-LD Syntax specification is http://json-ld.org/spec/ED/json-ld-api/20120524/. The <a href=\"http://json-ld.org/spec/latest/json-ld-api/\">latest edition of the JSON-LD Syntax</a> is available at http://json-ld.org/spec/latest/json-ld-api/",
+    "IEEE-754-1985": "IEEE. <cite>IEEE Standard for Binary Floating-Point Arithmetic.</cite> See <a href=\"http://standards.ieee.org/reading/ieee/std_public/description/busarch/754-1985_desc.html\">http://standards.ieee.org/reading/ieee/std_public/description/busarch/754-1985_desc.html</a>",
+    "RFC5988": "<cite><a href=\"http://tools.ietf.org/rfc/rfc5988\">Web Linking</a></cite> M. Nottingham. Editor. October 2010. IETF Standard. URL: <a href=\"http://tools.ietf.org/rfc/rfc5988.txt\">http://tools.ietf.org/rfc/rfc5988.txt</a>",
+    "RDF-CONCEPTS": "<cite><a href=\"http://www.w3.org/TR/2011/WD-rdf11-concepts-20110830/\">RDF 1.1 Concepts and Abstract Syntax</a></cite> Richard Cyganiak, David Wood, Editors. World Wide Web Consortium (work in progress). 30 May 2012. Editor's Draft. This edition of the JSON-LD Syntax specification is http://www.w3.org/TR/2011/WD-rdf11-concepts-20110830/. The <a href=\"http://www.w3.org/TR/rdf11-concepts/\">latest edition of the JSON-LD Syntax</a> is available at http://www.w3.org/TR/rdf11-concepts/",
+    "TURTLE-TR": "Eric Prud'hommeaux, Gavin Carothers. <cite><a href=\"http://www.w3.org/TR/2011/WD-turtle-20110809/\">Turtle: Terse RDF Triple Language.</a></cite> 09 August 2011. W3C Working Draft. URL: <a href=\"http://www.w3.org/TR/2011/WD-turtle-20110809/\">http://www.w3.org/TR/2011/WD-turtle-20110809/</a>",
+    "MICRODATA": "<cite><a href=\"http://www.w3.org/TR/2012/WD-microdata-20120329/\">HTML Microdata</a></cite> Ian Hickson Editor. World Wide Web Consortium (work in progress). 29 March 2012. This edition of the HTML Microdata specification is http://www.w3.org/TR/2012/WD-microdata-20120329/. The <a href=\"http://www.w3.org/TR/microdata/\">latest edition of HTML Microdata</a> is available at http://www.w3.org/TR/microdata/",
+    "WEBIDL": "<cite><a href=\"http://www.w3.org/TR/2012/CR-WebIDL-20120419/\">Web IDL</a></cite> Cameron McCormack, Editor. World Wide Web Consortium. 19 April 2012. Candidate Recommendataion. This edition of Web IDL is http://www.w3.org/TR/2012/CR-WebIDL-20120419/. The <a href=\"http://dev.w3.org/2006/webapi/WebIDL/\">latest edition of Web IDL</a> is available at http://dev.w3.org/2006/webapi/WebIDL/",
+    "JSON-POINTER": "<cite><a href=\"http://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-02\">JSON Pointer</a></cite> P. Bryan, Ed. IETF Draft. URL: <a href=\"http://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-02\">http://tools.ietf.org/html/draft-ietf-appsawg-json-pointer-02</a>",
+    "RDF-NORMALIZATION": "<cite><a href=\"http://json-ld.org/spec/ED/rdf-graph-normalization/20111016/\">RDF Graph Normalization</a></cite> Manu Sporny, Dave Longley Editors. World Wide Web Consortium (work in progress). 16 October 2011. Editor's Draft. This edition of the RDF Graph Normalization specification is http://json-ld.org/spec/ED/rdf-graph-normalization/20111016/. The <a href=\"http://json-ld.org/spec/latest/rdf-graph-normalization/\">latest edition of RDF Graph Normalization</a> is available at http://json-ld.org/spec/latest/rdf-graph-normalization/"
+};
+
 var preProc = {
     apply:  function(c) {
-        // extend the bibliography entries
-        berjon.biblio["JSON-LD"] = "<cite><a href=\"http://json-ld.org/spec/ED/json-ld-syntax/20120522/\">The JSON-LD Syntax</a></cite> Manu Sporny, Gregg Kellogg, Markus Lanthaler Editors. World Wide Web Consortium (work in progress). 22 May 2012. Editor's Draft. This edition of the JSON-LD Syntax specification is http://json-ld.org/spec/ED/json-ld-syntax/20120522/. The <a href=\"http://json-ld.org/spec/latest/json-ld-syntax/\">latest edition of the JSON-LD Syntax</a> is available at http://json-ld.org/spec/latest/json-ld-syntax/";
-        berjon.biblio["RDF-CONCEPTS"] = "<cite><a href=\"http://www.w3.org/TR/2011/WD-rdf11-concepts-20110830/\">RDF 1.1 Concepts and Abstract Syntax</a></cite> Richard Cyganiak, David Wood, Editors. World Wide Web Consortium (work in progress). 30 May 2012. Editor's Draft. This edition of the JSON-LD Syntax specification is http://www.w3.org/TR/2011/WD-rdf11-concepts-20110830/. The <a href=\"http://www.w3.org/TR/rdf11-concepts/\">latest edition of the JSON-LD Syntax</a> is available at http://www.w3.org/TR/rdf11-concepts/";
+        $.getJSON('../../../core.jsonld', function(vocab) {
+            $('#vocabulary-jsonld').html(JSON.stringify(vocab, null, 2).replace("/\n/g", "<br />"));
+
+            var options = { "base": "http://purl.org/hydra/" };
+            var classesFrame = {
+                "@context": [
+                    vocab["@context"],
+                    {
+                        "rdfs:subClassOf": { "@container": "@set" }
+                    }
+                ],
+                "@type": [ "rdfs:Class", "owl:Class" ]
+            };
+
+            // Document classes
+            jsonld.frame(vocab, classesFrame, options, function(err, classes) {
+              var classOverview = "";
+              var classIndex = new Array();
+
+              $.each(classes["@graph"], function(index, value) {
+                classOverview += '<h3 id="' + value["@id"] + '">' + value["@id"] + '</h3>';
+                classOverview += '<p>' + value["rdfs:comment"] + '</p>';
+                classOverview += '<p><strong>Subclass of:</strong> add this!!</p>';
+                classOverview += '<p><strong>Status:</strong> ' + value["vs:status"] + '</p>';
+
+                classIndex.push(value["@id"]);
+              });
+
+              $('#vocabulary-classes').html(classOverview);
+
+              classIndex.sort();
+              classOverview = '<ul class="hlist">';
+              $.each(classIndex, function(index, value) {
+                classOverview += '<li><a href="#' + value + '">' + value + '</li>';
+              });
+              classOverview += '<ul>';
+              $('#vocabulary-overview').append(classOverview);
+            });
+
+            // Document properties
+            var propertiesFrame = {
+              "@context": vocab["@context"],
+              "@type": [ "rdfs:Property", "owl:DatatypeProperty", "owl:ObjectProperty" ]
+            };
+
+            jsonld.frame(vocab, propertiesFrame, options, function(err, properties) {
+              var propertyOverview = "";
+              var propIndex = new Array();
+
+              $.each(properties["@graph"], function(index, value) {
+                propertyOverview += '<h3 id="' + value["@id"] + '">' + value["@id"] + '</h3>';
+                propertyOverview += '<p>' + value["rdfs:comment"] + '</p>';
+
+                if (value["rdfs:domain"]) {
+                    propertyOverview += '<p><strong>Domain:</strong> ' + value["rdfs:domain"] + '</p>';
+                }
+                if (value["rdfs:range"]) {
+                    propertyOverview += '<p><strong>Range:</strong> ' + value["rdfs:range"] + '</p>';
+                }
+                propertyOverview += '<p><strong>Status:</strong> ' + value["vs:status"] + '</p>';
+
+                propIndex.push(value["@id"]);
+              });
+
+              $('#vocabulary-properties').html(propertyOverview);
+
+              propIndex.sort();
+              classOverview = '<ul class="hlist">';
+              $.each(propIndex, function(index, value) {
+                classOverview += '<li><a href="#' + value + '">' + value + '</li>';
+              });
+              classOverview += '<ul>';
+              $('#vocabulary-overview').append(classOverview);
+            });
+
+
+
+        //alert(vocab['@context']);
+        }).error(function(jqxhr) {
+        alert("Can't load the vocabulary.");
+        });
 
         // process the document before anything else is done
         var refs = document.querySelectorAll('adef') ;
