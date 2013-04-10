@@ -1,13 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<title>Hydra Core Vocabulary Specification</title>
+<title>Hydra Core Vocabulary</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<!--
-  === NOTA BENE ===
-  For the three scripts below, if your spec resides on dev.w3 you can check them
-  out in the same tree and use relative links so that they'll work offline,
-  -->
 <script type="text/javascript" src="../../../js/respec-w3c-common.js" class="remove"></script>
 <script type="text/javascript" src="../../../js/jsonld.js" class="remove"></script>
 <script type="text/javascript" src="../../../js/respec-w3c-extensions.js" class="remove"></script>
@@ -25,7 +20,7 @@
       copyrightStart:       "2012",
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
-      shortName:            "hydra-core-vocab",
+      shortName:            "hydra-core",
       subtitle:             "A Vocabulary for Hypermedia-Driven Web APIs",
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
@@ -109,7 +104,12 @@
     display: inline-table;
     list-style-type: none;
     padding-right: 20px;
-
+  }
+  .illustration {
+    text-align: center;
+  }
+  #vocabulary-jsonld {
+    white-space: pre-wrap;
   }
 </style>
 </head>
@@ -121,15 +121,37 @@
     the creation of generic API clients possible.</p>
 </section>
 
-<section id='sotd'>
+<section id="sotd">
   <p>To participate in the development of this specification please file bugs
     and issues in the <a href="https://github.com/lanthaler/Hydra/issues">issue tracker</a>.</p>
 </section>
 
 <section class="informative">
-  <h1>Introduction</h1>
+  <h2>Introduction</h2>
 
-  <section>
+  <p>Coping with the ever-increasing amount of data becomes
+    increasingly challenging. To alleviate the information overload put on
+    people, systems are progressively being connected directly to each
+    other. They exchange, analyze, and manipulate humongous amounts of
+    data without any human interaction. Most current solutions, however,
+    do not exploit the whole potential of the architecture of the World
+    Wide Web and completely ignore the possibilities offered by Linked Data
+    technologies.</p>
+
+  <p>The combination of the REST architectural style and the Linked
+    Data principles offer opportunities to advance the Web of machines
+    in a similar way that hypertext did for the human Web. Most
+    building blocks exist already and are in place but they are rarely
+    used together. Hydra tries to fill that gap. It allows data to be
+    enriched with machine-readable affordances which enable
+    interaction. This not only addresses the problem that Linked Data
+    is still mostly read-only, but it also paves the way for a
+    completely new breed of interoperable Web APIs. The fact that it
+    enables the creation of composable contracts means that
+    interaction models of Web APIs can be reused at an unprecedented
+    granularity.</p>
+
+<!--   <section>
     <h2>Scope</h2>
 
     <p>This document is aimed at both Web API publishers (those involved in
@@ -152,41 +174,76 @@
     <p>All examples in this document are written in JSON-LD [[JSON-LD]].
       Throughout the document, the following prefixes are used:</p>
 
-    <p class="issue">Document prefixes</p>
-  </section>
+
+  </section> -->
 </section>
 
 <section>
-  <h1>Hydra at a glance</h1>
+  <h2>Conformance</h2>
 
-  <p><img src="vocabulary.png" /></p>
+  <p>This specification describes the conformance criteria for
+    <dfn title="Hydra API description">Hydra API descriptions</dfn> and
+    <dfn title="Hydra client">Hydra clients</dfn>. This criteria is
+    relevant to authors, authoring tool implementers, and client
+    implementers. All authoring guidelines, diagrams, examples, and notes
+    in this specification are non-normative, as are all sections
+    explicitly marked as non-normative. Everything else in this
+    specification is normative.</p>
 
-  <p>An alphabetical index of the classes and properties of Hydra are given
-   below. All the terms are hyperlinked to their detailed description for
-   quick reference.</p>
+  <p>The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD,
+    SHOULD NOT, RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this
+    specification have the meaning defined in [[!RFC2119]].</p>
+</section>
+
+<section class="informative">
+  <h2>Hydra at a Glance</h2>
+
+  <p>The basic idea behind Hydra is to provide a vocabulary which enables a
+    server to advertise valid state transitions to a client. A client can
+    then use this information to construct HTTP requests which modify the
+    server’s state so that a certain desired goal is achieved. Since all
+    the information about the valid state transitions is exchanged in a
+    machine-processable way at runtime instead of being hardcoded into the
+    client at design time, clients can be decoupled from the server and
+    adapt to changes more easily.</p>
+
+  <p>The figure below illustrates the Hydra core vocabulary (the figure’s
+    intention is to show how Hydra is used rather than its precise
+    definition).</p>
+
+  <div class="illustration">
+    <p><img src="vocabulary.png" alt="The Hydra core vocabulary" /></p>
+    <p class="caption">The Hydra core vocabulary</p>
+  </div>
+
+  <p>An alphabetical index of the classes and properties of Hydra are
+    given below. All the terms are hyperlinked to their detailed
+    description for quick reference.</p>
+
+  <p class="issue">Document prefixes</p>
 
   <p id="vocabulary-overview"></p>
 </section>
 
 <section>
-  <h1>Classes</h1>
+  <h2>Classes</h2>
   <div id="vocabulary-classes"></div>
 </section>
 
 <section>
-  <h1>Properties</h1>
+  <h2>Properties</h2>
   <div id="vocabulary-properties"></div>
 </section>
 
 <section>
-  <h1>External Vocabulary References</h1>
+  <h2>External Vocabulary References</h2>
 
   <p class="issue">Should we reuse things such as HTTP in RDF or should we
     redefine it and just declare it as equivalent?</p>
 </section>
 
 <section class="appendix">
-  <h1>The Hydra Core Vocabulary in JSON-LD</h1>
+  <h2>The Hydra Core Vocabulary in JSON-LD</h2>
   <pre id="vocabulary-jsonld">
   </pre>
 </section>
