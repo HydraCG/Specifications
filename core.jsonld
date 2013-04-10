@@ -5,22 +5,361 @@
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
-    "hydra": "http://purl.org/hydra/core#"
+    "hydra": "http://purl.org/hydra/core#",
+    "defines": { "@reverse": "rdfs:definedBy" }
   },
-  "@graph": [
+  "@id": "http://purl.org/hydra/core",
+  "@type": "owl:Ontology",
+  "rdfs:label": "The Hydra Core Vocabulary",
+  "rdfs:comment": "A Vocabulary for Hypermedia-Driven Web APIs",
+  "defines": [
     {
-      "@id": "hydra:http://purl.org/hydra/core",
-      "@type": "owl:Ontology",
-      "rdfs:label": "The Hydra Core Vocabulary",
-      "rdfs:comment": "A Vocabulary for Hypermedia-Driven Web APIs",
+      "@id": "hydra:ApiDocumentation",
+      "@type": "owl:Class",
+      "rdfs:label": "ApiDocumentation",
+      "rdfs:comment": "",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:apiDocumentation",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "apiDocumentation",
+      "rdfs:comment": "A link to the API documentation",
+      "rdfs:range": "hydra:ApiDocumentation",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:supportedClasses",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "supported classes",
+      "rdfs:comment": "The classes supported by the Web API",
+      "rdfs:domain": "hydra:apiDocumentation",
+      "rdfs:range": "hydra:Class",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:statusCodes",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "status codes",
+      "rdfs:comment": "A description of the status codes that may be returned by the Web API",
+      "rdfs:range": "hydra:StatusCodeDescription",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:entrypoint",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "entrypoint",
+      "rdfs:comment": "A link to main entry point of the Web API",
+      "rdfs:domain": "hydra:apiDocumentation",
+      "rdfs:range": "hydra:Resource",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:Resource",
+      "@type": "owl:Class",
+      "rdfs:label": "Hydra Resource",
+      "rdfs:comment": "A dereferenceable resource.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:Class",
+      "@type": "owl:Class",
+      "rdfs:label": "Hydra Class",
+      "rdfs:comment": "A Hydra class.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:supportedProperties",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "supported properties",
+      "rdfs:comment": "The properties known to be supported by a Hydra class",
+      "rdfs:domain": "hydra:Class",
+      "rdfs:range": "rdfs:SupportedProperty",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:SupportedProperty",
+      "@type": "owl:Class",
+      "rdfs:label": "Supported Property",
+      "rdfs:comment": "A property known to be supported by a Hydra class.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:property",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "property",
+      "rdfs:comment": "A property",
+      "rdfs:range": "rdf:Property",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:required",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "required",
+      "rdfs:comment": "True if the property is required, false otherwise.",
+      "rdfs:range": "xsd:boolean",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:readonly",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "ready-only",
+      "rdfs:comment": "True if the property is read-only, false otherwise.",
+      "rdfs:range": "xsd:boolean",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:writeonly",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "write-only",
+      "rdfs:comment": "True if the property is write-only, false otherwise.",
+      "rdfs:range": "xsd:boolean",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:supportedOperations",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "supported operations",
+      "rdfs:comment": "The operations supported by instances of a specific Hydra class or the target of a Hydra link",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:operations",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "operations",
+      "rdfs:comment": "The operations supported a Hydra resource",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:Operation",
+      "@type": "owl:Class",
+      "rdfs:label": "Operation",
+      "rdfs:comment": "An operation.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:method",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "method",
+      "rdfs:comment": "",
+      "rdfs:domain": "hydra:Operation",
+      "rdfs:range": "hydra:HttpMethod",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:expects",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "expects",
+      "rdfs:comment": "",
+      "rdfs:domain": "hydra:Operation",
+      "rdfs:range": "rdfs:Class",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:returns",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "returns",
+      "rdfs:comment": "",
+      "rdfs:domain": "hydra:Operation",
+      "rdfs:range": "rdfs:Class",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:StatusCodeDescription",
+      "@type": "owl:Class",
+      "rdfs:label": "Status code description",
+      "rdfs:comment": "",
+      "rdfs:subClassOf": [
+        "owl:Thing",
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": "hydra:description"
+        }
+      ],
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:statusCode",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "status code",
+      "rdfs:comment": "",
+      "rdfs:domain": "hydra:StatusCodeDescription",
+      "rdfs:range": "xsd:integer",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:Link",
+      "@type": "owl:Class",
+      "rdfs:label": "Link",
+      "rdfs:comment": "A Link.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:TemplatedLink",
+      "@type": "owl:Class",
+      "rdfs:label": "Templated Link",
+      "rdfs:comment": "A templated Link.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:IriTemplate",
+      "@type": "owl:Class",
+      "rdfs:label": "IRI Template",
+      "rdfs:comment": "An IRI template as defined by RFC6570.",
+      "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:template",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "template",
+      "rdfs:comment": "The IRI template.",
+      "rdfs:domain": "hydra:IriTemplate",
+      "rdfs:range": "xsd:string",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:mappings",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "mappings",
+      "rdfs:comment": "The variable-to-property mappings of the IRI template.",
+      "rdfs:domain": "hydra:IriTemplate",
+      "rdfs:range": "hydra:IriTemplateMapping",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:IriTemplateMapping",
+      "@type": "owl:Class",
+      "rdfs:label": "IriTemplateMapping",
+      "rdfs:comment": "A mapping from an IRI template variable to a property.",
+      "rdfs:subClassOf": [
+        "owl:Thing",
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": "hydra:property"
+        },
+        {
+          "@type": "owl:Restriction",
+          "owl:cardinality": 1,
+          "owl:onProperty": "hydra:variable"
+        }
+      ],
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:variable",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "variable",
+      "rdfs:comment": "An IRI template variable",
+      "rdfs:domain": "hydra:IriTemplateMapping",
+      "rdfs:range": "xsd:string",
       "vs:status": "unstable"
     },
     {
       "@id": "hydra:Collection",
       "@type": "owl:Class",
       "rdfs:label": "Collection",
-      "rdfs:comment": "A Collection holds references to a number of related resources. The relationship between the individual members is not further specified.",
+      "rdfs:comment": "A Collection holding references to a number of related resources.",
       "rdfs:subClassOf": "owl:Thing",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:members",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "members",
+      "rdfs:comment": "The members of a collection",
+      "rdfs:domain": "hydra:Collection",
+      "rdfs:range": "hydra:Resource",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:PagedCollection",
+      "@type": "owl:Class",
+      "rdfs:label": "PagedCollection",
+      "rdfs:comment": "A PagedCollection is a subtype of a Collection with the only difference that it's members are sorted and only a subset of them are referenced from a PagedCollection. To get the other members, the nextPage/previousPage properties have to be used.",
+      "rdfs:subClassOf": "Collection",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:totalItems",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "total items",
+      "rdfs:comment": "The total number of items referenced from a set of interlinked PagedCollections.",
+      "rdfs:domain": "hydra:Collection",
+      "rdfs:range": "xsd:integer",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:itemsPerPage",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "items per page",
+      "rdfs:comment": "The maximum number of items referenced by each single PagedCollection in a set of interlinked PagedCollections.",
+      "rdfs:domain": "hydra:PagedCollection",
+      "rdfs:range": "xsd:integer",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:firstPage",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "first page",
+      "rdfs:comment": "The first page of an interlinked set of PagedCollections",
+      "rdfs:domain": "hydra:PagedCollection",
+      "rdfs:range": "hydra:PagedCollection",
+      "vs:status": "unstable"
+    },
+
+    {
+      "@id": "hydra:lastPage",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "last page",
+      "rdfs:comment": "The last page of an interlinked set of PagedCollections",
+      "rdfs:domain": "hydra:PagedCollection",
+      "rdfs:range": "hydra:PagedCollection",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:nextPage",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "next page",
+      "rdfs:comment": "The page following this page in an interlinked set of PagedCollections",
+      "rdfs:domain": "hydra:PagedCollection",
+      "rdfs:range": "hydra:PagedCollection",
+      "vs:status": "unstable"
+    },
+
+    {
+      "@id": "hydra:previousPage",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "previous page",
+      "rdfs:comment": "The page preceding this page in an interlinked set of PagedCollections",
+      "rdfs:domain": "hydra:PagedCollection",
+      "rdfs:range": "hydra:PagedCollection",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:search",
+      "@type": "owl:ObjectProperty",
+      "rdfs:label": "search",
+      "rdfs:comment": "A IRI template that can be used to query a collection",
+      "rdfs:domain": "hydra:Collection",
+      "rdfs:range": "hydra:IriTemplate",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:freetextQuery",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:label": "freetext query",
+      "rdfs:comment": "The freetext query.",
+      "rdfs:range": "xsd:string",
       "vs:status": "unstable"
     },
     {
@@ -28,6 +367,14 @@
       "@type": "owl:Class",
       "rdfs:label": "CreateResourceOperation",
       "rdfs:comment": "A CreateResourceOperation is a HTTP operation which expects an input of the type specified in hydra:input and creates a resource of the type specified by hydra:returns.",
+      "rdfs:subClassOf": "Operation",
+      "vs:status": "unstable"
+    },
+    {
+      "@id": "hydra:ReplaceResourceOperation",
+      "@type": "owl:Class",
+      "rdfs:label": "ReplaceResourceOperation",
+      "rdfs:comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It expects as input of the type specified in hydra:input and results in a resource of the type specified by hydra:returns.",
       "rdfs:subClassOf": "Operation",
       "vs:status": "unstable"
     },
@@ -55,240 +402,6 @@
       "vs:status": "unstable"
     },
     {
-      "@id": "hydra:HttpMethod",
-      "@type": "owl:Class",
-      "rdfs:label": "HttpMethod",
-      "rdfs:comment": "An HTTP method",
-      "rdfs:subClassOf": "owl:Thing",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:IriTemplate",
-      "@type": "owl:Class",
-      "rdfs:label": "IriTemplate",
-      "rdfs:comment": "An IRI template as defined by RFC6570.",
-      "rdfs:subClassOf": "owl:Thing",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:IriTemplateMapping",
-      "@type": "owl:Class",
-      "rdfs:label": "IriTemplateMapping",
-      "rdfs:comment": "A mapping from an IRI template variable to a property.",
-      "rdfs:subClassOf": [
-        "owl:Thing",
-        {
-          "@type": "owl:Restriction",
-          "owl:cardinality": 1,
-          "owl:onProperty": "hydra:property"
-        },
-        {
-          "@type": "owl:Restriction",
-          "owl:cardinality": 1,
-          "owl:onProperty": "hydra:variable"
-        }
-      ],
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:Operation",
-      "@type": "owl:Class",
-      "rdfs:label": "Operation",
-      "rdfs:comment": "An HTTP operation.",
-      "rdfs:subClassOf": "owl:Thing",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:PagedCollection",
-      "@type": "owl:Class",
-      "rdfs:label": "PagedCollection",
-      "rdfs:comment": "A PagedCollection is a subtype of a Collection with the only difference that it's members are sorted and only a subset of them are referenced from a PagedCollection. To get the other members, the nextPage/previousPage properties have to be used.",
-      "rdfs:subClassOf": "Collection",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:ReplaceResourceOperation",
-      "@type": "owl:Class",
-      "rdfs:label": "ReplaceResourceOperation",
-      "rdfs:comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It expects as input of the type specified in hydra:input and results in a resource of the type specified by hydra:returns.",
-      "rdfs:subClassOf": "Operation",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:Resource",
-      "@type": "owl:Class",
-      "rdfs:label": "Resource",
-      "rdfs:comment": "A Resource represents a dereferenceable resource.",
-      "rdfs:subClassOf": "owl:Thing",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:StatusCodeDescription",
-      "@type": "owl:Class",
-      "rdfs:label": "Status code description",
-      "rdfs:comment": "",
-      "rdfs:subClassOf": [
-        "owl:Thing",
-        {
-          "@type": "owl:Restriction",
-          "owl:cardinality": 1,
-          "owl:onProperty": "hydra:description"
-        }
-      ],
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:description",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "description",
-      "rdfs:comment": "A description.",
-      "rdfs:range": "xsd:string",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:expects",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "expects",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:Operation",
-      "rdfs:range": "rdfs:Class",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:firstPage",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "first page",
-      "rdfs:comment": "The first page of a list of PagedCollections",
-      "rdfs:domain": "hydra:PagedCollection",
-      "rdfs:range": "hydra:PagedCollection",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:freetextQuery",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "freetext query",
-      "rdfs:comment": "The freetext query.",
-      "rdfs:range": "xsd:string",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:itemsPerPage",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "items per page",
-      "rdfs:comment": "The maximum number of items returned by every single PagedCollection from a list of interlinked PagedCollection's.",
-      "rdfs:domain": "hydra:PagedCollection",
-      "rdfs:range": "xsd:integer",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:lastPage",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "last page",
-      "rdfs:comment": "The last page of a list of PagedCollections",
-      "rdfs:domain": "hydra:PagedCollection",
-      "rdfs:range": "hydra:PagedCollection",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:mappings",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "mappings",
-      "rdfs:comment": "The variable-to-property mappings for the IRI template.",
-      "rdfs:domain": "hydra:IriTemplate",
-      "rdfs:range": "hydra:IriTemplateMapping",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:method",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "method",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:Operation",
-      "rdfs:range": "hydra:HttpMethod",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:nextPage",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "next page",
-      "rdfs:comment": "The page following this page in a list of PagedCollections",
-      "rdfs:domain": "hydra:PagedCollection",
-      "rdfs:range": "hydra:PagedCollection",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:operations",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "operations",
-      "rdfs:comment": "The documented HTTP operations for this resource.",
-      "rdfs:domain": "hydra:Resource",
-      "rdfs:range": "hydra:Operation",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:previousPage",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "previous page",
-      "rdfs:comment": "The page preceding this page in a list of PagedCollections",
-      "rdfs:domain": "hydra:PagedCollection",
-      "rdfs:range": "hydra:PagedCollection",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:property",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "property",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:IriTemplateMapping",
-      "rdfs:range": "rdf:Property",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:returns",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "returns",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:Operation",
-      "rdfs:range": "rdfs:Class",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:search",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "search",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:Collection",
-      "rdfs:range": "hydra:IriTemplate",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:statusCode",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "status code",
-      "rdfs:comment": "",
-      "rdfs:domain": "hydra:StatusCodeDescription",
-      "rdfs:range": "xsd:integer",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:statusCodes",
-      "@type": "owl:ObjectProperty",
-      "rdfs:label": "status codes",
-      "rdfs:comment": "Additional documentation about some of the status codes the operation might return.",
-      "rdfs:domain": "hydra:Operation",
-      "rdfs:range": "hydra:StatusCodeDescription",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:template",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "template",
-      "rdfs:comment": "The IRI template.",
-      "rdfs:domain": "hydra:IriTemplate",
-      "rdfs:range": "xsd:string",
-      "vs:status": "unstable"
-    },
-    {
       "@id": "hydra:title",
       "@type": "owl:DatatypeProperty",
       "rdfs:label": "title",
@@ -297,20 +410,10 @@
       "vs:status": "unstable"
     },
     {
-      "@id": "hydra:totalItems",
+      "@id": "hydra:description",
       "@type": "owl:DatatypeProperty",
-      "rdfs:label": "total items",
-      "rdfs:comment": "The total number of items in this Collection.",
-      "rdfs:domain": "hydra:Collection",
-      "rdfs:range": "xsd:integer",
-      "vs:status": "unstable"
-    },
-    {
-      "@id": "hydra:variable",
-      "@type": "owl:DatatypeProperty",
-      "rdfs:label": "variable",
-      "rdfs:comment": "An IRI template variable",
-      "rdfs:domain": "hydra:IriTemplateMapping",
+      "rdfs:label": "description",
+      "rdfs:comment": "A description.",
       "rdfs:range": "xsd:string",
       "vs:status": "unstable"
     }
