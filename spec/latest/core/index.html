@@ -105,6 +105,10 @@
     list-style-type: none;
     padding-right: 20px;
   }
+  .highlight {
+    font-weight: bold;
+    color: #0a3;
+  }
   .illustration {
     text-align: center;
   }
@@ -185,7 +189,8 @@
     intention is to show how Hydra is used rather than its precise
     definition).</p>
 
-  <p class="issue">The figure is confusing and should be improved.</p>
+  <p class="issue">Is this illustration clear enough or is it confusing?
+    Feedback would be much appreciated.</p>
 
   <div class="illustration">
     <p><img src="vocabulary.png" alt="The Hydra core vocabulary" /></p>
@@ -199,6 +204,101 @@
   <p id="vocabulary-overview"></p>
 
   <p class="issue">The used prefixes should be documented somewhere.</p>
+</section>
+
+<section>
+  <h2>Using Hydra</h2>
+
+  <p>Throughout this section, a simple Web API featuring an issue tracker
+    will be used to illustrate how Hydra can be used. The Web API enables
+    users to file new issues and to modify or comment existing ones.</p>
+
+  <section>
+    <h3>Documenting a Web API</h3>
+  </section>
+
+  <section>
+    <h3>Accessing a Hydra-powered Web API</h3>
+
+    <p>The first step when trying to access a Web API is to find an entry
+      point. Typically, this is done by looking for documentation on the
+      API publisher's homepage. Hydra enables the API's main entry point
+      to be discovered automatically if the API publisher marks his
+      responses with a special HTTP Link Header as defined in [[RFC5988]].
+      A Hydra client would look a Link Header with a relation type
+      <code>http://purl.org/hydra/core#apiDocumentation</code> (this is
+      the IRI identifying the <i>hydra:apiDocumentation</i> property).</p>
+
+    <p>In the following example, a Hydra client simply accesses the
+      homepage of an API publisher, <code>http://www.example.com</code>
+      to find the entry point of its API. A client may use an HTTP GET or
+      HEAD request. The difference between the two is that the former may
+      return a message-body in the response whereas the latter will not;
+      otherwise they are identical.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Discovering Hydra API documentation documents">
+      <!--
+      HEAD / HTTP/1.1
+      Host: www.example.com
+
+      ====================================
+
+      HTTP/1.1 200 OK
+      ...
+      Content-Type: application/ld+json
+      ****Link: <http://api.example.com/doc/>;
+            rel="http://purl.org/hydra/core#apiDocumentation"****
+      -->
+    </pre>
+
+    <p>The response in the example above contains an HTTP Link Header
+      pointing to <code>http://api.example.com/doc/api.jsonld</code>.
+      Retrieving that resource, the client would obtain a
+      <a>Hydra API description</a> that documents the API's main entry
+      point:</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Retrieving a Hydra API description to obtain the main entry point">
+      <!--
+      GET /doc/ HTTP/1.1
+      Host: api.example.com
+      Accept: application/ld+json,application/json,*/*;q=0.1
+
+      ====================================
+
+      HTTP/1.1 200 OK
+      ...
+      Content-Type: application/ld+json
+
+      {
+        "@context": "context.jsonld",
+        "title": "The example.com API",
+        ****"entrypoint": "http://api.example.com/"****,
+        ...
+      }
+      -->
+    </pre>
+
+    <p>Please note that in most cases the entry point will already be
+      known to the client. Thus, the discovery of the API documentation
+      using HTTP Link Headers is typically not necessary as the concepts
+      used in responses from the API will dereference to their
+      documentation.</p>
+  </section>
+
+  <section>
+    <h3>Using Hydra Descriptions as JSON</h3>
+
+    <p class="issue">The are multiple ways to serialize a
+      <a>Hydra API description</a> in JSON-LD. To make it usable also for
+      plain-old JSON clients, the serialization has to have a deterministic
+      shape. The definition of a profile will make it possible to signal
+      or request specific serialization conventions at the media type
+      level. The definition of the profile might be as simple as defining
+      a JSON-LD frame.</p>
+  </section>
+
 </section>
 
 <section>
