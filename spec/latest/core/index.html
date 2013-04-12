@@ -121,8 +121,8 @@
 <body>
 <section id="abstract">
   <p>Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs.
-    By specifying a number of concepts commonly used in Web APIs it renders
-    the creation of generic API clients possible.</p>
+    By specifying a number of concepts commonly used in Web APIs it enables
+    the creation of generic API clients.</p>
 </section>
 
 <section id="sotd">
@@ -160,8 +160,8 @@
   <h2>Conformance</h2>
 
   <p>This specification describes the conformance criteria for
-    <dfn title="Hydra API description">Hydra API descriptions</dfn> and
-    <dfn title="Hydra client">Hydra clients</dfn>. This criteria is
+    <dfn title="Hydra API documentation">Hydra API documentations</dfn>
+    and <dfn title="Hydra client">Hydra clients</dfn>. This criteria is
     relevant to authors, authoring tool implementers, and client
     implementers. All authoring guidelines, diagrams, examples, and notes
     in this specification are non-normative, as are all sections
@@ -197,7 +197,7 @@
     <p class="caption">The Hydra core vocabulary</p>
   </div>
 
-  <p>An alphabetical index of the classes and properties of Hydra are
+  <p>An alphabetical index of the classes and properties of Hydra is
     given below. All the terms are hyperlinked to their detailed
     description for quick reference.</p>
 
@@ -211,7 +211,82 @@
 
   <p>Throughout this section, a simple Web API featuring an issue tracker
     will be used to illustrate how Hydra can be used. The Web API enables
-    users to file new issues and to modify or comment existing ones.</p>
+    its users to file new issues, modify or delete existing ones, and
+    to comment them. For the sake of simplicity, orthogonal aspects such
+    as authentication or authorization are not covered.</p>
+
+  <section>
+    <h3>Adding Affordances to Representations</h3>
+
+    <p>The exemplary Web API has to expose representations of issues and
+      comments. To enable interaction with those resources, a client has
+      to know which operations the server supports. In human-facing
+      websites such affordances are typically exposed by links and forms
+      and described in natural language. Unfortunately, machines can not
+      interpret such information easily. The solution that presents itself
+      is to reduce the language to a small number of unambiguous concepts
+      which are easily recognizable by a machine client. Hydra formalizes
+      such concepts.</p>
+
+    <p>The following example illustrates how representations can be
+      augmented with information that enables clients to interact with
+      them. A client would be able to understand that the resource in
+      the example below can be deleted by sending an HTTP DELETE
+      request.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="A representation of an issue">
+      <!--
+      {
+        ****"@context": "http://purl.org/hydra/core/context.jsonld"****,
+        "@id": "/an-issue",
+        "title": "An exemplary issue representation",
+        "description": "This issue can be deleted with an HTTP DELETE request"
+        ****"operations"****: [
+          ****{
+            "@type": "DeleteResourceOperation",
+            "method": "DELETE"
+          }****
+        ]
+      }
+      -->
+    </pre>
+
+    <p>The example above references Hydra's context to map properties such
+      as <code>operations</code> and <code>method</code> and values like
+      <code>DeleteResourceOperation</code> to URLs that unambiguously
+      identify these concepts. It would be similarly valid JSON-LD if
+      these mappings would be directly embedded into the representation
+      or if the full URLs would be used instead. Typically, however, the
+      context is the same for a lot of representations in a Web API and
+      it thus makes sense to reduce the response size by leveraging a
+      remote context that can easily be cached by a client.</p>
+
+    <p>In Hydra, an <i>Operation</i> represents the information necessary
+      for a client to construct valid HTTP requests in order to manipulate
+      the server’s resource state. As such, the only required property of
+      an <i>Operation</i> is its HTTP <i>method</i>. Optionally, it is
+      also possible to describe what information the server <i>expects</i>
+      or <i>returns</i>, including additional information about HTTP
+      status codes that might be returned. This helps a developer to
+      understand what to expect when invoking an operation. This
+      information has, however, not to be considered as being complete;
+      it is merely a hint. Developers should, e.g., expect that other
+      HTTP status codes might be returned and program their clients
+      accordingly.</p>
+
+    <p>Hydra has three predefined operation classes, namely
+      <i>CreateResourceOperation</i>, <i>ReplaceResourceOperation</i>,
+      and <i>DeleteResourceOperation</i>. As their names suggest, they
+      can be used to implement simple
+      <abbr title="Create, replace, update, and delete">CRUD</abbr>
+      functionality. More specialized operations can be easily created
+      by subclassing these classes or their base class <i>Operation</i>.</p>
+
+    <p class="issue">Describe Resource, Link, Templated Link and perhaps
+      also Operations here.</p>
+
+  </section>
 
   <section>
     <h3>Documenting a Web API</h3>
@@ -255,11 +330,11 @@
     <p>The response in the example above contains an HTTP Link Header
       pointing to <code>http://api.example.com/doc/api.jsonld</code>.
       Retrieving that resource, the client would obtain a
-      <a>Hydra API description</a> that documents the API's main entry
+      <a>Hydra API documentation</a> defining the API's main entry
       point:</p>
 
     <pre class="example" data-transform="updateExample"
-         title="Retrieving a Hydra API description to obtain the main entry point">
+         title="Retrieving a Hydra API documentation to obtain the main entry point">
       <!--
       GET /doc/ HTTP/1.1
       Host: api.example.com
@@ -288,42 +363,42 @@
       documentation.</p>
   </section>
 
-  <section>
+<!--   <section>
     <h3>Using Hydra Descriptions as JSON</h3>
 
     <p class="issue">The are multiple ways to serialize a
-      <a>Hydra API description</a> in JSON-LD. To make it usable also for
+      <a>Hydra API documentation</a> in JSON-LD. To make it usable also for
       plain-old JSON clients, the serialization has to have a deterministic
       shape. The definition of a profile will make it possible to signal
       or request specific serialization conventions at the media type
       level. The definition of the profile might be as simple as defining
       a JSON-LD frame.</p>
-  </section>
+  </section> -->
 
 </section>
 
 <section>
   <h2>Classes</h2>
+
+  <p class="issue">The class definitions haven't been updated yet.</p>
+
   <div id="vocabulary-classes"></div>
 </section>
 
 <section>
   <h2>Properties</h2>
+
+  <p class="issue">The property definitions haven't been updated yet.</p>
+
   <div id="vocabulary-properties"></div>
 </section>
 
-<section>
-  <h2>External Vocabulary References</h2>
-
-  <p class="issue">Should we reuse things such as HTTP in RDF or should we
-    redefine it and just declare it as equivalent?</p>
-</section>
-
-<section class="appendix">
+<!-- <section class="appendix">
   <h2>The Hydra Core Vocabulary in JSON-LD</h2>
+
   <pre id="vocabulary-jsonld">
   </pre>
-</section>
+</section> -->
 
 </body>
 </html>
