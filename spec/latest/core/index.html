@@ -228,6 +228,133 @@
       which are easily recognizable by a machine client. Hydra formalizes
       such concepts.</p>
 
+    <p>The simplest and most important affordance on the Web are
+      hyperlinks. Without them, it would be impossible to browse the Web.
+      Users typically select the link based on the text it is labeled
+      with. To give machines a similar understanding, links can be
+      annotated with a link relation type&mdash;a registered token or a
+      URI identifying the semantics of the link. The following example
+      shows how such a typed link is used in HTML to reference a
+      stylesheet.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="A typed link referencing a stylesheet as used in HTML">
+      <!--
+      <link ****rel="stylesheet"**** href="http://www.example.com/styles.css" />
+      -->
+    </pre>
+
+    <p>In Linked Data, the link relation type corresponds to the property
+      itself. An example in JSON-LD would thus look as follows.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Referencing a stylesheet in JSON-LD">
+      <!--
+      {
+        ****"urn:iana:link-relations:stylesheet"****: { "@id": "http://www.example.com/styles.css" }
+      }
+      -->
+    </pre>
+
+<!--     <p class="note">The <code>urn:iana:link-relations:stylesheet</code> URN
+      is not officially registered (yet). For the moment, see
+      <a href="http://tools.ietf.org/html/draft-saintandre-iana-urn">draft-saintandre-iana-urn</a>
+      which defines this URN pattern.</p> -->
+
+    <p>Generally, a client decides whether to follow a link or not based on
+      the link relation (or the property in general, in the case of
+      Linked Data) which defines its semantics. There are however also
+      clients such as Web crawlers which simply follow every which is
+      intended to be dereferenced. In HTML this usually means that all
+      links in anchor elements (the <code>&lt;a&gt;</code> tag) are
+      followed but, e.g., most references in link elements (the
+      <code>&lt;link&gt;</code> tag), such as used in the example above,
+      are ignored. Since in RDF serializations no such distinction exists,
+      the best a client can do is to blindly try to dereference all URIs.
+      It would thus be beneficial to describe in a machine-readable manner
+      whether a property represents a link that is intended to be
+      dereferenced or whether it solely represents an identifier. Hydra's
+      <i>Link</i> class does just that. It can be used to define properties
+      that represent dereferenceable links. In the exemplary Web API used
+      throughout this section, it can, e.g., be used to define a property
+      linking issues to their comments:</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Definining properties representing hyperlinks using Hydra's Link class">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://example.com/vocab#comments",
+        ****"@type": "Link"****
+      }
+      -->
+    </pre>
+
+    <p>In the example above, a property identified with the URL
+      <code>http://example.com/vocab#comments</code> is be defined to be
+      of the type <i>Link</i>. This is enough information for a client
+      understanding Hydra to know that the value of the
+      <code>comments</code> property in the following example is intended
+      to be dereferenced.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Using a property defined to be a hyperlink">
+      <!--
+      {
+        "@context": {
+          ****"comments": "http://example.com/vocab#comments"****
+        },
+        "@id": "http://example.com/an-issue",
+        "title": "An exemplary issue linking to its comments",
+        ****"comments": { "@id": "http://example.com/an-issue/comments" }****
+      }
+      -->
+    </pre>
+
+    <p>In the example above, the value of the <code>comments</code>
+      property is a JSON object with an <code>@id</code> member. This is
+      JSON-LD's convention to distinguish between strings and IRIs. By
+      using JSON-LD's type-coercion feature, the representation can be
+      made even more idiomatic:</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Using JSON-LD's type-coercion feature to create idiomatic representations">
+      <!--
+      {
+        "@context": {
+          "comments": { "@id": "http://example.com/vocab#comments", ****"@type": "@id"**** }
+        },
+        "@id": "http://example.com/an-issue",
+        "title": "An exemplary issue linking to its comments",
+        "comments": ****"http://example.com/an-issue/comments"****
+      }
+      -->
+    </pre>
+
+    <p>While links are enough to build read-only Web APIs, more powerful
+      affordances are required to build read-write Web APIs. Thus, Hydra
+      introduces the notion of operations. Simply speaking, an
+      <i>Operation</i> represents the information necessary for a client
+      to construct valid HTTP requests in order to manipulate the server's
+      resource state. As such, the only required property of an
+      <i>Operation</i> is its HTTP <i>method</i>. Optionally, it is
+      also possible to describe what information the server <i>expects</i>
+      or <i>returns</i>, including additional information about HTTP
+      status codes that might be returned. This helps a developer to
+      understand what to expect when invoking an operation. This
+      information has, however, not to be considered as being complete;
+      it is merely a hint. Developers should, e.g., expect that other
+      HTTP status codes might be returned and program their clients
+      accordingly.</p>
+
+    <p>Hydra has three predefined operation classes, namely
+      <i>CreateResourceOperation</i>, <i>ReplaceResourceOperation</i>,
+      and <i>DeleteResourceOperation</i>. As their names suggest, they
+      can be used to implement simple
+      <abbr title="Create, replace, update, and delete">CRUD</abbr>
+      functionality. More specialized operations can be easily created
+      by subclassing these classes or their base class <i>Operation</i>.</p>
+
     <p>The following example illustrates how representations can be
       augmented with information that enables clients to interact with
       them. A client would be able to understand that the resource in
@@ -235,7 +362,7 @@
       request.</p>
 
     <pre class="example" data-transform="updateExample"
-         title="A representation of an issue">
+         title="A representation of an issue augmented with a delete operation">
       <!--
       {
         ****"@context": "http://purl.org/hydra/core/context.jsonld"****,
@@ -261,31 +388,6 @@
       context is the same for a lot of representations in a Web API and
       it thus makes sense to reduce the response size by leveraging a
       remote context that can easily be cached by a client.</p>
-
-    <p>In Hydra, an <i>Operation</i> represents the information necessary
-      for a client to construct valid HTTP requests in order to manipulate
-      the server’s resource state. As such, the only required property of
-      an <i>Operation</i> is its HTTP <i>method</i>. Optionally, it is
-      also possible to describe what information the server <i>expects</i>
-      or <i>returns</i>, including additional information about HTTP
-      status codes that might be returned. This helps a developer to
-      understand what to expect when invoking an operation. This
-      information has, however, not to be considered as being complete;
-      it is merely a hint. Developers should, e.g., expect that other
-      HTTP status codes might be returned and program their clients
-      accordingly.</p>
-
-    <p>Hydra has three predefined operation classes, namely
-      <i>CreateResourceOperation</i>, <i>ReplaceResourceOperation</i>,
-      and <i>DeleteResourceOperation</i>. As their names suggest, they
-      can be used to implement simple
-      <abbr title="Create, replace, update, and delete">CRUD</abbr>
-      functionality. More specialized operations can be easily created
-      by subclassing these classes or their base class <i>Operation</i>.</p>
-
-    <p class="issue">Describe Resource, Link, Templated Link and perhaps
-      also Operations here.</p>
-
   </section>
 
   <section>
@@ -361,6 +463,13 @@
       using HTTP Link Headers is typically not necessary as the concepts
       used in responses from the API will dereference to their
       documentation.</p>
+  </section>
+
+  <section>
+    <h3>Advanced Concepts</h3>
+
+    <p class="issue">Describe TemplatedLink (IriTemplate, IriTemplateMapping),
+      Collection, PagedCollection, Error, and Resource.</p>
   </section>
 
 <!--   <section>
