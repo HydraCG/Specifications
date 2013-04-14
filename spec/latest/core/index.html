@@ -394,6 +394,154 @@
 
   <section>
     <h3>Documenting a Web API</h3>
+
+    <p>In Web APIs, most representations are typically very similar.
+      Furthermore, resources often support the same operations. It thus
+      makes sense, to collect this information in a central documentation.
+      Traditionally, this has been done in natural language which forces
+      developers to hardcode that knowledge into their clients. Hydra
+      addresses this issue by making the documentation completely
+      machine-processable. The fact that all definitions can be identified
+      by URLs enables reuse at unprecedented granularity.</p>
+
+    <p>Hydra's <i>ApiDocumentation</i> class builds the foundation for
+      the description of a Web API. As shown in the following example,
+      Hydra describes a API by giving it a title, a short description, and
+      documenting its main entry point. Furthermore, the classes known to
+      be supported by the Web API and additional information about status
+      codes that might be returned can be documented. This information
+      may be used to automatically generate documentations in natural
+      language.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="The overall structure of a Hydra API documentation">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/doc/",
+        ****"@type": "ApiDocumentation"****,
+        ****"title"****: ####"The name of the API",####
+        ****"description"****: ####"A short description of the API",####
+        ****"entrypoint"****: ####"URL of the API's main entry point",####
+        ****"supportedClasses"****: [
+          ####... The classes known to be supported by the Web API ...####
+        ],
+        ****"statusCodes"****: [
+          ####... Additional information about HTTP status codes ... ####
+        ]
+      }
+      -->
+    </pre>
+
+    <p>In Linked Data, properties are, just as everything else, identified
+      by IRIs and thus have global scope which implies that they have
+      independent semantics. In contrast, properties in data models as
+      used in common programming languages are class-dependent. Their
+      semantics depend on the class they belong to. In data models classes
+      are typically described by the properties they expose whereas in
+      Linked Data properties define to which classes they belong. If no
+      class is specified, it is assumed that a property may apply to every
+      class.</p>
+
+    <p>These differences have interesting consequences. For example, the
+      commonly asked question of which properties can be applied to an
+      instance of a specific class can typically not be answered for
+      Linked Data. Strictly speaking, any property which is not explicitly
+      forbidden could be applied. This stems from the fact that Linked Data
+      works under an open-world assumption whereas data models used by
+      programmers typically work under a closed-world assumption. The
+      difference is that when a closed world is assumed, everything that
+      is not known to be true is false or vice-versa. With an open-world
+      assumption the failure to derive a fact does not automatically imply
+      the opposite; it embraces the fact that the knowledge is
+      incomplete.</p>
+
+    <p>Since Hydra uses classes to describe the information expected or
+      returned by an operation, it also defines a concept to describe the
+      properties known to be supported by a class. The following example
+      illustrates this feature. Instead of referencing properties directly,
+      <i>supportedProperties</i> references an intermediate data structure,
+      namely instances of the <i>SupportedProperty</i> class. This makes
+      it possible to define whether a specific property is required or
+      whether it is read-only or write-only depending on the class it is
+      associated with.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Defining a class and documenting its supported properties">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/doc/#Comment",
+        ****"@type": "Class"****,
+        ****"title"****: ####"The name of the class",####
+        ****"description"****: ####"A short description of the class.",####
+        ****"supportedProperties"****: [
+          ####... The properties known to be supported by the class ...####
+          {
+            ****"@type": "SupportedProperty"****,
+            ****"property"****: ####The property####,
+            ****"required"****: ####Is the property required in a request to be valid####
+            ****"readonly"****: ####Can the property's value be modified?####
+            ****"writeonly"****: ####Is the property's value included in responses?####
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>All instances of a specific class typically support the same
+      operations. Hydra therefore features a <i>supportedOperations</i>
+      property which defines the operations supported by all instances of
+      a class.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Defining a class and documenting its supported operations">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/doc/#Comment",
+        "@type": "Class",
+        "title": ####"The name of the class",####
+        "description": ####"A short description of the class.",####
+        "supportedProperties": [
+          ####... The properties known to be supported by the class ...####
+        ],
+        ****"supportedOperations"****: [
+          ####... The operations known to be supported by instances of the class ...####
+        ]
+      }
+      -->
+    </pre>
+
+    <p>The same feature can be used to describe the operations supported
+      by values of a <i>Link</i> property. This is often helpful when
+      certain operations depend on the permissions of the current user. It
+      makes it, e.g., possible to show a "delete" link only if the current
+      user has the permission to delete the resource. Otherwise, the link
+      would simply be hidden in the representation.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Documenting the supported operations of link properties">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/doc/#comments",
+        ****"@type": "Link"****,
+        "title": "Comments",
+        "description": "A link to comments with an operation to create a new comment.",
+        ****"supportedOperations"****: [
+          ****{
+            "@type": "CreateResourceOperation",
+            "title": "Creates a new comment",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Comment",
+            "returns": "http://api.example.com/doc/#Comment",
+            "statusCodes": ####... optional information about status codes that might be returned...####
+          }****
+        ]
+      }
+      -->
+    </pre>
   </section>
 
   <section>
@@ -426,8 +574,7 @@
       HTTP/1.1 200 OK
       ...
       Content-Type: application/ld+json
-      ****Link: <http://api.example.com/doc/>;
-            rel="http://purl.org/hydra/core#apiDocumentation"****
+      ****Link: <http://api.example.com/doc/>; rel="http://purl.org/hydra/core#apiDocumentation"****
       -->
     </pre>
 
@@ -451,7 +598,7 @@
       Content-Type: application/ld+json
 
       {
-        "@context": "context.jsonld",
+        "@context": "http://purl.org/hydra/core/context.jsonld",
         "@id": "http://api.example.com/api/doc/",
         "title": "The example.com API",
         ****"entrypoint": "http://api.example.com/"****,
