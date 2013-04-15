@@ -7,35 +7,53 @@ var localBibliography = {
 var preProc = {
     apply:  function(c) {
         $.getJSON('../../../core.jsonld', function(vocab) {
-            $('#vocabulary-jsonld').html(JSON.stringify(vocab, null, 2).replace(/\n/g, "<br />"));
-
             var options = { "base": "http://purl.org/hydra/" };
-            var classesFrame = {
-                "@context": [
-                    vocab["@context"],
-                    {
-                        "rdfs:subClassOf": { "@container": "@set" }
-                    }
-                ],
-                "@type": [ "rdfs:Class", "owl:Class" ]
+            var context = {
+                "hydra": "http://purl.org/hydra/core#",
+                "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+                "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+                "xsd": "http://www.w3.org/2001/XMLSchema#",
+                "owl": "http://www.w3.org/2002/07/owl#",
+                "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
+                "defines": { "@reverse": "rdfs:definedBy" },
+                "comment": "rdfs:comment",
+                "label": "rdfs:label",
+                "domain": { "@id": "rdfs:domain" },
+                "range": { "@id": "rdfs:range" },
+                "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id", "@container": "@set" },
+                "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id", "@container": "@set" },
+                "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
+                "status": "vs:status"
             };
 
+            jsonld.compact(vocab, context, function(err, doc) {
+                $('#vocabulary-jsonld').html(JSON.stringify(doc, null, 2).replace(/\n/g, "<br />"));
+            });
+
             // Document classes
+            var classesFrame = {
+                "@context": context,
+                "@type": [ "hydra:Class", "rdfs:Class", "owl:Class" ],
+                "subClassOf": { "@embed": false }
+            };
+
             jsonld.frame(vocab, classesFrame, options, function(err, classes) {
                 if (err) {
-                    alert('Framing classes failed with error code ' + err.code);
+                    alert('Framing classes failed with error code ' + JSON.stringify(err));
                 }
 
                 var classOverview = "";
                 var classIndex = new Array();
 
-                $.each(classes["@graph"], function(index, value) {
-                    classOverview += '<h3 id="' + value["@id"] + '">' + value["@id"] + '</h3>';
-                    classOverview += '<p>' + value["rdfs:comment"] + '</p>';
-                    classOverview += '<p><strong>Subclass of:</strong> add this!!</p>';
-                    classOverview += '<p><strong>Status:</strong> ' + value["vs:status"] + '</p>';
+                $.each(classes['@graph'], function(index, value) {
+                    classOverview += '<h3 id="' + value['@id'] + '">' + value['@id'] + '</h3>';
+                    classOverview += '<p>' + value['comment'] + '</p>';
+                    if (value['subClassOf'].length > 0) {
+                        classOverview += '<p><strong>Subclass of:</strong> ' + value['subClassOf'].join(', ') + '</p>';
+                    }
+                    classOverview += '<p><strong>Status:</strong> ' + value['status'] + '</p>';
 
-                    classIndex.push(value["@id"]);
+                    classIndex.push(value['@id']);
                 });
 
                 $('#vocabulary-classes').html(classOverview);
@@ -51,27 +69,31 @@ var preProc = {
 
             // Document properties
             var propertiesFrame = {
-              "@context": vocab["@context"],
-              "@type": [ "rdfs:Property", "owl:DatatypeProperty", "owl:ObjectProperty" ]
+              "@context": context,
+              "@type": [ "hydra:Link", "hydra:TemplatedLink", "rdf:Property", "owl:DatatypeProperty", "owl:ObjectProperty" ]
             };
 
             jsonld.frame(vocab, propertiesFrame, options, function(err, properties) {
+
                 var propertyOverview = "";
                 var propIndex = new Array();
 
-                $.each(properties["@graph"], function(index, value) {
-                    propertyOverview += '<h3 id="' + value["@id"] + '">' + value["@id"] + '</h3>';
-                    propertyOverview += '<p>' + value["rdfs:comment"] + '</p>';
+                $.each(properties['@graph'], function(index, value) {
+                    propertyOverview += '<h3 id="' + value['@id'] + '">' + value['@id'] + '</h3>';
+                    propertyOverview += '<p>' + value['comment'] + '</p>';
 
-                    if (value["rdfs:domain"]) {
-                        propertyOverview += '<p><strong>Domain:</strong> ' + value["rdfs:domain"] + '</p>';
+                    if (value['domain']) {
+                        propertyOverview += '<p><strong>Domain:</strong> ' + value['domain']['@id'] + '</p>';
                     }
-                    if (value["rdfs:range"]) {
-                        propertyOverview += '<p><strong>Range:</strong> ' + value["rdfs:range"] + '</p>';
+                    if (value['range']) {
+                        propertyOverview += '<p><strong>Range:</strong> ' + value['range']['@id'] + '</p>';
                     }
-                    propertyOverview += '<p><strong>Status:</strong> ' + value["vs:status"] + '</p>';
+                    if (value['subPropertyOf']) {
+                        propertyOverview += '<p><strong>Subproperty of:</strong> ' + value['subPropertyOf'] + '</p>';
+                    }
+                    propertyOverview += '<p><strong>Status:</strong> ' + value['status'] + '</p>';
 
-                    propIndex.push(value["@id"]);
+                    propIndex.push(value['@id']);
                 });
 
 
