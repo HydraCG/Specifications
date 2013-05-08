@@ -21,6 +21,6 @@ More information about Hydra is available at:
 http://www.markus-lanthaler.com/hydra
 
 
-[1] http://www.w3.org/TR/json-ld/
-[2] http://www.markus-lanthaler.com/hydra/spec/latest/core/
-[3] https://github.com/lanthaler/Hydra/issues
+[1]: http://www.w3.org/TR/json-ld/
+[2]: http://www.markus-lanthaler.com/hydra/spec/latest/core/
+[3]: https://github.com/lanthaler/Hydra/issues
