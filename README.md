@@ -1,14 +1,26 @@
 Hydra: Hypermedia-Driven Web APIs
-==============
+=====================================================================
 
-Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs. By
-specifying a number of concepts commonly used in Web APIs it renders the
-creation of generic API clients possible.
+Hydra is an effort to simplify the development of interoperable,
+hypermedia-driven Web APIs. The two fundamental building blocks of
+Hydra are [JSON-LD][1] and the [Hydra Core Vocabulary][2].
 
-To participate in the development of this specification please file bugs and
-issues in the issue tracker.
+JSON-LD is the serialization format used in the communication between
+the server and its clients. The Hydra Core Vocabulary represents the
+shared vocabulary between them. By specifying a number of concepts
+which are commonly used in Web APIs it can be used as the foundation
+to build Web services that share REST's benefits in terms of loose
+coupling, maintainability, evolvability, and scalability. Furthermore
+it enables the creation of generic API clients instead of requiring
+specialized clients for every single API.
 
-***This is highly experimental stuff that isn't ready for production use.***
+To participate in the development of this specification please file
+bugs and issues in the [issue tracker][3].
 
-You can find more information about Hydra on my homepage:
+More information about Hydra is available at:
 http://www.markus-lanthaler.com/hydra
+
+
+[1] http://www.w3.org/TR/json-ld/
+[2] http://www.markus-lanthaler.com/hydra/spec/latest/core/
+[3] https://github.com/lanthaler/Hydra/issues
