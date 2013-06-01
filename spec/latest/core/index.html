@@ -286,14 +286,14 @@
       <!--
       {
         "@context": "http://purl.org/hydra/core/context.jsonld",
-        "@id": "http://example.com/vocab#comments",
+        "@id": "http://api.example.com/vocab#comments",
         ****"@type": "Link"****
       }
       -->
     </pre>
 
     <p>In the example above, a property identified with the URL
-      <code>http://example.com/vocab#comments</code> is be defined to be
+      <code>http://api.example.com/vocab#comments</code> is be defined to be
       of the type <i>Link</i>. This is enough information for a client
       understanding Hydra to know that the value of the
       <code>comments</code> property in the following example is intended
@@ -304,11 +304,11 @@
       <!--
       {
         "@context": {
-          ****"comments": "http://example.com/vocab#comments"****
+          ****"comments": "http://api.example.com/vocab#comments"****
         },
-        "@id": "http://example.com/an-issue",
+        "@id": "http://api.example.com/an-issue",
         "title": "An exemplary issue linking to its comments",
-        ****"comments": { "@id": "http://example.com/an-issue/comments" }****
+        ****"comments": { "@id": "http://api.example.com/an-issue/comments" }****
       }
       -->
     </pre>
@@ -324,11 +324,11 @@
       <!--
       {
         "@context": {
-          "comments": { "@id": "http://example.com/vocab#comments", ****"@type": "@id"**** }
+          "comments": { "@id": "http://api.example.com/vocab#comments", ****"@type": "@id"**** }
         },
-        "@id": "http://example.com/an-issue",
+        "@id": "http://api.example.com/an-issue",
         "title": "An exemplary issue linking to its comments",
-        "comments": ****"http://example.com/an-issue/comments"****
+        "comments": ****"http://api.example.com/an-issue/comments"****
       }
       -->
     </pre>
@@ -589,7 +589,7 @@
       <!--
       GET /doc/ HTTP/1.1
       Host: api.example.com
-      Accept: application/ld+json,application/json,*/*;q=0.1
+      Accept: application/ld+json
 
       ====================================
 
@@ -599,7 +599,7 @@
 
       {
         "@context": "http://purl.org/hydra/core/context.jsonld",
-        "@id": "http://api.example.com/api/doc/",
+        "@id": "http://api.example.com/doc/",
         "title": "The example.com API",
         ****"entrypoint": "http://api.example.com/"****,
         ...
@@ -638,7 +638,7 @@
       <!--
       {
         "@context": "http://purl.org/hydra/core/context.jsonld",
-        "@id": "http://example.com/an-issue/comments",
+        "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
         ****"members"****: [
           {
@@ -674,7 +674,7 @@
       <!--
       {
         "@context": "http://purl.org/hydra/core/context.jsonld",
-        "@id": "http://example.com/an-issue/comments?page=3",
+        "@id": "http://api.example.com/an-issue/comments?page=3",
         ****"@type": "PagedCollection"****,
         ****"totalItems": "4980"****,
         ****"itemsPerPage": "10"****,
