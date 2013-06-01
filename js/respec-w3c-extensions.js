@@ -1,7 +1,20 @@
 // extend the bibliography entries
 var localBibliography = {
     "JSON-LD": "Manu Sporny, Gregg Kellogg, Markus Lanthaler, Editors. <cite><a href=\"http://json-ld.org/spec/latest/json-ld/\">JSON-LD 1.0</a>.</cite> W3C Editor's Draft (work in progress). URL: <a href=\"http://json-ld.org/spec/latest/json-ld/\">http://json-ld.org/spec/latest/json-ld/</a>",
-    "JSON-LD-API": "Markus Lanthaler, Gregg Kellogg, Manu Sporny, Editors. <cite><a href=\"http://json-ld.org/spec/latest/json-ld-api/\">JSON-LD 1.0 Processing Algorithms and API</a>.</cite> W3C Editor's Draft (work in progress). URL: <a href=\"http://json-ld.org/spec/latest/json-ld-api/\">http://json-ld.org/spec/latest/json-ld-api/</a>"
+    "JSON-LD-API": "Markus Lanthaler, Gregg Kellogg, Manu Sporny, Editors. <cite><a href=\"http://json-ld.org/spec/latest/json-ld-api/\">JSON-LD 1.0 Processing Algorithms and API</a>.</cite> W3C Editor's Draft (work in progress). URL: <a href=\"http://json-ld.org/spec/latest/json-ld-api/\">http://json-ld.org/spec/latest/json-ld-api/</a>",
+    "RFC6570": {
+        "authors": [
+            "Joe Gregorio",
+            "Roy T. Fielding",
+            "Marc Hadley",
+            "Mark Nottingham",
+            "David Orchard"
+        ],
+        "href": "http://www.rfc-editor.org/rfc/rfc6570.txt",
+        "title": "URI Template",
+        "date": "March 2012",
+        "status": "RFC 6570"
+    }
 };
 
 var preProc = {

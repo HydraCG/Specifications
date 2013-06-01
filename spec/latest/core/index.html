@@ -618,8 +618,7 @@
 <section>
   <h2>Advanced Concepts</h2>
 
-  <p class="issue">Describe TemplatedLink (IriTemplate, IriTemplateMapping),
-    Error, and Resource.</p>
+  <p class="issue">Describe StatusCodeDescription, Error, and Resource.</p>
 
   <section>
     <h3>Collections</h3>
@@ -691,7 +690,67 @@
 
     <p class="issue">Say that all these properties are optional? What about
       <i>firstPage</i> and, more interestingly, <i>lastPage</i>?</p>
+  </section>
 
+  <section>
+    <h3>Templated Links</h3>
+
+    <p>Sometimes, it is impossible for a server to construct a URL because
+      the URL depends on information only known by the client. A typical
+      use case are URLs which enable a client to query the server. In such
+      a case, the server cannot construct the URL because it does not know
+      the query the client is interested in. What the server can do however,
+      is to give the client a template to construct such a URL at runtime.
+      In Hydra, the <i>IriTemplate</i> class is used to do so.</p>
+
+    <p>A <i>IriTemplate</i> consists of a <i>template</i>, whose syntax is
+      specified in [[!RFC6570]], and a set of <i>mappings</i>. Each
+      <i>IriTemplateMapping</i> maps a <i>variable</i> used in the template
+      to a <i>property</i> and may optionally specify whether that variable
+      is <i>required</i> or not.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Description of an IRI Template">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        ****"@type": "IriTemplate"****,
+        ****"template": "http://api.example.com/issues{?q}"****,
+        ****"mappings"****: [
+          {
+            ****"@type": "IriTemplateMapping"****,
+            ****"variable": "q"****,
+            ****"property": "hydra:freetextQuery"****,
+            ****"required": true****,
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>The example above maps the variable <code>q</code> to Hydra's
+      <i>freetextQuery</i> property and marks it as required.
+      As its name suggests, the <i>freetextQuery</i> property can be used
+      for free text queries.</p>
+
+    <p>Similar to how Hydra's <i>Link</i> class allows the definition of
+      properties that represent hyperlinks as described in
+      <a class="sectionRef" href="#adding-affordances-to-representations"></a>,
+      the <i>TemplatedLink</i> class allows the definition of properties
+      whose value are IRI templates. Hydra predefines one such property,
+      namely the <i>search</i> property which can be used to document
+      available search interfaces.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="The definition of Hydra's search property (extract)">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "****hydra:search****",
+        ****"@type": "hydra:TemplatedLink"****
+      }
+      -->
+    </pre>
   </section>
 
 <!--   <section>
