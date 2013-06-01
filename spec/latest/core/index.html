@@ -536,7 +536,7 @@
             "method": "POST",
             "expects": "http://api.example.com/doc/#Comment",
             "returns": "http://api.example.com/doc/#Comment",
-            "statusCodes": ####... optional information about status codes that might be returned...####
+            "statusCodes": ####... optional information about status codes that might be returned ...####
           }****
         ]
       }
@@ -613,12 +613,85 @@
       used in responses from the API will dereference to their
       documentation.</p>
   </section>
+</section>
+
+<section>
+  <h2>Advanced Concepts</h2>
+
+  <p class="issue">Describe TemplatedLink (IriTemplate, IriTemplateMapping),
+    Error, and Resource.</p>
 
   <section>
-    <h3>Advanced Concepts</h3>
+    <h3>Collections</h3>
 
-    <p class="issue">Describe TemplatedLink (IriTemplate, IriTemplateMapping),
-      Collection, PagedCollection, Error, and Resource.</p>
+    <p>In many situations, it makes sense to expose resources that reference
+      a set of somehow related resources. Results of a search query or
+      entries of an address book are just two examples. To simplify such
+      use cases, Hydra defines the two classes <i>hydra:Collection</i> and
+      <i>hydra:PagedCollection</i>.</p>
+
+    <p>A <i>hydra:Collection</i> can be used to reference a set of resources
+      as follows:</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Referencing related resources using a Hydra Collection">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/posts/1/comments",
+        ****"@type": "Collection"****,
+        ****"members"****: [
+          {
+            "@id": "/comments/429"
+          },
+          {
+            "@id": "/comments/781",
+            "title": "Properties may be embedded directly in the collection"
+          },
+          ...
+        ]
+      }
+      -->
+    </pre>
+
+    <p>As shown in the example above, member items can either consist of
+      solely a link or also include some properties. In some cases embedding
+      member properties directly in the collection is beneficial as it may
+      reduce the number of HTTP requests necessary to get enough information
+      to process the result.</p>
+
+    <p>Since collections may become very large, Web APIs often chose to
+      split a collection into multiple pages. In Hydra, that can be achieved
+      with a <i>hydra:PagedCollection</i>. Additionally to the
+      <i>members</i> property, a <i>PagedCollection</i> may also include
+      links to the <i>firstPage</i>, <i>nextPage</i>, <i>previousPage</i>,
+      or <i>lastPage</i> as well as information about the
+      <i>itemsPerPage</i> and the <i>totalItems</i> as shown in the
+      following example.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="A Hydra PagedCollection splites a collection into multiple pages">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@id": "http://api.example.com/posts/1/comments?page=3",
+        ****"@type": "PagedCollection"****,
+        ****"totalItems": "4980"****,
+        ****"itemsPerPage": "10"****,
+        ****"firstPage": "/posts/1/comments?page=1"****,
+        ****"nextPage": "/posts/1/comments?page=4"****,
+        ****"previousPage": "/posts/1/comments?page=2"****,
+        ****"lastPage": "/posts/1/comments?page=498"****,
+        "members": [
+          ####... the members of this PagedCollection ...####
+        ]
+      }
+      -->
+    </pre>
+
+    <p class="issue">Say that all these properties are optional? What about
+      <i>firstPage</i> and, more interestingly, <i>lastPage</i>?</p>
+
   </section>
 
 <!--   <section>
@@ -632,7 +705,6 @@
       level. The definition of the profile might be as simple as defining
       a JSON-LD frame.</p>
   </section> -->
-
 </section>
 
 <section>
