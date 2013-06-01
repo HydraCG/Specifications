@@ -624,7 +624,8 @@
 <section>
   <h2>Advanced Concepts</h2>
 
-  <p class="issue">Describe StatusCodeDescription, Error, and Resource.</p>
+  <p class="issue">Describe Hydra's Resource class? Or should that better be
+    described somewhere in the beginning?</p>
 
   <section>
     <h3>Collections</h3>
@@ -759,18 +760,77 @@
     </pre>
   </section>
 
-<!--   <section>
-    <h3>Using Hydra Descriptions as JSON</h3>
+  <section>
+    <h3>Description of HTTP Status Codes and Errors</h3>
 
-    <p class="issue">The are multiple ways to serialize a
-      <a>Hydra API documentation</a> in JSON-LD. To make it usable also for
-      plain-old JSON clients, the serialization has to have a deterministic
-      shape. The definition of a profile will make it possible to signal
-      or request specific serialization conventions at the media type
-      level. The definition of the profile might be as simple as defining
-      a JSON-LD frame.</p>
-  </section> -->
+    <p>HTTP status codes have well defined semantics and can be used to
+      signal the outcome of an operation. Unfortunately, however, HTTP
+      status codes by themselves are often not specific enough, making it
+      difficult to understand the real cause of an error. For
+      instance, a <code>429 Too Many Requests</code> response is rarely
+      informative enough by itself. The address this issue, Hydra defines
+      a <i>StatusCodeDescription</i> class which allows additional
+      information to be associated with an HTTP status code.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Associating additional information to an HTTP status code">
+      <!--
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@type": "****StatusCodeDescription****",
+        ****"statusCode": 429****,
+        "title": "Too Many Requests",
+        "description": "A maximum of 500 requests per hour and user is allowed.",
+        ...
+      }
+      -->
+    </pre>
+
+    <p>An <i>ApiDocumentation</i> or an <i>Operation</i> may document the
+      status codes that might be returned by the server using the
+      <i>statusCodes</i> property as described in
+      <a class="sectionRef" href="#documenting-a-web-api"></a>. This allows
+      a developer to understand what to expect when invoking an operation.
+      It has, however, not to be considered as an extensive list of all
+      potentially returned status codes; it is merely a hint. Developers
+      should expect to encounter other HTTP status codes as well.</p>
+
+    <p>A server may also return a <i>StatusCodeDescription</i> directly in
+      a response. When doing so, it often makes sense to subclass the
+      <i>StatusCodeDescription</i> to make its semantics more explicit.
+      Hydra defines just one such subclass, namely the <i>Error</i> class.
+      This provides an extensible framework to communicate error details to
+      a client.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Using Hydra's Error class to describe errors">
+      <!--
+      HTTP/1.1 400 Bad Request
+      Content-Type: application/ld+json
+
+      {
+        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@type": "****Error****",
+        "title": "An error occurred",
+        "description": "Typically, a specialization of this class is used in practice.",
+        ...
+      }
+      -->
+    </pre>
+  </section>
 </section>
+
+<!-- <section>
+  <h2>Using Hydra Descriptions as JSON</h2>
+
+  <p class="issue">The are multiple ways to serialize a
+    <a>Hydra API documentation</a> in JSON-LD. To make it usable also for
+    plain-old JSON clients, the serialization has to have a deterministic
+    shape. The definition of a profile will make it possible to signal
+    or request specific serialization conventions at the media type
+    level. The definition of the profile might be as simple as defining
+    a JSON-LD frame.</p>
+</section> -->
 
 <section>
   <h2>Classes</h2>
