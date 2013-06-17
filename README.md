@@ -14,8 +14,8 @@ coupling, maintainability, evolvability, and scalability. Furthermore
 it enables the creation of generic API clients instead of requiring
 specialized clients for every single API.
 
-To participate in the development of this specification please file
-bugs and issues in the [issue tracker][3].
+To participate in the development of this specification please join
+the [Hydra W3C Community Group][3].
 
 More information about Hydra is available at:
 http://www.markus-lanthaler.com/hydra
@@ -23,4 +23,4 @@ http://www.markus-lanthaler.com/hydra
 
 [1]: http://www.w3.org/TR/json-ld/
 [2]: http://www.markus-lanthaler.com/hydra/spec/latest/core/
-[3]: https://github.com/lanthaler/Hydra/issues
+[3]: http://m.lanthi.com/HydraCG
