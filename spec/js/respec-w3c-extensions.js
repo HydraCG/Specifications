@@ -19,7 +19,7 @@ var localBibliography = {
 
 var preProc = {
     apply:  function(c) {
-        $.getJSON('../../../core.jsonld', function(vocab) {
+        $.getJSON('core.jsonld', function(vocab) {
             var options = { "base": "http://purl.org/hydra/" };
             var context = {
                 "hydra": "http://purl.org/hydra/core#",
