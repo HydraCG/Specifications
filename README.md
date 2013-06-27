@@ -17,7 +17,7 @@ specialized clients for every single API.
 To participate in the development of this specification please join
 the [Hydra W3C Community Group][3].
 
-More information about Hydra is available at:
+More information about Hydra is currently available at:
 http://www.markus-lanthaler.com/hydra
 
 

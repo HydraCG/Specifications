@@ -31,7 +31,7 @@
       // diffTool:             "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
 
       // if there a publicly available Editor's Draft, this is the link
-      edDraftURI:           "http://www.markus-lanthaler.com/hydra/spec/latest/core/index.html",
+      edDraftURI:           "http://www.hydra-cg.com/spec/latest/core/",
 
       // if this is a LCWD, uncomment and set the end of its review period
       // lcEnd: "2009-08-05",
@@ -81,19 +81,21 @@
   };
 //]]>
 </script>
-<script type="text/javascript">
-
+<script type="text/javascript" class="remove">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36111533-1']);
-  _gaq.push(['_setDomainName', 'markus-lanthaler.com']);
+  _gaq.push(['_setAccount', 'UA-42071981-1']);
+  _gaq.push(['_setSiteSpeedSampleRate', 100]);
   _gaq.push(['_trackPageview']);
+
+  _gaq.push(['ml._setAccount', 'UA-36111533-1']);
+  _gaq.push(['ml._setSiteSpeedSampleRate', 100]);
+  _gaq.push(['ml._trackPageview']);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
 </script>
 <style type="text/css">
   .hlist {
@@ -131,8 +133,12 @@
 </section>
 
 <section id="sotd">
-  <p>To participate in the development of this specification please file bugs
-    and issues in the <a href="https://github.com/lanthaler/Hydra/issues">issue tracker</a>.</p>
+  <p>To participate in the development of this specification, please join the
+    <a href="http://m.lanthi.com/HydraCG">Hydra W3C Community Group</a>. If you
+    want to suggest a feature or discuss one, you should send a mail to the
+    <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-hydra@w3.org mailing list</a>.
+    Specification bugs and issues should be reported in the
+    <a href="https://github.com/HydraCG/Specifications/issues">issue tracker</a>.</p>
 </section>
 
 <section class="informative">
