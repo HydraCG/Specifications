@@ -492,16 +492,16 @@
         "@context": "http://purl.org/hydra/core/context.jsonld",
         "@id": "http://api.example.com/doc/#Comment",
         ****"@type": "Class"****,
-        ****"title"****: ####"The name of the class",####
-        ****"description"****: ####"A short description of the class.",####
+        ****"title"****: ####"The name of the class"####,
+        ****"description"****: ####"A short description of the class."####,
         ****"supportedProperties"****: [
           ####... The properties known to be supported by the class ...####
           {
             ****"@type": "SupportedProperty"****,
-            ****"property"****: ####The property####,
-            ****"required"****: ####Is the property required in a request to be valid####
-            ****"readonly"****: ####Can the property's value be modified?####
-            ****"writeonly"****: ####Is the property's value included in responses?####
+            ****"property"****: "#property", ####// The property####
+            ****"required"****: true, ####// Is the property required in a request to be valid####
+            ****"readonly"****: false, ####// Can the property's value be modified?####
+            ****"writeonly"****: true ####// Is the property's value included in responses?####
           }
         ]
       }
