@@ -499,9 +499,9 @@
           {
             ****"@type": "SupportedProperty"****,
             ****"property"****: "#property", ####// The property####
-            ****"required"****: true, ####// Is the property required in a request to be valid####
-            ****"readonly"****: false, ####// Can the property's value be modified?####
-            ****"writeonly"****: true ####// Is the property's value included in responses?####
+            ****"required"****: true, ####// Is the property required in a request to be valid?####
+            ****"readonly"****: false, ####// Can the property's value be modified or is it read-only?####
+            ****"writeonly"****: true ####// Can the property's value be retrieved or is it write-only?####
           }
         ]
       }
@@ -555,7 +555,9 @@
             "method": "POST",
             "expects": "http://api.example.com/doc/#Comment",
             "returns": "http://api.example.com/doc/#Comment",
-            "statusCodes": ####... optional information about status codes that might be returned ...####
+            "statusCodes": [****
+              ####... optional information about status codes that might be returned ...####
+            ****]
           }****
         ]
       }
