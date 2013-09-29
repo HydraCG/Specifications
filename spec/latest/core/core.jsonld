@@ -84,7 +84,7 @@
     {
       "@id": "hydra:Link",
       "@type": "hydra:Class",
-      "subClassOf": [ "hydra:Resource", "rdfs:Property" ],
+      "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Link",
       "comment": "The class of properties representing links.",
       "vs:status": "stable"
