@@ -51,7 +51,7 @@
     "mappings": "hydra:mappings",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
-    "defines": { "@reverse": "rdfs:definedBy" },
+    "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
     "domain": { "@id": "rdfs:domain", "@type": "@id" },

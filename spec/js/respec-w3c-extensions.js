@@ -28,7 +28,7 @@ var preProc = {
                 "xsd": "http://www.w3.org/2001/XMLSchema#",
                 "owl": "http://www.w3.org/2002/07/owl#",
                 "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
-                "defines": { "@reverse": "rdfs:definedBy" },
+                "defines": { "@reverse": "rdfs:isDefinedBy" },
                 "comment": "rdfs:comment",
                 "label": "rdfs:label",
                 "domain": { "@id": "rdfs:domain" },
