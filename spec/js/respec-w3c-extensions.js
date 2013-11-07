@@ -1,7 +1,7 @@
 // extend the bibliography entries
 var localBibliography = {
-    "JSON-LD": "Manu Sporny, Gregg Kellogg, Markus Lanthaler, Editors. <cite><a href=\"http://json-ld.org/spec/latest/json-ld/\">JSON-LD 1.0</a>.</cite> W3C Editor's Draft (work in progress). URL: <a href=\"http://json-ld.org/spec/latest/json-ld/\">http://json-ld.org/spec/latest/json-ld/</a>",
-    "JSON-LD-API": "Markus Lanthaler, Gregg Kellogg, Manu Sporny, Editors. <cite><a href=\"http://json-ld.org/spec/latest/json-ld-api/\">JSON-LD 1.0 Processing Algorithms and API</a>.</cite> W3C Editor's Draft (work in progress). URL: <a href=\"http://json-ld.org/spec/latest/json-ld-api/\">http://json-ld.org/spec/latest/json-ld-api/</a>",
+    "JSON-LD": "Manu Sporny, Gregg Kellogg, Markus Lanthaler, Editors. <cite><a href=\"http://www.w3.org/TR/2013/PR-json-ld-20131105/\">JSON-LD 1.0</a>.</cite> 5 November 2013. W3C Proposed Recommendation. URL: <a href=\"http://www.w3.org/TR/2013/PR-json-ld-20131105/\">http://www.w3.org/TR/2013/PR-json-ld-20131105/</a>. The latest edition is available at <a href=\"http://www.w3.org/TR/json-ld/\">http://www.w3.org/TR/json-ld/</a>",
+    "JSON-LD-API": "Markus Lanthaler, Gregg Kellogg, Manu Sporny, Editors. <cite><a href=\"http://www.w3.org/TR/2013/PR-json-ld-api-20131105/\">JSON-LD 1.0 Processing Algorithms and API</a>.</cite> 5 November 2013. W3C Proposed Recommendation. URL: <a href=\"http://www.w3.org/TR/2013/PR-json-ld-api-20131105/\">http://www.w3.org/TR/2013/PR-json-ld-api-20131105/</a>. The latest edition is available at <a href=\"http://www.w3.org/TR/json-ld-api/\">http://www.w3.org/TR/json-ld-api/</a>",
     "RFC6570": {
         "authors": [
             "Joe Gregorio",
