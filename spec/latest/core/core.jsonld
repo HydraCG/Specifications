@@ -71,7 +71,7 @@
       "subClassOf": "rdfs:Resource",
       "label": "Hydra Resource",
       "comment": "The class of dereferenceable resources.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Class",
@@ -79,7 +79,7 @@
       "subClassOf": [ "hydra:Resource", "rdfs:Class" ],
       "label": "Hydra Class",
       "comment": "The class of Hydra classes. Hydra classes and their instances are dereferenceable resources.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Link",
@@ -87,7 +87,7 @@
       "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Link",
       "comment": "The class of properties representing links.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:apiDocumentation",
@@ -95,14 +95,14 @@
       "label": "apiDocumentation",
       "comment": "A link to the API documentation",
       "range": "hydra:ApiDocumentation",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:ApiDocumentation",
       "@type": "hydra:Class",
       "label": "ApiDocumentation",
       "comment": "The Hydra API documentation class",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:entrypoint",
@@ -111,7 +111,7 @@
       "comment": "A link to main entry point of the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Resource",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:supportedClasses",
@@ -120,7 +120,7 @@
       "comment": "The classes known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Class",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:statusCodes",
@@ -128,7 +128,7 @@
       "label": "status codes",
       "comment": "Additional information about status codes that might be returned by the Web API",
       "range": "hydra:StatusCodeDescription",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:supportedProperties",
@@ -137,14 +137,14 @@
       "comment": "The properties known to be supported by a Hydra class",
       "domain": "hydra:Class",
       "range": "hydra:SupportedProperty",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:SupportedProperty",
       "@type": "hydra:Class",
       "label": "Supported Property",
       "comment": "A property known to be supported by a Hydra class.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:property",
@@ -152,7 +152,7 @@
       "label": "property",
       "comment": "A property",
       "range": "rdf:Property",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:required",
@@ -160,7 +160,7 @@
       "label": "required",
       "comment": "True if the property is required, false otherwise.",
       "range": "xsd:boolean",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:readonly",
@@ -169,7 +169,7 @@
       "comment": "True if the property is read-only, false otherwise.",
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:writeonly",
@@ -178,7 +178,7 @@
       "comment": "True if the property is write-only, false otherwise.",
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:supportedOperations",
@@ -186,7 +186,7 @@
       "label": "supported operations",
       "comment": "The operations supported by instances of a specific Hydra class or the target of a Hydra link",
       "range": "hydra:Operation",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:operations",
@@ -195,7 +195,7 @@
       "comment": "The operations supported a Hydra resource",
       "domain": "hydra:Resource",
       "range": "hydra:operation",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Operation",
@@ -203,7 +203,7 @@
       "subClassOf": "rdfs:Resource",
       "label": "Operation",
       "comment": "An operation.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:CreateResourceOperation",
@@ -211,7 +211,7 @@
       "subClassOf": "hydra:Operation",
       "label": "CreateResourceOperation",
       "comment": "A CreateResourceOperation is a HTTP operation which expects an input of the type specified by hydra:expects and creates a resource of the type specified by hydra:returns.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:ReplaceResourceOperation",
@@ -219,7 +219,7 @@
       "subClassOf": "hydra:Operation",
       "label": "ReplaceResourceOperation",
       "comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It data of the type specified in hydra:expects and results in a resource of the type specified by hydra:returns.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:DeleteResourceOperation",
@@ -227,7 +227,7 @@
       "subClassOf": "hydra:Operation",
       "label": "DeleteResourceOperation",
       "comment": "A DeleteResourceOperation is a HTTP operation that deletes a resource.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:method",
@@ -236,7 +236,7 @@
       "comment": "The HTTP method.",
       "domain": "hydra:Operation",
       "range": "xsd:string",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:expects",
@@ -245,7 +245,7 @@
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
       "range": "hydra:Class",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:returns",
@@ -254,7 +254,7 @@
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
       "range": "hydra:Class",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:StatusCodeDescription",
@@ -262,7 +262,7 @@
       "subClassOf": "hydra:Resource",
       "label": "Status code description",
       "comment": "Additional information about a status code that might be returned.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:statusCode",
@@ -271,7 +271,7 @@
       "comment": "The HTTP status code",
       "domain": "hydra:StatusCodeDescription",
       "range": "xsd:integer",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:title",
@@ -280,7 +280,7 @@
       "label": "title",
       "comment": "A title, often used along with a description.",
       "range": "xsd:string",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:description",
@@ -289,14 +289,14 @@
       "label": "description",
       "comment": "A description.",
       "range": "xsd:string",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Error",
       "@type": "rdfs:Class",
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
-      "vs:status": "stable"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Collection",
@@ -304,7 +304,7 @@
       "subClassOf": "hydra:Resource",
       "label": "Collection",
       "comment": "A collection holding references to a number of related resources.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:members",
@@ -313,7 +313,7 @@
       "comment": "The members of a collection",
       "domain": "hydra:Collection",
       "range": "hydra:Resource",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:PagedCollection",
@@ -321,7 +321,7 @@
       "subClassOf": "hydra:Collection",
       "label": "PagedCollection",
       "comment": "A PagedCollection is a subclass of Collection with the only difference that its members are sorted and only a subset of all members are returned in a single PagedCollection. To get the other members, the nextPage/previousPage properties have to be used.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:totalItems",
@@ -330,7 +330,7 @@
       "comment": "The total number of items referenced by a collection or a set of interlinked PagedCollections.",
       "domain": "hydra:Collection",
       "range": "xsd:integer",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:itemsPerPage",
@@ -339,7 +339,7 @@
       "comment": "The maximum number of items referenced by each single PagedCollection in a set of interlinked PagedCollections.",
       "domain": "hydra:PagedCollection",
       "range": "xsd:integer",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:firstPage",
@@ -348,7 +348,7 @@
       "comment": "The first page of an interlinked set of PagedCollections",
       "domain": "hydra:PagedCollection",
       "range": "hydra:PagedCollection",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:lastPage",
@@ -357,7 +357,7 @@
       "comment": "The last page of an interlinked set of PagedCollections",
       "domain": "hydra:PagedCollection",
       "range": "hydra:PagedCollection",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:nextPage",
@@ -366,7 +366,7 @@
       "comment": "The page following the current instance in an interlinked set of PagedCollections",
       "domain": "hydra:PagedCollection",
       "range": "hydra:PagedCollection",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:previousPage",
@@ -375,7 +375,7 @@
       "comment": "The page preceding the current instance in an interlinked set of PagedCollections",
       "domain": "hydra:PagedCollection",
       "range": "hydra:PagedCollection",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:search",
@@ -383,7 +383,7 @@
       "label": "search",
       "comment": "A IRI template that can be used to query a collection",
       "range": "hydra:IriTemplate",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:freetextQuery",
@@ -391,7 +391,7 @@
       "label": "freetext query",
       "comment": "A property representing a freetext query.",
       "range": "xsd:string",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:TemplatedLink",
@@ -399,14 +399,14 @@
       "subClassOf": "rdf:Property",
       "label": "Templated Link",
       "comment": "A templated link.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:IriTemplate",
       "@type": "hydra:Class",
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:template",
@@ -416,7 +416,7 @@
       "seeAlso": "http://tools.ietf.org/html/rfc6570",
       "domain": "hydra:IriTemplate",
       "range": "xsd:string",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:mappings",
@@ -425,14 +425,14 @@
       "comment": "The variable-to-property mappings of the IRI template.",
       "domain": "hydra:IriTemplate",
       "range": "hydra:IriTemplateMapping",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:IriTemplateMapping",
       "@type": "hydra:Class",
       "label": "IriTemplateMapping",
       "comment": "A mapping from an IRI template variable to a property.",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:variable",
@@ -441,7 +441,7 @@
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
-      "vs:status": "testing"
+      "vs:term_status": "testing"
     }
   ]
 }

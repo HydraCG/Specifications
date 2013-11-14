@@ -36,7 +36,7 @@ var preProc = {
                 "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@id", "@container": "@set" },
                 "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id", "@container": "@set" },
                 "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
-                "status": "vs:status"
+                "status": "vs:term_status"
             };
 
             jsonld.compact(vocab, context, function(err, doc) {
