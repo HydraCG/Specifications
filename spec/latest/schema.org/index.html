@@ -1,0 +1,577 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Integration of Hydra into Schema.org</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="../../js/respec-w3c-common.js" class="remove"></script>
+<script type="text/javascript" src="../../js/jsonld.js" class="remove"></script>
+<script type="text/javascript" src="../../js/respec-w3c-extensions.js" class="remove"></script>
+<script type="text/javascript" class="remove">
+//<![CDATA[
+  var respecConfig = {
+      // extend the bibliography entries
+      "localBiblio": localBibliography,
+
+      doRDFa: "1.1",
+      // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+      specStatus:           "unofficial",
+      // if you wish the publication date to be other than today, set this
+      //publishDate:          "2012-08-30",
+      copyrightStart:       "2012",
+
+      // the specification's short name, as in http://www.w3.org/TR/short-name/
+      shortName:            "hydra-schema-org",
+      // subtitle:             "A Vocabulary for Hypermedia-Driven Web APIs",
+
+      // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+      // and its maturity status
+      // previousPublishDate:  "2012-08-30",
+      // previousMaturity:     "FPWD",
+      // previousDiffURI:      "http://www.w3.org/TR/2012/WD-json-ld-syntax-20120830/",
+      // diffTool:             "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
+
+      // if there a publicly available Editor's Draft, this is the link
+      edDraftURI:           "http://www.hydra-cg.com/spec/latest/schema.org/",
+
+      // if this is a LCWD, uncomment and set the end of its review period
+      // lcEnd: "2009-08-05",
+
+      issueBase: "https://github.com/lanthaler/hydra/issues/",
+
+      // if you want to have extra CSS, append them to this list
+      // it is recommended that the respec.css stylesheet be kept
+      // extraCSS:             [],
+
+      // editors, add as many as you like
+      // only "name" is required
+      editors:  [
+          { name: "Markus Lanthaler", url: "http://www.markus-lanthaler.com/",
+            company: "Graz University of Technology", companyURL: "http://www.tugraz.at/" }
+      ],
+
+      // authors, add as many as you like.
+      // This is optional, uncomment if you have authors as well as editors.
+      // only "name" is required. Same format as editors.
+      authors:  [
+          { name: "Markus Lanthaler", url: "http://www.markus-lanthaler.com/",
+            company: "Graz University of Technology", companyURL: "http://www.tugraz.at/" }
+      ],
+
+      // name of the WG
+      // wg:           "RDF Working Group",
+
+      // URI of the public WG page
+      // wgURI:        "http://www.w3.org/2011/rdf-wg/",
+
+      // name (with the @w3c.org) of the public mailing to which comments are due
+      // wgPublicList: "public-rdf-comments",
+
+      // URI of the patent status for this WG, for Rec-track documents
+      // !!!! IMPORTANT !!!!
+      // This is important for Rec-track documents, do not copy a patent URI from a random
+      // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+      // Team Contact.
+      wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+      maxTocLevel: 4,
+      preProcess: [ preProc ],
+      alternateFormats: [
+        //  { uri: "diff-20120712.html", label: "diff to previous version"}
+          { uri: "core.jsonld", label: "JSON-LD"}
+      ]
+  };
+//]]>
+</script>
+<script type="text/javascript" class="remove">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42071981-1']);
+  _gaq.push(['_setSiteSpeedSampleRate', 100]);
+  _gaq.push(['_trackPageview']);
+
+  _gaq.push(['ml._setAccount', 'UA-36111533-1']);
+  _gaq.push(['ml._setSiteSpeedSampleRate', 100]);
+  _gaq.push(['ml._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<style type="text/css">
+  .hlist {
+    border: 1px solid navy;
+    padding:5px;
+    background-color: #F4FFFF;
+  }
+  .hlist li {
+    display: inline;
+    display: inline-table;
+    list-style-type: none;
+    padding-right: 20px;
+  }
+  .highlight {
+    font-weight: bold;
+    color: #0a3;
+  }
+  .comment {
+    color: #999;
+  }
+  .illustration {
+    text-align: center;
+  }
+  #vocabulary-jsonld {
+    white-space: pre-wrap;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  tbody tr:hover {
+    background: #fcfaee;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 0.25em 1em;
+    vertical-align: top;
+    width: 10em;
+  }
+  table th:nth-child(2), td:nth-child(2) {
+    width: 9em;
+  }
+  table th:nth-child(3), td:nth-child(3) {
+    width: 20em;
+  }
+  table th:nth-child(4), td:nth-child(4) {
+    width: 13em;
+  }
+</style>
+</head>
+
+<body>
+<section id="abstract">
+  <p>Hydra is a lightweight vocabulary to create hypermedia-driven Web APIs.
+    This document describes how a subset of Hydra could be integrated into
+    Schema.org.</p>
+</section>
+
+<section id="sotd">
+  <p>To participate in the development of this specification, please join the
+    <a href="http://m.lanthi.com/HydraCG">Hydra W3C Community Group</a>. If you
+    want to suggest a feature or discuss one, you should send a mail to the
+    <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-hydra@w3.org mailing list</a>.
+    Specification bugs and issues should be reported in the
+    <a href="https://github.com/HydraCG/Specifications/issues">issue tracker</a>.</p>
+</section>
+
+<section class="informative">
+  <h2>Introduction</h2>
+
+  <p>This document proposes the introduction of a subset of the Hydra Core
+    Vocabulary [[!HYDRA-CORE]] into Schema.org to make Schema.org's Actions
+    executable. Hydra describes all the details necessary for a client to
+    invoke Actions or follow hyperlinks in order to achieve certain
+    application-specific goals.</p>
+
+  <p>This document is based on "Actions" as defined in
+    <a href="http://www.w3.org/wiki/File:Actionsinschema.org.pdf">Actions in schema.org (draft 4)</a>.
+    Instead of describing the subset of Hydra here, we concentrate on the
+    differences to the Actions in schema.org draft. For a more thorough
+    explanation of Hydra, please refer to [[HYDRA-CORE]].</p>
+</section>
+
+<section>
+  <h2>Examples</h2>
+
+  <p>This section will illustrate how the Hydra can be used to realize a few of
+    <a href="https://developers.google.com/gmail/actions/overview">GMail's Action</a>
+    examples. Some examples will use concepts which are not defined in Schema.org
+    yet. We will comment the examples accordingly. Furthermore, we will highlight
+    the concepts introduced by Hydra.</p>
+
+  <section>
+    <h3>One Click Actions</h3>
+
+    <p>In GMail, <a href="https://developers.google.com/gmail/actions/reference/one-click-action">one click actions</a>
+      allow users to perform one-click operations directly without having to
+      leave GMail. At the moment GMail supports two types of one click actions:
+      ConfirmAction and SaveAction. Since the mechanism is the same we won't
+      describe the later.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Confirm Action">
+      <!--
+      {
+        "@context": "http://schema.org",
+        "@id": "https://myexpenses.com/approve?expenseId=abc123",
+        "description": "Approval request for John's $10.13 expense for office supplies",
+        "****operations****": {
+          "@type": [ "ConfirmAction", "****Operation****" ], ####<-- Operation could also be omitted####
+          "name": "Approve Expense",
+          "****method****": "POST"
+        }
+      }
+      -->
+    </pre>
+
+    <p>Instead of introducing the notion of an ActionHandler, Hydra assigns the
+      approval request a URL and describes the operations supported by that
+      resource. Consequently the URL can be used to approve the request sending
+      an empty POST. Typically, however, it would make more sense to include data
+      in the POST to make the intent explicit and at the same time to allow
+      to reject the request.</p>
+  </section>
+
+  <section>
+    <h3>RSVP Action</h3>
+
+    <p>Accept or decline an event invitation.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="RSVP Action">
+      <!--
+      {
+        "@context": "http://schema.org/",
+        "@id": "http://mysite.com/rsvp?eventId=123",
+        "@type": "Event",
+        "name": "Taco Night",
+        "startDate": "2015-04-18T15:30:00Z",
+        "endDate": "2015-04-18T16:30:00Z",
+        "location": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "name": "Google",
+            "streetAddress": "24 Willie Mays Plaza",
+            "addressLocality": "San Francisco",
+            "addressRegion": "CA",
+            "postalCode": "94107",
+            "addressCountry": "USA"
+          }
+        },
+        "****operations****": {
+          "@type": [ "RsvpAction", "****Operation****" ], ####<-- Operation could also be omitted####
+          "****method****": "POST",
+          "****expects****": "RsvpResponse" ####<-- not defined yet####
+        }
+      }
+      -->
+    </pre>
+
+    <p>This tells a client how to send a <i>RsvpResponse</i> in order to
+      accept or decline the <i>EventInvitation</i>. The definition of
+      <i>RsvpResponse</i> defines the required properties:</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Definition of RsvpResponse">
+      <!--
+      {
+        "@context": "http://schema.org/",
+        "@id": "http://schema.org/RsvpResponse", ####<-- please note that this could be on an external site as well####
+        "@type": "Class",
+        "****supportedProperties****": [
+          {
+            "@type": "****SupportedProperty****",
+            "****property****": "attendance", ####<-- not defined yet, possible values according GMail: yes/no/maybe####
+            "****required****": true
+          }
+        ]
+      }
+      -->
+    </pre>
+  </section>
+
+  <section>
+    <h3>Review Action</h3>
+
+    <p>While this example could be realized the same way as above, we will
+      show an alternative by creating an anonymous inline class.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="Definition of RsvpResponse">
+      <!--
+      {
+        "@context": "http://schema.org/",
+        "@id": "http://reviews.com/review?id=123",
+        "****operations****": {
+          "@type": ["ReviewAction", "****Operation****" ], ####<-- Operation could also be omitted####
+          "description": "We hope you enjoyed your meal at Joe's Diner. Please tell us about it.",
+          "review": {
+            "@type": "Review",
+            "itemReviewed": {
+              "@type": "FoodEstablishment",
+              "name": "Joe's Diner"
+            },
+            "reviewRating": {
+              "@type": "Rating",
+              "bestRating": "5",
+              "worstRating": "1"
+            }
+          },
+          "****method****": "POST",
+          "****expects****": {
+            "@type": "Class",
+            "subclassOf": "Rating", ####<-- a specialization of Rating to make ratingValue required####
+            "****supportedProperties****": [
+              {
+                "@type": "****SupportedProperty****",
+                "****property****": "ratingValue",
+                "****required****": true
+              },
+              {
+                "@type": "****SupportedProperty****",
+                "****property****": "reviewBody",
+                "****required****": false
+              }
+          }
+        }
+      }
+      -->
+    </pre>
+  </section>
+</section>
+
+<section>
+  <h2>Vocabulary Specification</h2>
+
+  <p>The following sections define the concepts to be introduced in
+    Schema.org.</p>
+
+  <section>
+    <h3>Operation</h3>
+
+    <p>Subclass of <i>Intangible</i> &gt; <i>Thing</i></p>
+
+    <p>Equivalent to <i>hydra:Operation</i></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Equivalent to</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>method</td>
+          <td>Text</td>
+          <td>The HTTP method.</td>
+          <td>hydra:method</td>
+        </tr>
+        <tr>
+          <td>expects</td>
+          <td>Class</td>
+          <td>The information expected by the Web API.</td>
+          <td>hydra:expects</td>
+        </tr>
+        <tr>
+          <td>returns</td>
+          <td>Class</td>
+          <td>The information returned by the Web API on success.</td>
+          <td>hydra:returns</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h3>Class</h3>
+
+    <p>Subclass of <i>Thing</i></p>
+
+    <p>Equivalent to <i>hydra:Class</i></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Equivalent to</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>supportedProperties</td>
+          <td>SupportedProperty</td>
+          <td>The properties known to be supported by a class.</td>
+          <td>hydra:supportedProperties</td>
+        </tr>
+        <tr>
+          <td>supportedOperations</td>
+          <td>Class</td>
+          <td>The operations supported by instances of this class.</td>
+          <td>hydra:supportedOperations</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <section>
+    <h3>SupportedProperty</h3>
+
+    <p>Subclass of <i>Intangible</i> &gt; <i>Thing</i></p>
+
+    <p>Equivalent to <i>hydra:SupportedProperty</i></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Equivalent to</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>property</td>
+          <td>Property</td>
+          <td>The property.</td>
+          <td>hydra:property</td>
+        </tr>
+        <tr>
+          <td>required</td>
+          <td>Boolean</td>
+          <td>True if the property is required, false otherwise.</td>
+          <td>hydra:required</td>
+        </tr>
+        <tr>
+          <td>readonly</td>
+          <td>Boolean</td>
+          <td>True if the property is read-only, false otherwise.</td>
+          <td>hydra:readonly</td>
+        </tr>
+        <tr>
+          <td>writeonly</td>
+          <td>Boolean</td>
+          <td>True if the property is write-only, false otherwise.</td>
+          <td>hydra:writeonly</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <section>
+    <h4>Additional Concepts for Hypermedia-Driven Web APIs</h4>
+
+    <p>In order to properly document Web APIs and to be able to distinguish
+      URIs used purely as identifiers from URLs intended to be dereferenced,
+      the introduction of the following concepts may be sensible as well.</p>
+
+    <section>
+      <h3>ApiDocumentation</h3>
+
+      <p>Subclass of <i>WebResource</i> &gt; <i>CreativeWork</i> &gt; <i>Thing</i></p>
+
+      <p>Equivalent to <i>hydra:ApiDocumentation</i></p>
+
+      <p class="issue">hydra:apiDocumentation</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Equivalent to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>entrypoint</td>
+            <td>WebResource</td>
+            <td>A link to main entry point of the Web API.</td>
+            <td>hydra:entrypoint</td>
+          </tr>
+          <tr>
+            <td>supportedClasses</td>
+            <td>Class</td>
+            <td>The classes known to be supported by the Web API.</td>
+            <td>hydra:supportedClasses</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h3>WebResource</h3>
+
+      <p>Subclass of <i>CreativeWork</i> &gt; <i>Thing</i></p>
+
+      <p>Equivalent to <i>hydra:Resource</i></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Equivalent to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>operations</td>
+            <td>Operation</td>
+            <td>The operations supported a Hydra resource.</td>
+            <td>hydra:operations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="note"><i>WebPage</i> should become a subtype of <i>WebResource</i>.</p>
+    </section>
+
+    <section>
+      <h3>Link</h3>
+
+      <p>Subclass of <i>Property</i> &gt; <i>Thing</i></p>
+
+      <p>Equivalent to <i>hydra:Link</i></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Equivalent to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>supportedOperations</td>
+            <td>Class</td>
+            <td>The operations supported by the targets of Hydra links.</td>
+            <td>hydra:supportedOperations</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+</section>
+
+<!-- <section>
+  <h2>Classes</h2>
+
+  <div id="vocabulary-classes"></div>
+</section>
+
+<section>
+  <h2>Properties</h2>
+
+  <div id="vocabulary-properties"></div>
+</section>
+
+<section class="appendix informative">
+  <h2>The Hydra Core Vocabulary in JSON-LD</h2>
+
+  <pre id="vocabulary-jsonld">
+  </pre>
+</section> -->
+
+</body>
+</html>
