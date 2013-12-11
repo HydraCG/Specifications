@@ -302,7 +302,7 @@
          title="Definining properties representing hyperlinks using Hydra's Link class">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/vocab#comments",
         ****"@type": "Link"****
       }
@@ -384,7 +384,7 @@
          title="A representation of an issue augmented with a delete operation">
       <!--
       {
-        ****"@context": "http://purl.org/hydra/core/context.jsonld"****,
+        ****"@context": "http://www.w3.org/ns/hydra/context.jsonld"****,
         "@id": "/an-issue",
         "title": "An exemplary issue representation",
         "description": "This issue can be deleted with an HTTP DELETE request",
@@ -434,7 +434,7 @@
          title="The overall structure of a Hydra API documentation">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/",
         ****"@type": "ApiDocumentation"****,
         ****"title"****: ####"The name of the API"####,
@@ -490,7 +490,7 @@
          title="Defining a class and documenting its supported properties">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/#Comment",
         ****"@type": "Class"****,
         ****"title"****: ####"The name of the class"####,
@@ -518,7 +518,7 @@
          title="Defining a class and documenting its supported operations">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/#Comment",
         "@type": "Class",
         "title": ####"The name of the class"####,
@@ -544,7 +544,7 @@
          title="Documenting the supported operations of link properties">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/#comments",
         ****"@type": "Link"****,
         "title": "Comments",
@@ -577,7 +577,7 @@
       to be discovered automatically if the API publisher marks his
       responses with a special HTTP Link Header as defined in [[RFC5988]].
       A Hydra client would look a Link Header with a relation type
-      <code>http://purl.org/hydra/core#apiDocumentation</code> (this is
+      <code>http://www.w3.org/ns/hydra/core#apiDocumentation</code> (this is
       the IRI identifying the <i>hydra:apiDocumentation</i> property).</p>
 
     <p>In the following example, a Hydra client simply accesses the
@@ -598,7 +598,7 @@
       HTTP/1.1 200 OK
       ...
       Content-Type: application/ld+json
-      ****Link: <http://api.example.com/doc/>; rel="http://purl.org/hydra/core#apiDocumentation"****
+      ****Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"****
       -->
     </pre>
 
@@ -622,7 +622,7 @@
       Content-Type: application/ld+json
 
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/",
         "title": "The example.com API",
         ****"entrypoint": "http://api.example.com/"****,
@@ -661,7 +661,7 @@
          title="Referencing related resources using a Hydra Collection">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
         ****"members"****: [
@@ -697,7 +697,7 @@
          title="A Hydra PagedCollection splites a collection into multiple pages">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments?page=3",
         ****"@type": "PagedCollection"****,
         ****"totalItems": "4980"****,
@@ -738,7 +738,7 @@
          title="Description of an IRI Template">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         ****"@type": "IriTemplate"****,
         ****"template": "http://api.example.com/issues{?q}"****,
         ****"mappings"****: [
@@ -770,7 +770,7 @@
          title="The definition of Hydra's search property (extract)">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "****hydra:search****",
         ****"@type": "hydra:TemplatedLink"****
       }
@@ -794,7 +794,7 @@
          title="Associating additional information to an HTTP status code">
       <!--
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****StatusCodeDescription****",
         ****"statusCode": 429****,
         "title": "Too Many Requests",
@@ -827,7 +827,7 @@
       Content-Type: application/ld+json
 
       {
-        "@context": "http://purl.org/hydra/core/context.jsonld",
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Error****",
         "title": "An error occurred",
         "description": "Typically, a specialization of this class is used in practice.",

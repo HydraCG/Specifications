@@ -1,6 +1,6 @@
 {
   "@context": {
-    "hydra": "http://purl.org/hydra/core#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -60,7 +60,7 @@
     "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id" },
     "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" }
   },
-  "@id": "http://purl.org/hydra/core",
+  "@id": "http://www.w3.org/ns/hydra/core",
   "@type": "owl:Ontology",
   "label": "The Hydra Core Vocabulary",
   "comment": "A lightweight vocabulary for hypermedia-driven Web APIs",
