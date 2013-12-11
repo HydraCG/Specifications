@@ -25,9 +25,9 @@ var preProc = {
         }
 
         $.getJSON('core.jsonld', function(vocab) {
-            var options = { "base": "http://purl.org/hydra/" };
+            var options = { "base": "http://www.w3.org/ns/hydra/" };
             var context = {
-                "hydra": "http://purl.org/hydra/core#",
+                "hydra": "http://www.w3.org/ns/hydra/core#",
                 "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
                 "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
                 "xsd": "http://www.w3.org/2001/XMLSchema#",
