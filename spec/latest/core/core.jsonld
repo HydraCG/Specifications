@@ -293,7 +293,8 @@
     },
     {
       "@id": "hydra:Error",
-      "@type": "rdfs:Class",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:StatusCodeDescription",
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
       "vs:term_status": "stable"
