@@ -100,6 +100,7 @@
     {
       "@id": "hydra:ApiDocumentation",
       "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
       "label": "ApiDocumentation",
       "comment": "The Hydra API documentation class",
       "vs:term_status": "stable"
@@ -142,6 +143,7 @@
     {
       "@id": "hydra:SupportedProperty",
       "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
       "label": "Supported Property",
       "comment": "A property known to be supported by a Hydra class.",
       "vs:term_status": "stable"
@@ -200,6 +202,7 @@
     {
       "@id": "hydra:Operation",
       "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
       "label": "Operation",
       "comment": "An operation.",
       "vs:term_status": "stable"
@@ -396,7 +399,7 @@
     {
       "@id": "hydra:TemplatedLink",
       "@type": "hydra:Class",
-      "subClassOf": "rdf:Property",
+      "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Templated Link",
       "comment": "A templated link.",
       "vs:term_status": "testing"
@@ -404,6 +407,7 @@
     {
       "@id": "hydra:IriTemplate",
       "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
       "vs:term_status": "testing"
@@ -430,6 +434,7 @@
     {
       "@id": "hydra:IriTemplateMapping",
       "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
       "label": "IriTemplateMapping",
       "comment": "A mapping from an IRI template variable to a property.",
       "vs:term_status": "testing"
