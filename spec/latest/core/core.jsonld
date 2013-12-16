@@ -200,7 +200,6 @@
     {
       "@id": "hydra:Operation",
       "@type": "hydra:Class",
-      "subClassOf": "rdfs:Resource",
       "label": "Operation",
       "comment": "An operation.",
       "vs:term_status": "stable"
