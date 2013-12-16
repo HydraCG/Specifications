@@ -196,7 +196,7 @@
       "label": "operations",
       "comment": "The operations supported a Hydra resource",
       "domain": "hydra:Resource",
-      "range": "hydra:operation",
+      "range": "hydra:Operation",
       "vs:term_status": "stable"
     },
     {
