@@ -11,15 +11,15 @@
     "title": "hydra:title",
     "description": "hydra:description",
     "entrypoint": { "@id": "hydra:entrypoint", "@type": "@id" },
-    "supportedClasses": { "@id": "hydra:supportedClasses", "@type": "@id" },
+    "supportedClass": { "@id": "hydra:supportedClass", "@type": "@id" },
     "Class": "hydra:Class",
-    "supportedProperties": { "@id": "hydra:supportedProperties", "@type": "@id" },
+    "supportedProperty": { "@id": "hydra:supportedProperty", "@type": "@id" },
     "SupportedProperty": "hydra:SupportedProperty",
     "property": { "@id": "hydra:property", "@type": "@id" },
     "required": "hydra:required",
     "readonly": "hydra:readonly",
     "writeonly": "hydra:writeonly",
-    "supportedOperations": { "@id": "hydra:supportedOperations", "@type": "@id" },
+    "supportedOperation": { "@id": "hydra:supportedOperation", "@type": "@id" },
     "Operation": "hydra:Operation",
     "CreateResourceOperation": "hydra:CreateResourceOperation",
     "ReplaceResourceOperation": "hydra:ReplaceResourceOperation",
@@ -32,9 +32,9 @@
     "statusCode": "hydra:statusCode",
     "Error": "hydra:Error",
     "Resource": "hydra:Resource",
-    "operations": "hydra:operations",
+    "operation": "hydra:operation",
     "Collection": "hydra:Collection",
-    "members": { "@id": "hydra:members", "@type": "@id" },
+    "member": { "@id": "hydra:member", "@type": "@id" },
     "search": "hydra:search",
     "freetextQuery": "hydra:freetextQuery",
     "PagedCollection": "hydra:PagedCollection",
@@ -48,7 +48,7 @@
     "TemplatedLink": "hydra:TemplatedLink",
     "IriTemplate": "hydra:IriTemplate",
     "template": "hydra:template",
-    "mappings": "hydra:mappings",
+    "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
     "defines": { "@reverse": "rdfs:isDefinedBy" },
@@ -115,10 +115,10 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedClasses",
+      "@id": "hydra:supportedClass",
       "@type": "hydra:Link",
       "label": "supported classes",
-      "comment": "The classes known to be supported by the Web API",
+      "comment": "A class known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Class",
       "vs:term_status": "stable"
@@ -132,7 +132,7 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedProperties",
+      "@id": "hydra:supportedProperty",
       "@type": "hydra:Link",
       "label": "supported properties",
       "comment": "The properties known to be supported by a Hydra class",
@@ -183,18 +183,18 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedOperations",
+      "@id": "hydra:supportedOperation",
       "@type": "hydra:Link",
-      "label": "supported operations",
-      "comment": "The operations supported by instances of a specific Hydra class or the target of a Hydra link",
+      "label": "supported operation",
+      "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:operations",
+      "@id": "hydra:operation",
       "@type": "hydra:Link",
-      "label": "operations",
-      "comment": "The operations supported a Hydra resource",
+      "label": "operation",
+      "comment": "An operation supported by the Hydra resource",
       "domain": "hydra:Resource",
       "range": "hydra:Operation",
       "vs:term_status": "stable"
@@ -310,10 +310,10 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:members",
+      "@id": "hydra:member",
       "@type": "hydra:Link",
-      "label": "members",
-      "comment": "The members of a collection",
+      "label": "member",
+      "comment": "A member of the collection",
       "domain": "hydra:Collection",
       "range": "hydra:Resource",
       "vs:term_status": "testing"
@@ -423,10 +423,10 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:mappings",
+      "@id": "hydra:mapping",
       "@type": "rdf:Property",
-      "label": "mappings",
-      "comment": "The variable-to-property mappings of the IRI template.",
+      "label": "mapping",
+      "comment": "A variable-to-property mapping of the IRI template.",
       "domain": "hydra:IriTemplate",
       "range": "hydra:IriTemplateMapping",
       "vs:term_status": "testing"
