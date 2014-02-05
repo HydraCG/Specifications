@@ -388,7 +388,7 @@
         "@id": "/an-issue",
         "title": "An exemplary issue representation",
         "description": "This issue can be deleted with an HTTP DELETE request",
-        ****"operations"****: [
+        ****"operation"****: [
           ****{
             "@type": "DeleteResourceOperation",
             "method": "DELETE"
@@ -399,7 +399,7 @@
     </pre>
 
     <p>The example above references Hydra's context to map properties such
-      as <code>operations</code> and <code>method</code> and values like
+      as <code>operation</code> and <code>method</code> and values like
       <code>DeleteResourceOperation</code> to URLs that unambiguously
       identify these concepts. It would be similarly valid JSON-LD if
       these mappings would be directly embedded into the representation
@@ -510,7 +510,7 @@
     </pre>
 
     <p>All instances of a specific class typically support the same
-      operations. Hydra therefore features a <i>supportedOperations</i>
+      operations. Hydra therefore features a <i>supportedOperation</i>
       property which defines the operations supported by all instances of
       a class.</p>
 
@@ -526,8 +526,8 @@
         "supportedProperties": [
           ####... The properties known to be supported by the class ...####
         ],
-        ****"supportedOperations"****: [
-          ####... The operations known to be supported by instances of the class ...####
+        ****"supportedOperation"****: [
+          ####... Operations known to be supported by instances of the class ...####
         ]
       }
       -->
@@ -549,7 +549,7 @@
         ****"@type": "Link"****,
         "title": "Comments",
         "description": "A link to comments with an operation to create a new comment.",
-        ****"supportedOperations"****: [
+        ****"supportedOperation"****: [
           ****{
             "@type": "CreateResourceOperation",
             "title": "Creates a new comment",

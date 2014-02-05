@@ -19,7 +19,7 @@
     "required": "hydra:required",
     "readonly": "hydra:readonly",
     "writeonly": "hydra:writeonly",
-    "supportedOperations": { "@id": "hydra:supportedOperations", "@type": "@id" },
+    "supportedOperation": { "@id": "hydra:supportedOperation", "@type": "@id" },
     "Operation": "hydra:Operation",
     "CreateResourceOperation": "hydra:CreateResourceOperation",
     "ReplaceResourceOperation": "hydra:ReplaceResourceOperation",
@@ -32,7 +32,7 @@
     "statusCode": "hydra:statusCode",
     "Error": "hydra:Error",
     "Resource": "hydra:Resource",
-    "operations": "hydra:operations",
+    "operation": "hydra:operation",
     "Collection": "hydra:Collection",
     "member": { "@id": "hydra:member", "@type": "@id" },
     "search": "hydra:search",
@@ -183,18 +183,18 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedOperations",
+      "@id": "hydra:supportedOperation",
       "@type": "hydra:Link",
-      "label": "supported operations",
-      "comment": "The operations supported by instances of a specific Hydra class or the target of a Hydra link",
+      "label": "supported operation",
+      "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:operations",
+      "@id": "hydra:operation",
       "@type": "hydra:Link",
-      "label": "operations",
-      "comment": "The operations supported a Hydra resource",
+      "label": "operation",
+      "comment": "An operation supported by the Hydra resource",
       "domain": "hydra:Resource",
       "range": "hydra:Operation",
       "vs:term_status": "stable"
