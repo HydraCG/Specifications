@@ -664,7 +664,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
-        ****"members"****: [
+        ****"member"****: [
           {
             "@id": "/comments/429"
           },
@@ -686,8 +686,8 @@
 
     <p>Since collections may become very large, Web APIs often chose to
       split a collection into multiple pages. In Hydra, that can be achieved
-      with a <i>hydra:PagedCollection</i>. Additionally to the
-      <i>members</i> property, a <i>PagedCollection</i> may also include
+      with a <i>hydra:PagedCollection</i>. In addition to the
+      <i>member</i> property, a <i>PagedCollection</i> may also include
       links to the <i>firstPage</i>, <i>nextPage</i>, <i>previousPage</i>,
       or <i>lastPage</i> as well as information about the
       <i>itemsPerPage</i> and the <i>totalItems</i> as shown in the
@@ -706,7 +706,7 @@
         ****"nextPage": "/an-issue/comments?page=4"****,
         ****"previousPage": "/an-issue/comments?page=2"****,
         ****"lastPage": "/an-issue/comments?page=498"****,
-        "members": [
+        "member": [
           ####... the members of this PagedCollection ...####
         ]
       }
