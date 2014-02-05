@@ -11,7 +11,7 @@
     "title": "hydra:title",
     "description": "hydra:description",
     "entrypoint": { "@id": "hydra:entrypoint", "@type": "@id" },
-    "supportedClasses": { "@id": "hydra:supportedClasses", "@type": "@id" },
+    "supportedClass": { "@id": "hydra:supportedClass", "@type": "@id" },
     "Class": "hydra:Class",
     "supportedProperties": { "@id": "hydra:supportedProperties", "@type": "@id" },
     "SupportedProperty": "hydra:SupportedProperty",
@@ -115,10 +115,10 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedClasses",
+      "@id": "hydra:supportedClass",
       "@type": "hydra:Link",
       "label": "supported classes",
-      "comment": "The classes known to be supported by the Web API",
+      "comment": "A class known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Class",
       "vs:term_status": "stable"
