@@ -48,7 +48,7 @@
     "TemplatedLink": "hydra:TemplatedLink",
     "IriTemplate": "hydra:IriTemplate",
     "template": "hydra:template",
-    "mappings": "hydra:mappings",
+    "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
     "defines": { "@reverse": "rdfs:isDefinedBy" },
@@ -423,10 +423,10 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:mappings",
+      "@id": "hydra:mapping",
       "@type": "rdf:Property",
-      "label": "mappings",
-      "comment": "The variable-to-property mappings of the IRI template.",
+      "label": "mapping",
+      "comment": "A variable-to-property mapping of the IRI template.",
       "domain": "hydra:IriTemplate",
       "range": "hydra:IriTemplateMapping",
       "vs:term_status": "testing"
