@@ -480,7 +480,7 @@
       returned by an operation, it also defines a concept to describe the
       properties known to be supported by a class. The following example
       illustrates this feature. Instead of referencing properties directly,
-      <i>supportedProperties</i> references an intermediate data structure,
+      <i>supportedProperty</i> references an intermediate data structure,
       namely instances of the <i>SupportedProperty</i> class. This makes
       it possible to define whether a specific property is required or
       whether it is read-only or write-only depending on the class it is
@@ -495,8 +495,8 @@
         ****"@type": "Class"****,
         ****"title"****: ####"The name of the class"####,
         ****"description"****: ####"A short description of the class."####,
-        ****"supportedProperties"****: [
-          ####... The properties known to be supported by the class ...####
+        ****"supportedProperty"****: [
+          ####... Properties known to be supported by the class ...####
           {
             ****"@type": "SupportedProperty"****,
             ****"property"****: "#property", ####// The property####
@@ -523,8 +523,8 @@
         "@type": "Class",
         "title": ####"The name of the class"####,
         "description": ####"A short description of the class."####,
-        "supportedProperties": [
-          ####... The properties known to be supported by the class ...####
+        "supportedProperty": [
+          ####... Properties known to be supported by the class ...####
         ],
         ****"supportedOperation"****: [
           ####... Operations known to be supported by instances of the class ...####

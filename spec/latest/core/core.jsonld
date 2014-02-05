@@ -13,7 +13,7 @@
     "entrypoint": { "@id": "hydra:entrypoint", "@type": "@id" },
     "supportedClass": { "@id": "hydra:supportedClass", "@type": "@id" },
     "Class": "hydra:Class",
-    "supportedProperties": { "@id": "hydra:supportedProperties", "@type": "@id" },
+    "supportedProperty": { "@id": "hydra:supportedProperty", "@type": "@id" },
     "SupportedProperty": "hydra:SupportedProperty",
     "property": { "@id": "hydra:property", "@type": "@id" },
     "required": "hydra:required",
@@ -132,7 +132,7 @@
       "vs:term_status": "stable"
     },
     {
-      "@id": "hydra:supportedProperties",
+      "@id": "hydra:supportedProperty",
       "@type": "hydra:Link",
       "label": "supported properties",
       "comment": "The properties known to be supported by a Hydra class",
