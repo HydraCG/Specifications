@@ -388,7 +388,7 @@
         "@id": "/an-issue",
         "title": "An exemplary issue representation",
         "description": "This issue can be deleted with an HTTP DELETE request",
-        ****"operations"****: [
+        ****"operation"****: [
           ****{
             "@type": "DeleteResourceOperation",
             "method": "DELETE"
@@ -399,7 +399,7 @@
     </pre>
 
     <p>The example above references Hydra's context to map properties such
-      as <code>operations</code> and <code>method</code> and values like
+      as <code>operation</code> and <code>method</code> and values like
       <code>DeleteResourceOperation</code> to URLs that unambiguously
       identify these concepts. It would be similarly valid JSON-LD if
       these mappings would be directly embedded into the representation
@@ -440,8 +440,8 @@
         ****"title"****: ####"The name of the API"####,
         ****"description"****: ####"A short description of the API"####,
         ****"entrypoint"****: ####"URL of the API's main entry point"####,
-        ****"supportedClasses"****: [
-          ####... The classes known to be supported by the Web API ...####
+        ****"supportedClass"****: [
+          ####... Classes known to be supported by the Web API ...####
         ],
         ****"statusCodes"****: [
           ####... Additional information about HTTP status codes ... ####
@@ -480,7 +480,7 @@
       returned by an operation, it also defines a concept to describe the
       properties known to be supported by a class. The following example
       illustrates this feature. Instead of referencing properties directly,
-      <i>supportedProperties</i> references an intermediate data structure,
+      <i>supportedProperty</i> references an intermediate data structure,
       namely instances of the <i>SupportedProperty</i> class. This makes
       it possible to define whether a specific property is required or
       whether it is read-only or write-only depending on the class it is
@@ -495,8 +495,8 @@
         ****"@type": "Class"****,
         ****"title"****: ####"The name of the class"####,
         ****"description"****: ####"A short description of the class."####,
-        ****"supportedProperties"****: [
-          ####... The properties known to be supported by the class ...####
+        ****"supportedProperty"****: [
+          ####... Properties known to be supported by the class ...####
           {
             ****"@type": "SupportedProperty"****,
             ****"property"****: "#property", ####// The property####
@@ -510,7 +510,7 @@
     </pre>
 
     <p>All instances of a specific class typically support the same
-      operations. Hydra therefore features a <i>supportedOperations</i>
+      operations. Hydra therefore features a <i>supportedOperation</i>
       property which defines the operations supported by all instances of
       a class.</p>
 
@@ -523,11 +523,11 @@
         "@type": "Class",
         "title": ####"The name of the class"####,
         "description": ####"A short description of the class."####,
-        "supportedProperties": [
-          ####... The properties known to be supported by the class ...####
+        "supportedProperty": [
+          ####... Properties known to be supported by the class ...####
         ],
-        ****"supportedOperations"****: [
-          ####... The operations known to be supported by instances of the class ...####
+        ****"supportedOperation"****: [
+          ####... Operations known to be supported by instances of the class ...####
         ]
       }
       -->
@@ -549,7 +549,7 @@
         ****"@type": "Link"****,
         "title": "Comments",
         "description": "A link to comments with an operation to create a new comment.",
-        ****"supportedOperations"****: [
+        ****"supportedOperation"****: [
           ****{
             "@type": "CreateResourceOperation",
             "title": "Creates a new comment",
@@ -664,7 +664,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
-        ****"members"****: [
+        ****"member"****: [
           {
             "@id": "/comments/429"
           },
@@ -686,8 +686,8 @@
 
     <p>Since collections may become very large, Web APIs often chose to
       split a collection into multiple pages. In Hydra, that can be achieved
-      with a <i>hydra:PagedCollection</i>. Additionally to the
-      <i>members</i> property, a <i>PagedCollection</i> may also include
+      with a <i>hydra:PagedCollection</i>. In addition to the
+      <i>member</i> property, a <i>PagedCollection</i> may also include
       links to the <i>firstPage</i>, <i>nextPage</i>, <i>previousPage</i>,
       or <i>lastPage</i> as well as information about the
       <i>itemsPerPage</i> and the <i>totalItems</i> as shown in the
@@ -706,7 +706,7 @@
         ****"nextPage": "/an-issue/comments?page=4"****,
         ****"previousPage": "/an-issue/comments?page=2"****,
         ****"lastPage": "/an-issue/comments?page=498"****,
-        "members": [
+        "member": [
           ####... the members of this PagedCollection ...####
         ]
       }
@@ -741,7 +741,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         ****"@type": "IriTemplate"****,
         ****"template": "http://api.example.com/issues{?q}"****,
-        ****"mappings"****: [
+        ****"mapping"****: [
           {
             ****"@type": "IriTemplateMapping"****,
             ****"variable": "q"****,
