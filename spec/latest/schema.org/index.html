@@ -203,7 +203,7 @@
         "@context": "http://schema.org",
         "@id": "https://myexpenses.com/approve?expenseId=abc123",
         "description": "Approval request for John's $10.13 expense for office supplies",
-        "****operations****": {
+        "****operation****": {
           "@type": [ "ConfirmAction", "****Operation****" ], ####<-- Operation could also be omitted####
           "name": "Approve Expense",
           "****method****": "POST"
@@ -247,7 +247,7 @@
             "addressCountry": "USA"
           }
         },
-        "****operations****": {
+        "****operation****": {
           "@type": [ "RsvpAction", "****Operation****" ], ####<-- Operation could also be omitted####
           "****method****": "POST",
           "****expects****": "RsvpResponse" ####<-- not defined yet####
@@ -267,7 +267,7 @@
         "@context": "http://schema.org/",
         "@id": "http://schema.org/RsvpResponse", ####<-- please note that this could be on an external site as well####
         "@type": "Class",
-        "****supportedProperties****": [
+        "****supportedProperty****": [
           {
             "@type": "****SupportedProperty****",
             "****property****": "attendance", ####<-- not defined yet, possible values according GMail: yes/no/maybe####
@@ -291,7 +291,7 @@
       {
         "@context": "http://schema.org/",
         "@id": "http://reviews.com/review?id=123",
-        "****operations****": {
+        "****operation****": {
           "@type": ["ReviewAction", "****Operation****" ], ####<-- Operation could also be omitted####
           "description": "We hope you enjoyed your meal at Joe's Diner. Please tell us about it.",
           "review": {
@@ -310,7 +310,7 @@
           "****expects****": {
             "@type": "Class",
             "subclassOf": "Rating", ####<-- a specialization of Rating to make ratingValue required####
-            "****supportedProperties****": [
+            "****supportedProperty****": [
               {
                 "@type": "****SupportedProperty****",
                 "****property****": "ratingValue",
@@ -392,16 +392,16 @@
       </thead>
       <tbody>
         <tr>
-          <td>supportedProperties</td>
+          <td>supportedProperty</td>
           <td>SupportedProperty</td>
           <td>The properties known to be supported by a class.</td>
-          <td>hydra:supportedProperties</td>
+          <td>hydra:supportedProperty</td>
         </tr>
         <tr>
-          <td>supportedOperations</td>
+          <td>supportedOperation</td>
           <td>Class</td>
           <td>The operations supported by instances of this class.</td>
-          <td>hydra:supportedOperations</td>
+          <td>hydra:supportedOperation</td>
         </tr>
       </tbody>
     </table>
@@ -487,10 +487,10 @@
             <td>hydra:entrypoint</td>
           </tr>
           <tr>
-            <td>supportedClasses</td>
+            <td>supportedClass</td>
             <td>Class</td>
             <td>The classes known to be supported by the Web API.</td>
-            <td>hydra:supportedClasses</td>
+            <td>hydra:supportedClass</td>
           </tr>
         </tbody>
       </table>
@@ -514,10 +514,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>operations</td>
+            <td>operation</td>
             <td>Operation</td>
             <td>The operations supported a Hydra resource.</td>
-            <td>hydra:operations</td>
+            <td>hydra:operation</td>
           </tr>
         </tbody>
       </table>
@@ -543,10 +543,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>supportedOperations</td>
+            <td>supportedOperation</td>
             <td>Class</td>
             <td>The operations supported by the targets of Hydra links.</td>
-            <td>hydra:supportedOperations</td>
+            <td>hydra:supportedOperation</td>
           </tr>
         </tbody>
       </table>
