@@ -10,28 +10,30 @@
 //<![CDATA[
   var respecConfig = {
       // extend the bibliography entries
-      "localBiblio": localBibliography,
+      localBiblio: localBibliography,
 
       doRDFa: "1.1",
       // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-      specStatus:           "unofficial",
-      // if you wish the publication date to be other than today, set this
-      //publishDate:          "2012-08-30",
-      copyrightStart:       "2012",
+      specStatus: "unofficial",
+
+      //publishDate: "2012-08-30",
+
+      copyrightStart: "2012",
+      additionalCopyrightHolders: 'Copyright © 2012-' + new Date().getFullYear() + ' the Contributors to the Hydra Core Vocabulary Specification, published by the <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.',
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
-      shortName:            "hydra",
-      subtitle:             "A Vocabulary for Hypermedia-Driven Web APIs",
+      shortName: "hydra",
+      subtitle: "A Vocabulary for Hypermedia-Driven Web APIs",
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
       // and its maturity status
-      // previousPublishDate:  "2012-08-30",
-      // previousMaturity:     "FPWD",
-      // previousDiffURI:      "http://www.w3.org/TR/2012/WD-json-ld-syntax-20120830/",
-      // diffTool:             "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
+      // previousPublishDate: "2012-08-30",
+      // previousMaturity: "FPWD",
+      // previousDiffURI: "http://www.w3.org/TR/2012/WD-json-ld-syntax-20120830/",
+      // diffTool: "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
 
       // if there a publicly available Editor's Draft, this is the link
-      edDraftURI:           "http://www.hydra-cg.com/spec/latest/core/",
+      edDraftURI: "http://www.hydra-cg.com/spec/latest/core/",
 
       // if this is a LCWD, uncomment and set the end of its review period
       // lcEnd: "2009-08-05",
@@ -57,21 +59,12 @@
             company: "Graz University of Technology", companyURL: "http://www.tugraz.at/" }
       ],
 
-      // name of the WG
-      // wg:           "RDF Working Group",
+      // WG information
+      wg:           "Hydra W3C Community Group",
+      wgURI:        "http://www.w3.org/community/hydra/",
+      wgPublicList: "public-hydra",
+      // wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/??????/status",
 
-      // URI of the public WG page
-      // wgURI:        "http://www.w3.org/2011/rdf-wg/",
-
-      // name (with the @w3c.org) of the public mailing to which comments are due
-      // wgPublicList: "public-rdf-comments",
-
-      // URI of the patent status for this WG, for Rec-track documents
-      // !!!! IMPORTANT !!!!
-      // This is important for Rec-track documents, do not copy a patent URI from a random
-      // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-      // Team Contact.
-      wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
       maxTocLevel: 4,
       preProcess: [ preProc ],
       alternateFormats: [
@@ -134,12 +127,17 @@
 </section>
 
 <section id="sotd">
+  <p>This specification was published by the
+    <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a>. It is
+    not a W3C Standard nor is it on the W3C Standards Track. Please note that under the
+    <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+    there is a limited opt-out and other conditions apply. Learn more about
+    <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
+
   <p>To participate in the development of this specification, please join the
-    <a href="http://m.lanthi.com/HydraCG">Hydra W3C Community Group</a>. If you
-    want to suggest a feature or discuss one, you should send a mail to the
-    <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-hydra@w3.org mailing list</a>.
-    Specification bugs and issues should be reported in the
-    <a href="https://github.com/HydraCG/Specifications/issues">issue tracker</a>.</p>
+    <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a>. If
+    you have questions, want to suggest a feature, or raise an issue, please send a mail to the
+    <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-hydra@w3.org mailing list</a>.</p>
 </section>
 
 <section class="informative">
