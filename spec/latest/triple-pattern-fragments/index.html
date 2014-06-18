@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Triple Pattern Fragments</title>
+  <meta charset="utf-8">
+  <script src="../../js/respec-w3c-common.js" async class="remove"></script>
+  <script class="remove">
+    var respecConfig = {
+        specStatus: "unofficial",
+        shortName: "tp-fragments",
+        subtitle: "A low-cost, queryable Linked Data Fragments interface",
+        copyrightStart: "2014",
+        additionalCopyrightHolders: 'Copyright © ' + new Date().getFullYear() + ' the Contributors to the Hydra Core Vocabulary Specification, published by the <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.',
+        editors: [{
+          name: "Ruben Verborgh",
+          url: "http://ruben.verborgh.org/",
+          company: "Ghent University – iMinds",
+          companyURL: "http://mmlab.be/",
+        }],
+        authors: [{
+          name: "Ruben Verborgh",
+          url: "http://ruben.verborgh.org/",
+          company: "Ghent University – iMinds",
+          companyURL: "http://mmlab.be/",
+        }],
+        edDraftURI: "http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/",
+        maxTocLevel: 2,
+    };
+  </script>
+  <style>
+    dd ul { margin: 0 0 .5em; }
+    pre code { color: black; }
+    dl.triple dt { float: left; clear: left; width: 6em; }
+  </style>
+</head>
+<body>
+  <section id="abstract">
+    <p>
+      This document specifies <em>triple pattern fragments</em>,
+      a type of Linked Data Fragment designed for low-cost server usage
+      while enabling efficient client-side execution of common types of queries.
+      Each page of a triple pattern fragment contains
+      (a subset of) those triples of a dataset
+      that match a specific triple pattern,
+      together with the estimated total number of matching triples,
+      and hypermedia controls to find all other triple pattern fragments of the dataset.
+    </p>
+    <p>
+      The document additionally specifies requirements
+      for servers of triple pattern fragments.
+    </p>
+  </section>
+
+  <section id="introduction" class="informative">
+    <h2>Introduction</h2>
+    <section>
+      <h3>Scope and aim</h3>
+      <p>
+        The Web has several common types of interfaces
+        to offer access to a dataset of Linked Data through HTTP,
+        each of which have their own advantages and disadvantages:
+      </p>
+      <dl>
+        <dt><a href="../linked-data-fragments/#data-dumps">data dump servers</a></dt>
+        <dd>
+          <em>advantages:</em>
+          <ul>
+            <li>responses can be pre-generated</li>
+            <li>responses are effectively cacheable through HTTP</li>
+          </ul>
+        </dd>
+        <dd>
+          <em>disadvantages:</em>
+          <ul>
+            <li>large HTTP response size</li>
+            <li>large granularity, clients have to download everything before they can query</li>
+            <li>inefficient for data that changes often</li>
+          </ul>
+        </dd>
+        <dt><a href="../linked-data-fragments/#linked-data-documents">Linked Data servers</a></dt>
+        <dd>
+          <em>advantages:</em>
+          <ul>
+            <li>responses are inexpensive to generate</li>
+            <li>responses are effectively cacheable through HTTP</li>
+            <li>small response size</li>
+          </ul>
+        </dd>
+        <dd>
+          <em>disadvantages:</em>
+          <ul>
+            <li>dereferencing can only lead to one particular document about an entity</li>
+            <li>hard to find triples with a certain object (commonly needed for queries)</li>
+          </ul>
+        </dd>
+        <dt><a href="../linked-data-fragments/#sparql-query-results">SPARQL endpoints</a></dt>
+        <dd>
+          <em>advantages:</em>
+          <ul>
+            <li>fine granularity, so clients can ask highly customized parts of a dataset</li>
+            <li>small response size (with relation to the request), few unneeded data is sent</li>
+          </ul>
+        </dd>
+        <dd>
+          <em>disadvantages:</em>
+          <ul>
+            <li>many (but not all) results are expensive to generate</li>
+            <li>not efficiently cacheable though HTTP, since requests are highly individualised</li>
+          </ul>
+        </dd>
+      </dl>
+      <p>
+        <a href="../linked-data-fragments/">Linked Data Fragments</a>
+        allow to describe all HTTP interfaces to Linked Data
+        in terms of what parts of the dataset they offer access to.
+        All of the above servers offer access to
+        interface-specific Linked Data Fragments of a dataset.
+      </p>
+      <p>
+        In this document, we specify an HTTP interface for <em>triple pattern fragments</em>
+        (also known as <em>basic Linked Data Fragments</em>),
+        which form a type of Linked Data Fragment
+        with a different advantages/disadvantages balance:
+      </p>
+      <dl>
+        <dt>Triple pattern fragments server</dt>
+        <dd>
+          <em>advantages:</em>
+          <ul>
+            <li>responses are inexpensive to generate</li>
+            <li>small response size</li>
+            <li>efficiently cacheable though HTTP</li>
+            <li>clients can efficiently execute basic graph pattern queries</li>
+          </ul>
+        </dd>
+        <dd>
+          <em>disadvantages:</em>
+          <ul>
+            <li>execution of non-trivial queries requires multiple requests and is thus slower</li>
+            <li>no server support for detailed selection of literals (beyond equality)</li>
+          </ul>
+        </dd>
+      </dl>
+    </section>
+    <section>
+      <h3>Document conventions</h3>
+      <p>
+        Triples in this document are expressed
+        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!turtle]].
+        This document uses the following namespace prefixes:
+      </p>
+      <pre>
+@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
+@prefix rdfs:        &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
+@prefix dbpedia:     &lt;http://dbpedia.org/resource/&gt;.
+@prefix dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;.
+@prefix hydra:       &lt;http://www.w3.org/ns/hydra/core#&gt;.
+@prefix void:        &lt;http://rdfs.org/ns/void#&gt;.
+      </pre>
+    </section>
+  </section>
+
+  <section id="conformance">
+  </section>
+
+  <section>
+    <h2>Triple Pattern Fragments</h2>
+    <section>
+      <h2>Definition</h2>
+      <p>
+        A <dfn>triple pattern fragment</dfn>
+        (also known as a <dfn>basic Linked Data Fragment</dfn>)
+        is a <a href="../linked-data-fragments/">Linked Data Fragment</a>
+        with the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The selector of a triple pattern fragment MUST be a triple pattern
+          <code>{ ?s ?p ?o. }</code>, in which each of the three components
+          MUST be either a <em>variable</em>,
+          a <em>constant IRI</em>,
+          or (in the case of <code>?o</code>) a <em>constant literal</em>.
+          These components MUST NOT be blank nodes.
+          The data MUST contain those triples that match the triple pattern,
+          but MAY additionally contain other, related triples.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          A triple pattern fragment MUST contain one or more triples
+          that express the estimated total number of matches for the triple pattern.
+        </dd>
+        <dd>
+          The fragment MAY contain additional metadata.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A triple pattern fragment MUST contain hypermedia controls
+          that allow to retrieve any other triple pattern fragment of the same dataset.
+          This MUST be provided as a form
+          that allows to choose subject, predicate, and object of the selector's triple pattern.
+        </dd>
+        <dd>
+          The fragment MAY contain additional hypermedia controls.
+          In particular, the URLs of the entities of the data, metadata, and control triples
+          SHOULD be dereferenceable.
+        </dd>
+      </dl>
+
+      <p>The following sections will detail each of the components.</p>
+    </section>
+
+    <section id="data">
+      <h3>Data</h3>
+      <p>
+        A triple pattern fragment of a dataset is fully determined
+        by its <dfn>triple pattern selector</dfn>.
+        In its most abstract form,
+        a triple pattern selector consists of three components
+        <code>subject</code>, <code>predicate</code>, and <code>object</code>
+        [[!RDF-CONCEPTS]].
+        The <code>subject</code> MUST either be a variable or an IRI;
+        the <code>predicate</code> MUST either be a variable or an IRI;
+        the <code>object</code> MUST either be a variable, an IRI, or a literal.
+      </p>
+      <p>
+        Variable names MAY be substituted,
+        i.e., two triple pattern fragments of a dataset are identical
+        if and only if there exists an injective substitution function for variable names
+        such that all three components of the fragment are equal.
+      </p>
+      <p>
+        The data of a fragment is obtained
+        by selecting those triples of its dataset
+        that match the triple pattern selector.
+        These triples SHOULD be ordered in some consistent way,
+        such that triple pattern fragments can be paged consistently.
+      </p>
+    </section>
+
+    <section id="metadata">
+      <h3>Metadata</h3>
+      <p>
+        Each triple pattern fragment,
+        and each page of a triple pattern fragment,
+        MUST contain the estimated total number of triples that match the fragment's selector.
+        This MUST be expressed as a triple with the following components:
+      </p>
+      <dl class="triple">
+        <dt>subject</dt>
+        <dd>the URL of the fragment</dd>
+        <dt>predicate</dt>
+        <dd>the <code>void:triples</code> predicate</dd>
+        <dt>object</dt>
+        <dd>an integer literal expressing the estimated total number of matching triples</dd>
+      </dl>
+      <p>
+        The estimate MUST be a non-negative, finite, integer number with the following properties:
+      </p>
+      <ul>
+        <li>If no triples match the selector, the estimate MUST be zero.</li>
+        <li>If one or more triples match the selector, the estimate MUST NOT be zero.</li>
+        <li>The estimate SHOULD be as close as possible to the actual number of matches.</li>
+        <li>
+          If the number of matching triples is smaller than the number of items per page,
+          the estimate SHOULD be exactly the number of matching triples.
+        </li>
+      </ul>
+      <p>
+        The metadata set MAY additionally contain variations of the above triple.
+        For instance,
+        it is RECOMMENDED to add a triple with the same subject and object
+        and the <code>hydra:totalItems</code> predicate.
+      </p>
+    </section>
+
+    <section id="controls">
+      <h3>Hypermedia controls</h3>
+      <p>
+        Each triple pattern fragment,
+        and each page of a triple pattern fragment,
+        MUST contain a hypermedia control
+        that can generate the URL
+        of each other triple pattern fragment of the same dataset.
+      </p>
+      <p>
+        This control MUST act as a function that
+        accepts three parameters <var>subject</var>, <var>predicate</var>, and <var>object</var>,
+        each of which can either be
+        a variable, a constant IRI, or (in the case of <var>object</var>) a constant literal.
+        It MUST then map these parameters
+        to the URL of the dataset's triple pattern fragment
+        whose selector has the given parameter values.
+      </p>
+      <p>
+        This control MUST be expressed as a form in the Hydra core vocabulary
+        using triples with the following structure:
+      </p>
+<pre><code>&lt;http://example.org/example#dataset&gt;
+    void:subset &lt;http://example.org/example?s=http%3A%2F%2Fexample.org%2Fsubject&gt;;
+    hydra:search [
+        hydra:template "http://example.org/example{?s,p,o}";
+        hydra:mapping  [ hydra:variable "s"; hydra:property rdf:subject ],
+                       [ hydra:variable "p"; hydra:property rdf:predicate ],
+                       [ hydra:variable "o"; hydra:property rdf:object ]
+    ].</code></pre>
+      <p>
+        The above snippet assumes the dataset IRI is
+        <code>http://example.org/example#dataset</code>,
+        the fragment (or fragment page) URL is
+        <code>http://example.org/example?subject=http%3A%2F%2Fexample.org%2Fsubject</code>,
+        and the URI template [[!RFC6570]] to retrieve triple pattern fragments of the dataset is
+        <code>http://example.org/example{?subject,predicate,object}</code>.
+        It furthermore assumes that the parameter names of
+        <var>subject</var>, <var>predicate</var>, and <var>object</var>
+        are <code>s</code>, <code>p</code>, and <code>o</code>, respectively.
+        All of these MUST be adjusted to fit the configuration of a specific fragment server.
+        Note that the form MUST be attached to the <em>dataset</em>,
+        as the form filters the dataset and not the fragment,
+        and the <em>fragment</em> MUST explicitly be listed as a subset of the dataset,
+        in order to indicate the relation between the two.
+      </p>
+      <p>
+        This hypermedia control MUST be present
+        because there purposely does not exist a fixed URL format
+        that servers of triple pattern fragments need to follow.
+        This means that clients of triple pattern fragments
+        MUST NOT need prior knowledge of a server,
+        i.e., they MUST NOT assume a certain URL pattern.
+        Instead, clients MUST interpret the hypermedia control in each triple pattern fragment
+        in order to retrieve another fragment.
+        Clients MUST NOT attempt to deconstruct the URL of a fragment,
+        i.e., they MUST treat fragment URLs as opaque identifiers.
+      </p>
+      <div class="note">
+        <p>
+          The hypermedia control fulfills the <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf">hypermedia constraint</a>
+          that each representation should contain the controls towards next steps.
+          As a result, clients can use triple pattern fragments
+          without any prior knowledge.
+          This also means a server can freely choose the URLs of its triple pattern fragments,
+          as well as the names of parameters
+          (e.g., <code>subject</code>, <code>predicate</code>, <code>object</code>
+                 instead of <code>s</code>, <code>p</code>, <code>o</code> in the above snippet).
+        </p>
+        <p>
+          An equivalent hypermedia control for the above snippet could look as follows:
+        </p>
+<pre><code>&lt;form method="GET" action="http://example.org/example"&gt;
+  &lt;fieldset&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;label for="subject"&gt;subject&lt;/label&gt;     &lt;input id="subject"   name="s" /&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;label for="predicate"&gt;predicate&lt;/label&gt; &lt;input id="predicate" name="p" /&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;label for="object"&gt;object&lt;/label&gt;       &lt;input id="object"    name="o" /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/fieldset&gt;
+  &lt;p&gt;&lt;input type="submit" /&gt;&lt;/p&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+    </section>
+
+    <section id="paging">
+      <h3>Paging</h3>
+      <p>
+        Triple pattern fragments MAY be paged.
+        A <dfn title="triple pattern fragment page">page</dfn> of a triple pattern fragment
+        has the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The page MUST contain a non-empty subset of data of the corresponding triple pattern fragment,
+          unless that fragment is empty.
+          The data of a fragment is distributed over pages of a given page size <var>n</var>
+          by dividing the ordered list of matching triples
+          in chunks of size <var>n</var>;
+          only the last page can have fewer than <var>n</var> data triples.
+        </dd>
+        <dd>
+          The page MAY additionally contain other, relevant triples.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          The page SHOULD contain all metadata of the fragment.
+          In particular, it MUST contain those metadata triples that express
+          the estimated total number of matches of the fragment's triple pattern.
+        </dd>
+        <dd>
+          The page MAY contain additional metadata.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A page SHOULD contain all hypermedia controls of the fragment.
+          In particular, it MUST contain those controls
+          that allow to retrieve any triple pattern fragment of the dataset.
+        </dd>
+        <dd>
+          If there is a directly preceding or directly following page of the triple pattern fragment,
+          links to this page / these pages MUST be present.
+        </dd>
+        <dd>
+          The page MAY contain additional hypermedia controls.
+        </dd>
+      </dl>
+
+      <p>
+        The relation between a page and its fragment MUST be indicated explicitly
+        using the following triple:
+      </p>
+      <dl class="triple">
+        <dt>subject</dt>
+        <dd>the URL of the fragment</dd>
+        <dt>predicate</dt>
+        <dd>the <code>void:subset</code> predicate</dd>
+        <dt>object</dt>
+        <dd>the URL of the page</dd>
+      </dl>
+      <p class="issue">
+        The relation between a page and the associated fragment
+        should actually be expressed with a more precise predicate,
+        for instance, one of the Hydra core vocabulary paging predicates.
+        However, this part of the core vocabulary is still in development at the time of writing.
+      </p>
+
+      <p>
+        If the page has directly preceding or directly following pages,
+        this relationship MUST be indicated explicitly using the following triple(s):
+      </p>
+      <dl class="triple">
+        <dt>subject</dt>
+        <dd>the URL of the current page</dd>
+        <dt>predicate</dt>
+        <dd>the appropriate <code>hydra:previousPage</code> or <code>hydra:nextPage</code> predicate</dd>
+        <dt>object</dt>
+        <dd>the URL of the previous/next page</dd>
+      </dl>
+      <p>
+        If there is no directly preceding/following page (or if that page would be empty),
+        the above triple(s) MUST NOT be present.
+      </p>
+
+      <p>
+        In all metadata and control triples, the URL of the current page
+        MUST exactly match the URL through which the client has accessed the page.
+        <br>
+        If the fragment itself instead of a page is requested,
+        the URL of the fragment in all metadata and control triples
+        MUST match the requested fragment URL.
+      </p>
+      <div class="note">
+        <p>
+          The use of the requested URL in the representation
+          is especially important in the common case in which
+          fragments or pages are accessible through (subtly) different URLs,
+          such as <code>http://example.org/example?s=a&amp;page=3</code>
+          and <code>http://example.org/example?page=3&amp;s=a</code>.
+        </p>
+        <p>
+          For example, if the client requests <code>http://example.org/example?s=a&amp;page=3</code>
+          the <em>next page</em> triple should look like:
+        </p>
+<pre><code><strong>&lt;http://example.org/example?s=a&amp;page=3&gt;</strong> hydra:nextPage &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
+        <p>
+          However, if the client requests <code>http://example.org/example?page=3&amp;s=a</code>
+          the <em>next page</em> triple should look like:
+        </p>
+<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:nextPage &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
+        <p>
+          Using the requested URL helps the client correctly relate the requested resource (the page)
+          to other resources (other pages).
+        </p>
+      </div>
+
+      <p>
+        Fragment pages MAY be accessible by page number,
+        but this is not an obligation,
+        as previous/next is sufficient for most clients.
+        Clients MUST NOT assume a particular URL structure for pages;
+        paging MUST be fully accessible through hypermedia controls.
+        Clients MUST NOT attempt to deconstruct a fragment URL's possible paging structure,
+        i.e., they MUST treat page URLs as opaque identifiers.
+      </p>
+    </section>
+  </section>
+
+  <section id="server">
+    <h2>Triple Pattern Fragment servers</h2>
+    <section>
+      <h3>Definition</h3>
+      <p>
+        A server can host one or more datasets as triple pattern fragments.
+        For a server to be called a <dfn>triple pattern fragment server</dfn>
+        of a given dataset,
+        it MUST offer access to <em>all</em> possible triple fragments of that dataset.
+        Each of the fragment resources MUST be accessible through HTTP using a unique URL.
+        There MUST at least exist one triple-based format [[!RDF-CONCEPTS]]
+        in which the server offers representations of each triple fragment.
+      </p>
+      <p>
+        Servers MAY have a form of access control;
+        in this case, for all read-only operations,
+        the same access control principles
+        MUST apply to <em>all</em> triple pattern fragments of the dataset.
+        I.e., if a client can access one triple pattern fragment,
+        it MUST be able to access all triple pattern fragments of this dataset.
+      </p>
+      <p>
+        Triple pattern fragments servers MAY additionally offer access
+        to other Linked Data Fragments of the dataset.
+      </p>
+    </section>
+    <section>
+      <h3>Interface</h3>
+      <p>
+        Triple pattern fragment servers are HTTP servers
+        and hence MUST comply with the HTTP specification [[!RFC2616]].
+      </p>
+
+      <section>
+        <h4>URLs for fragments</h4>
+        <p>
+          A server MUST assign URLs to <em>all</em> possible
+          (pages of) triple pattern fragments of its datasets.
+          <br>
+          How URL assignment happens is implementation-dependent;
+          this choice is communicated to clients
+          through hypermedia controls of fragments' representations.
+        </p>
+        <p>
+          A URL of a fragment MUST identify the fragment resource
+          and MUST NOT identify a representation thereof.
+          All representations MUST be accessible through the fragment's canonical URL
+          using content negotiation [[!RFC2616]].
+          Servers SHOULD NOT have representation-specific fragment URLs.
+        </p>
+        <p>
+          Clients can obtain the URL of a specific fragment
+          through a hypermedia control in fragments' representations.
+          However, since hypermedia controls generally accept strings as input,
+          we need to specify how to convert IRIs, literals, and variables to strings
+          for use as <var>subject</var>, <var>predicate</var>, and <var>object</var> parameter values.
+          A triple pattern fragment server MUST at least support the following options:
+        </p>
+        <dl>
+          <dt>constant IRI</dt>
+          <dd>
+            the text value of the IRI,
+            e.g., <code>http://example.org/bar</code>
+          </dd>
+          <dt>constant text literal</dt>
+          <dd>
+            the text value of the literal, surrounded by double quotes <code>"</code>,
+            e.g., <code>"my text"</code>
+          </dd>
+          <dt>constant literal with language</dt>
+          <dd>
+            the text value of the literal, surrounded by double quotes <code>"</code>
+            followed by <code>@</code> and the lowercase language code [[!BCP47]]
+            e.g., <code>"my text"@en-gb</code>
+          </dd>
+          <dd>
+          <dt>constant literal with type</dt>
+          <dd>
+            the text value of the literal, surrounded by double quotes <code>"</code>
+            followed by <code>^^</code> and the text value of the IRI
+            e.g., <code>"42"^^http://www.w3.org/2001/XMLSchema#integer</code>
+          </dd>
+          <dt>variable</dt>
+          <dd>
+            either as the empty string,
+            or as a string starting with a question mark,
+            followed by one or more word characters,
+            e.g., <code>?var</code>.
+          </dd>
+          <dd>
+        </dl>
+        <p class="issue">
+          The Hydra core vocabulary could capture the above at some point.
+          <a href="https://github.com/HydraCG/Specifications/issues/30">See issue 30.</a>
+        </p>
+        <p>
+          All values MUST be URL encoded during the process of applying the hypermedia control.
+          However, they MUST NOT be encoded before being sent to the hypermedia control,
+          as this would result in double encoding.
+        </p>
+        <p>
+          A server MUST interpret variables encoded as an empty string
+          as unique variables.
+          A server MUST interpret identical non-empty variable names
+          as referring to the same variable.
+        </p>
+        <p class="issue">
+          We should talk about support for patterns such as <code>{ ?s ?p ?s }</code>.
+        </p>
+      </section>
+
+      <section>
+        <h4>HTTP GET and HEAD</h4>
+        <p>
+          Triple pattern fragment servers MUST support
+          the HTTP <code>GET</code> and <code>HEAD</code> methods.
+          When an HTTP <code>GET</code> or <code>HEAD</code> request arrives, a server MUST:
+        </p>
+        <ul>
+          <li>
+            reply with status code <code>200 OK</code>
+            if the fragment (page) with the given URL exists and is non-empty,
+            i.e., one or more triples match the selector;
+          </li>
+          <li>
+            reply with status code <code>404 Not Found</code>
+            if the fragment (page) with the given URL does not exist or is empty,
+            i.e., no triples match the selector.
+          </li>
+          <li>
+            reply with status code <code>404 Not Found</code>
+            if the selector is invalid
+            i.e., the parameter values are not in the domain of the selector.
+            This is the case if, for instance, a literal is used as subject.
+          </li>
+        </ul>
+        <p>
+          For <code>GET</code> requests,
+          a server MUST return a representation of the fragment corresponding to the request URL,
+          even if no triples match the selector.
+          In particular, even empty (pages of) fragments
+          MUST contain the hypermedia control that allows clients
+          to request other basic triple pattern fragments of the same dataset.
+        </p>
+        <p>
+          A server MUST try to satisfy the client's content type preferences
+          to the extent possible.
+          If no acceptable content type has been found,
+          a server SHOULD return a triple-based representation
+          instead of sending a response with status code <code>406 Not Acceptable</code>.
+        </p>
+        <p>
+          Other HTTP methods MAY be supported by a server,
+          although this is implementation-specific.
+          If a certain method is unsupported,
+          a server MUST send a response with status code <code>405 Method Not Allowed</code>.
+        </p>
+      </section>
+
+      <section>
+        <h4>Accessibility for Web applications</H4>
+        <p>
+          In order to allow browser applications to access fragments,
+          Cross-Origin Resource Sharing [[!CORS]] MUST be enabled on the server.
+          To this end,
+          triple pattern fragment servers MUST emit the following header and value
+          on <em>all</em> HTTP responses to requests for triple pattern fragments,
+          regardless of their status code:
+        </p>
+        <pre><code>Access-Control-Allow-Origin: *</code></pre>
+        <p class="note">
+          A value of <code>*</code> (all origins) has been chosen
+          instead of a specific originating server,
+          to improve the cacheability of resources.
+        </p>
+        <p class="issue">
+          This section should probably also mention cacheability separately.
+        </p>
+      </section>
+    </section>
+  </section>
+</body>
+</html>
