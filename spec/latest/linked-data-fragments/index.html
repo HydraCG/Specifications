@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linked Data Fragments</title>
+  <meta charset="utf-8">
+  <script src="../../js/respec-w3c-common.js" async class="remove"></script>
+  <script class="remove">
+    var respecConfig = {
+        specStatus: "unofficial",
+        shortName: "ldf",
+        subtitle: "A uniform view on Web interfaces to Linked Data",
+        copyrightStart: "2014",
+        additionalCopyrightHolders: 'Copyright © ' + new Date().getFullYear() + ' the Contributors to the Hydra Core Vocabulary Specification, published by the <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.',
+        editors: [{
+          name: "Ruben Verborgh",
+          url: "http://ruben.verborgh.org/",
+          company: "Ghent University – iMinds",
+          companyURL: "http://mmlab.be/",
+        }],
+        authors: [{
+          name: "Ruben Verborgh",
+          url: "http://ruben.verborgh.org/",
+          company: "Ghent University – iMinds",
+          companyURL: "http://mmlab.be/",
+        }],
+        edDraftURI: "http://www.hydra-cg.com/spec/latest/linked-data-fragments/",
+    };
+  </script>
+</head>
+<body>
+  <section id="abstract">
+    <p>
+      This document describes <em>Linked Data Fragments</em>,
+      a uniform view on all possible interfaces to publish Linked Data on the Web.
+      It defines Linked Data Fragments, and servers and clients thereof.
+      In addition, it explains how existing interfaces
+      (data dumps, Linked Data documents, SPARQL endpoints, …)
+      fit into this uniform view.
+    </p>
+  </section>
+
+  <section id="introduction">
+    <h2>Introduction</h2>
+    <section>
+      <h3>Scope and aim</h3>
+      <p>
+        On the Web, machines can access, browse, and query
+        <a href="http://www.w3.org/DesignIssues/LinkedData.html">Linked Data</a>
+        in various ways.
+        For instance,
+        they can extract <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> data
+        from HTML pages,
+        download a large dataset in <a href="http://www.w3.org/TR/rdfa-syntax/">Turtle</a>,
+        or query a <a href="http://www.w3.org/TR/sparql11-protocol/">SPARQL endpoint</a>.
+      </p>
+      <p>
+        The goal of <em>Linked Data Fragments</em> is to provide a uniform view
+        on all current and future ways of publishing Linked Data on the Web.
+        We want to provide a framework that can characterize all Linked Data interfaces
+        in order to allow qualitative and quantitative comparisons.
+        Furthermore, we want to stimulate the development of new kinds of interfaces
+        that address the current and emerging needs of the
+        <a href="http://www.w3.org/standards/semanticweb/">Semantic Web</a>.
+      </p>
+    </section>
+    <section>
+      <h3>Document conventions</h3>
+      <p>
+        Triples in this document are expressed
+        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!turtle]].
+        This document uses the following namespace prefixes:
+      </p>
+      <pre>
+@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
+@prefix rdfs:        &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
+@prefix dbpedia:     &lt;http://dbpedia.org/resource/&gt;.
+@prefix dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;.
+      </pre>
+    </section>
+  </section>
+
+  <section id="conformance">
+  </section>
+
+  <section id="definitions">
+    <h2>Definitions</h2>
+    <section>
+      <h3>Linked Data Fragment</h3>
+      <p>
+        A <dfn>Linked Data dataset</dfn> [[!void]] is a collection of RDF triples [[!RDF-CONCEPTS]]
+        that are published, maintained or aggregated by a single provider.
+      </p>
+      <aside class="example" title="Linked Data datasets">
+        <p>
+          All of the following are Linked Data datasets:
+        </p>
+        <ul>
+          <li><a href="http://wiki.dbpedia.org/Downloads39">DBpedia version 3.9</a></li>
+          <li><a href="http://wiki.dbpedia.org/Downloads38">DBpedia version 3.8</a></li>
+          <li><a href="http://www.freebase.com/">The latest Freebase version</a></li>
+        </ul>
+      </aside>
+
+      <p>
+        A <dfn>Linked Data Fragment</dfn> of a <em>Linked Data dataset</em>
+        is the subset of this dataset that matches a specific <em>selector</em>,
+        together with optional <em>metadata</em> and optional <em>hypermedia controls</em>
+        for these triples and/or the dataset itself.
+      </p>
+      <p>
+        Any proper or improper subset of a Linked Data dataset,
+        regardless of how this subset was created,
+        is thus by definition a Linked Data Fragment.
+        Larger Linked Data Fragments can be <em>paged</em>.
+      </p>
+      <aside class="example" title="Linked Data Fragments">
+        <p>
+          All of the following are (different) Linked Data Fragments of the
+          <a href="http://wiki.dbpedia.org/Downloads39">DBpedia 3.9</a> dataset:
+        </p>
+        <ul>
+          <li>The triples with <code>dbpedia:Germany</code> as subject.</li>
+          <li>The triples with <code>dbpedia:Germany</code> as object.</li>
+          <li>
+            The triples with <code>dbpedia:Germany</code> as subject or object,
+            together with the cardinality of all triples about countries,
+            and hyperlinks to fragments about neighbouring countries.
+          </li>
+          <li>Triples about countries in Asia, with links to documents about these countries.</li>
+          <li>The result of a specific SPARQL <code>CONSTRUCT</code> query over DBpedia.</li>
+          <li>A dump of the entire DBpedia dataset, with metadata about its size.</li>
+        </ul>
+      </aside>
+
+      <p>
+        A <dfn>selector</dfn> of a Linked Data Fragment
+        is a boolean function that decides
+        whether or not a certain triple or graph of triples of the corresponding dataset
+        is part of that fragment.
+        A <dfn>selector type</dfn> is a class of <em>selectors</em>
+        with similar characteristics.
+      </p>
+      <p>
+        In the general definition of a Linked Data Fragment,
+        there are no restrictions on what these selectors should look like.
+        They could be triple patterns, basic graph patterns,
+        SPARQL queries [[!RDF-SPARQL-QUERY]],
+        or even natural language queries.
+        Specific elector types help us characterize various kinds of Linked Data Fragments.
+      </p>
+      <aside class="example" title="Selectors">
+        <p>All of the following are selectors:</p>
+        <ul>
+          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
+          <li>
+            The graph pattern
+            <code>{ dbpedia:Germany rdf:type ?t. ?t rdfs:subclassOf ?t2. }</code>.
+          </li>
+          <li>The function <code>f(t) = true</code> <em>(universal selector)</em>.</li>
+          <li>The function <code>f(t) = false</code> <em>(empty selector)</em>.</li>
+          <li>
+            The criterion
+            “<code>true</code> if the triple describes a country; <code>false</code> otherwise”.
+          </li>
+          <li>A specific SPARQL query.</li>
+        </ul>
+        <p>The following are examples of selector <em>types</em>:</p>
+        <ul>
+          <li>A triple pattern.</li>
+          <li>A basic graph pattern.</li>
+          <li>A SPARQL query.</li>
+        </ul>
+      </aside>
+
+      <p>
+        <dfn>Metadata</dfn> of a Linked Data Fragment or dataset consists of
+        information <em>about</em> the data of that fragment or dataset,
+        without being part of the triples in the dataset itself.
+        Some Linked Data Fragments might have an empty metadata set.
+      </p>
+      <aside class="example" title="Metadata">
+        <p>
+          The following properties could be present as metadata of Linked Data Fragments:
+        </p>
+        <ul>
+          <li>The total number of triples in the entire dataset.</li>
+          <li>The total number of triples in the current Linked Data Fragment.</li>
+          <li>The license, author, and publisher of the dataset.</li>
+        </ul>
+      </aside>
+
+      <p>
+        A <dfn>hypermedia control</dfn> is a function that generates an HTTP URL [[!RFC3986]]
+        based on zero or more arguments.
+        In particular, a <dfn>hyperlink</dfn> is a zero-argument function (i.e., a URL),
+        and a <dfn>hypermedia form</dfn> is a multi-argument function.
+        Some Linked Data Fragments might have an empty hypermedia control set.
+      </p>
+      <aside class="example" title="Hypermedia controls">
+        <p>
+          The following hypermedia controls could be present on (pages of) Linked Data Fragments:
+        </p>
+        <ul>
+          <li>A link to a data dump of the entire collection.</li>
+          <li>Links to documents related to entities in the current Linked Data Fragment.</li>
+          <li>A form that allows to enter custom selectors,
+              leading to a Linked Data Fragment with the specified selector.</li>
+        </ul>
+      </aside>
+
+      <p>
+        Finally, a <dfn>Linked Data Fragment type</dfn>
+        is a class of those Linked Data Fragments that share common rules with regard to
+        their selector type, metadata set, and hypermedia control set.
+      </p>
+      <p>
+        Common Linked Data Fragment types are listed in
+        <a href="#existing-linked-data-fragments">the next section</a>.
+      </p>
+    </section>
+    <section>
+      <h3>Linked Data Fragments server</h3>
+      <p>
+        A <dfn>Linked Data Fragments server</dfn> is an HTTP server [[!RFC2616]]
+        that offers <em>all</em> possible Linked Data Fragments
+        of one or more specific Linked Data Fragment types
+        of one or more datasets.
+        It MUST support at least one triple-based representation for each fragment.
+      </p>
+      <aside class="example" title="Linked Data Fragments servers">
+        <p>The following are examples of Linked Data Fragments servers:</p>
+        <ul>
+          <li>A SPARQL endpoint.</li>
+          <li>A server of Linked Data documents (used for dereferencing).</li>
+          <li>A server hosting compressed dataset dumps in Turtle format.</li>
+        </ul>
+      </aside>
+    </section>
+    <section>
+      <h3>Linked Data Fragments client</h3>
+      <p>
+        A <dfn>Linked Data Fragments client</dfn> is an HTTP client
+        that can access Linked Data Fragments
+        of at least one specific Linked Data Fragments type.
+        It SHOULD be able to consume at least one triple-based representation
+        of the fragments it supports.
+      </p>
+      <aside class="example" title="Linked Data Fragments clients">
+        <p>The following are examples of Linked Data Fragments clients:</p>
+        <ul>
+          <li>A Web browser is a client of SPARQL endpoints.</li>
+          <li>A client-side script can be client of SPARQL endpoints.</li>
+          <li>A link-traversing bot can be a client of Linked Data documents.</li>
+        </ul>
+      </aside>
+    </section>
+  </section>
+
+  <section class="informative">
+    <h2>Existing Linked Data Fragments</h2>
+    <p>
+      Since the goal of Linked Data Fragments
+      is to provide a uniform view on Linked Data interfaces on the Web,
+      we will describe how existing types of Linked Data interfaces
+      fit into the Linked Data Fragments definition.
+      As each fragment is characterized by its selector, metadata set and control set,
+      we will define interfaces through those aspects.
+    </p>
+
+    <section>
+      <h3>Data dumps</h3>
+      <p>
+        A <dfn>data dump</dfn> of a dataset
+        can be defined as a Linked Data Fragment with the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The selector of a data dump is the universal selector
+          <code>f(t) = true</code> for all triples <code>t</code>.
+          In other words,
+          a data dump is an RDF representation
+          of <em>all</em> triples of its dataset.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          A data dump can contain metadata such as
+          the file size of the data dump in a particular representation,
+          the author and/or publisher of the dataset,
+          and/or licensing information.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A data dump can contain links to other entities,
+          either through their URLs (dereferencing)
+          or through other means.
+        </dd>
+      </dl>
+      <p>
+        Many publishers of Linked Data offer such downloadable data dumps of their datasets.
+        They can be used to set up a local triple store.
+      </p>
+      <aside class="example" title="Data dumps">
+        <p>
+          All of the following are data dumps:
+        </p>
+        <ul>
+          <li>A zipped file that contains all triples of DBpedia 3.9 in Turtle format.</li>
+          <li>A JSON-LD file that contains all triples of Freebase.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Linked Data documents</h3>
+      <p>
+        A <dfn>Linked Data document</dfn> of a dataset
+        can be defined as a Linked Data Fragment with the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The selector of a Linked Data document
+          takes a single entity (subject) as argument,
+          and it matches triples that are related to this entity.
+          <br>
+          The precise functional definition of the selector is implementation-specific,
+          but it includes those triples that match the triple pattern
+          <code>{ &lt;s&gt; ?p ?o. }</code>
+          and possibly contains triples matching <code>{ ?o ?p &lt;s&gt;. }</code>,
+          with <code>&lt;s&gt;</code> the chosen entity argument.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          A Linked Data document can contain metadata such as
+          the author and/or publisher of the dataset,
+          and/or licensing information.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A Linked Data document should contain links to other Linked Data documents,
+          in particular through the URLs of entities that are described in the document.
+          <br>
+          The dataset's canonical URLs of each entity
+          should dereference to the Linked Data document about this entity
+          (i.e., the document with this entity as the argument of the selector).
+        </dd>
+      </dl>
+      <p>
+        Linked Data documents can be used to browse a dataset,
+        or to execute queries using link-traversal-based query execution.
+      </p>
+      <aside class="example" title="Linked Data documents">
+        <p>
+          All of the following are Linked Data documents:
+        </p>
+        <ul>
+          <li>A Turtle file with triples from DBpedia 3.8 about <code>dbpedia:Germany</code>.</li>
+          <li>An HTML+RDFa document with triples from DBpedia 3.8 about <code>dbpedia:Germany</code>.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>SPARQL query results</h3>
+      <p>
+        A <dfn>SPARQL query result</dfn> of a dataset
+        can be defined as a Linked Data Fragment with the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The selector of a SPARQL query result is a SPARQL <code>CONSTRUCT</code> query,
+          so the data consists of those triples that result from executing this query.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          The metadata set is empty.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          While most SPARQL result representations do not contain hypermedia controls,
+          the SPARQL URL of the endpoint that generates the fragment
+          can serve as a URI template [[!RFC6570]] to retrieve other SPARQL query results.
+        </dd>
+      </dl>
+      <p>
+        SPARQL results allow to extract very specific fragments of a dataset.
+      </p>
+      <p>
+        Note that only results of <code>CONSTRUCT</code>
+        (and thus not <code>SELECT</code> or <code>ASK</code>) SPARQL queries
+        are considered Linked Data Fragments.
+        This is because only the execution of <code>CONSTRUCT</code> queries
+        results in data triples.
+        However, the <code>CONSTRUCT</code> query can contain <code>SELECT</code> subqueries.
+      </p>
+      <p>
+        The fact that a SPARQL query result is a Linked Data Fragment
+        means that each SPARQL endpoint is, by definition, a Linked Data Fragments server.
+      </p>
+      <aside class="example" title="SPARQL query results">
+        <p>
+          The following is a SPARQL query result:
+        </p>
+        <ul>
+          <li>
+            The Turtle representation of the execution on DBpedia 3.8 of
+<pre><code>CONSTRUCT {
+  ?person rdfs:label ?name; dbpedia-owl:birthPlace ?city.
+}
+WHERE {
+  ?person a foaf:Person;
+          rdfs:label ?name; dbpedia-owl:birthPlace ?city.
+  ?city dbpedia-owl:country dbpedia:Germany.
+}
+</code></pre>
+          </li>
+        </ul>
+        <p>
+          The following could be a SPARQL URI template
+          to obtain the fragment corresponding to the above query:
+        </p>
+        <ul>
+          <li><code>http://dbpedia.org/sparql{?query}</code></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Triple pattern fragments</h3>
+      <p>
+        A <dfn>triple pattern fragment</dfn>
+        (also known as <dfn>basic Linked Data Fragment</dfn>)
+        is a Linked Data Fragment with the following characteristics:
+      </p>
+      <dl>
+        <dt>data / selector</dt>
+        <dd>
+          The selector of a triple pattern fragment is a triple pattern
+          <code>{ ?s ?p ?o. }</code>, in which each of the three components
+          can be variable or constant.
+          The data consists of those triples that match the triple pattern.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          The metadata set of a triple pattern fragment contains a triple
+          that expresses the estimated total number of matches for the pattern.
+          <br>
+          Since fragments can be paged,
+          this information cannot always be derived from the data itself.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A triple pattern fragment contains hypermedia controls
+          that allow to retrieve any other triple pattern fragment of the same dataset.
+        </dd>
+      </dl>
+      <p>
+        Triple pattern fragments can be used to browse a dataset
+        with more flexibility than Linked Data documents.
+        They can also be used to solve more complex queries,
+        such as SPARQL queries,
+        on the client side.
+      </p>
+      <aside class="example" title="Triple pattern fragments">
+        <p>
+          The following is a triple pattern fragment:
+        </p>
+        <ul>
+          <li>
+            A Turtle representation of the triples matching
+            <code>{ ?s ?p dbpedia:Germany. }</code>,
+            together with a triple that represents the total number of matches,
+            as well as a form that represents the URI template
+            <code>http://example.org/fragments{?s,p,o}</code>.
+          </li>
+        </ul>
+      </aside>
+      <p>
+        Triple pattern fragments are described in detail in
+        a <a href="../triple-pattern-fragments/">separate document</a>.
+      </p>
+    </section>
+  </section>
+
+</body>
+</html>
