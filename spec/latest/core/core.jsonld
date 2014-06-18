@@ -220,7 +220,7 @@
       "@type": "hydra:Class",
       "subClassOf": "hydra:Operation",
       "label": "ReplaceResourceOperation",
-      "comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It data of the type specified in hydra:expects and results in a resource of the type specified by hydra:returns.",
+      "comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It expects data of the type specified in hydra:expects and results in a resource of the type specified by hydra:returns.",
       "vs:term_status": "testing"
     },
     {
