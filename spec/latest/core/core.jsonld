@@ -6,6 +6,7 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
+    "dc": "http://purl.org/dc/terms/",
     "apiDocumentation": "hydra:apiDocumentation",
     "ApiDocumentation": "hydra:ApiDocumentation",
     "title": "hydra:title",
@@ -54,6 +55,8 @@
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
+    "preferredPrefix": "http://purl.org/vocab/vann/preferredNamespacePrefix",
+    "licence": { "@id": "http://creativecommons.org/ns#licence", "@type": "@id" },
     "domain": { "@id": "rdfs:domain", "@type": "@vocab" },
     "range": {"@id": "rdfs:range", "@type": "@vocab" },
     "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@vocab" },
@@ -64,6 +67,11 @@
   "@type": "owl:Ontology",
   "label": "The Hydra Core Vocabulary",
   "comment": "A lightweight vocabulary for hypermedia-driven Web APIs",
+  "preferredPrefix": "hydra",
+  "dc:description": "The Hydra Core Vocabulary is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts commonly used in Web APIs it enables the creation of generic API clients.",
+  "dc:rights": "Copyright © 2012-2014 the Contributors to the Hydra Core Vocabulary Specification",
+  "dc:publisher": "Hydra W3C Community Group",
+  "cc:licence": "http://creativecommons.org/licenses/by/4.0/",
   "defines": [
     {
       "@id": "hydra:Resource",
