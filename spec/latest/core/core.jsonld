@@ -68,10 +68,10 @@
   "label": "The Hydra Core Vocabulary",
   "comment": "A lightweight vocabulary for hypermedia-driven Web APIs",
   "preferredPrefix": "hydra",
-  "dc:description": "The Hydra Core Vocabulary is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts commonly used in Web APIs it enables the creation of generic API clients.",
+  "licence": "http://creativecommons.org/licenses/by/4.0/",
   "dc:rights": "Copyright © 2012-2014 the Contributors to the Hydra Core Vocabulary Specification",
   "dc:publisher": "Hydra W3C Community Group",
-  "cc:licence": "http://creativecommons.org/licenses/by/4.0/",
+  "dc:description": "The Hydra Core Vocabulary is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts commonly used in Web APIs it enables the creation of generic API clients.",
   "defines": [
     {
       "@id": "hydra:Resource",
@@ -79,7 +79,7 @@
       "subClassOf": "rdfs:Resource",
       "label": "Hydra Resource",
       "comment": "The class of dereferenceable resources.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Class",
@@ -87,7 +87,7 @@
       "subClassOf": [ "hydra:Resource", "rdfs:Class" ],
       "label": "Hydra Class",
       "comment": "The class of Hydra classes. Hydra classes and their instances are dereferenceable resources.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Link",
@@ -95,7 +95,7 @@
       "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Link",
       "comment": "The class of properties representing links.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:apiDocumentation",
@@ -103,7 +103,7 @@
       "label": "apiDocumentation",
       "comment": "A link to the API documentation",
       "range": "hydra:ApiDocumentation",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:ApiDocumentation",
@@ -111,7 +111,7 @@
       "subClassOf": "hydra:Resource",
       "label": "ApiDocumentation",
       "comment": "The Hydra API documentation class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:entrypoint",
@@ -120,7 +120,7 @@
       "comment": "A link to main entry point of the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Resource",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:supportedClass",
@@ -129,7 +129,7 @@
       "comment": "A class known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:statusCodes",
@@ -137,7 +137,7 @@
       "label": "status codes",
       "comment": "Additional information about status codes that might be returned by the Web API",
       "range": "hydra:StatusCodeDescription",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:supportedProperty",
@@ -146,7 +146,7 @@
       "comment": "The properties known to be supported by a Hydra class",
       "domain": "hydra:Class",
       "range": "hydra:SupportedProperty",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:SupportedProperty",
@@ -154,7 +154,7 @@
       "subClassOf": "hydra:Resource",
       "label": "Supported Property",
       "comment": "A property known to be supported by a Hydra class.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:property",
@@ -162,7 +162,7 @@
       "label": "property",
       "comment": "A property",
       "range": "rdf:Property",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:required",
@@ -170,7 +170,7 @@
       "label": "required",
       "comment": "True if the property is required, false otherwise.",
       "range": "xsd:boolean",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:readonly",
@@ -179,7 +179,7 @@
       "comment": "True if the property is read-only, false otherwise.",
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:writeonly",
@@ -188,7 +188,7 @@
       "comment": "True if the property is write-only, false otherwise.",
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:supportedOperation",
@@ -196,7 +196,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:operation",
@@ -205,7 +205,7 @@
       "comment": "An operation supported by the Hydra resource",
       "domain": "hydra:Resource",
       "range": "hydra:Operation",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Operation",
@@ -213,7 +213,7 @@
       "subClassOf": "hydra:Resource",
       "label": "Operation",
       "comment": "An operation.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:CreateResourceOperation",
@@ -246,7 +246,7 @@
       "comment": "The HTTP method.",
       "domain": "hydra:Operation",
       "range": "xsd:string",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:expects",
@@ -255,7 +255,7 @@
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
       "range": "hydra:Class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:returns",
@@ -264,7 +264,7 @@
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
       "range": "hydra:Class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:StatusCodeDescription",
@@ -272,7 +272,7 @@
       "subClassOf": "hydra:Resource",
       "label": "Status code description",
       "comment": "Additional information about a status code that might be returned.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:statusCode",
@@ -281,7 +281,7 @@
       "comment": "The HTTP status code",
       "domain": "hydra:StatusCodeDescription",
       "range": "xsd:integer",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:title",
@@ -307,7 +307,7 @@
       "subClassOf": "hydra:StatusCodeDescription",
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Collection",
