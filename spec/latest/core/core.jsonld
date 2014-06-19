@@ -73,7 +73,7 @@
   "dc:description": "The Hydra Core Vocabulary is a lightweight vocabulary to create hypermedia-driven Web APIs. By specifying a number of concepts commonly used in Web APIs it enables the creation of generic API clients.",
   "dc:rights": "Copyright © 2012-2014 the Contributors to the Hydra Core Vocabulary Specification",
   "dc:publisher": "Hydra W3C Community Group",
-  "cc:licence": "http://creativecommons.org/licenses/by/4.0/",
+  "cc:license": "http://creativecommons.org/licenses/by/4.0/",
   "cc:attributionName": "Hydra W3C Community Group",
   "cc:attributionURL": "http://www.hydra-cg.com/",
   "defines": [
