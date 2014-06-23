@@ -4,6 +4,7 @@
   <title>Triple Pattern Fragments</title>
   <meta charset="utf-8">
   <script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+  <script type="text/javascript" src="../../js/respec-w3c-extensions.js" class="remove"></script>
   <script class="remove">
     var respecConfig = {
         specStatus: "unofficial",
@@ -28,6 +29,7 @@
         }],
         edDraftURI: "http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/",
         maxTocLevel: 2,
+        localBiblio: localBibliography,
     };
   </script>
   <style>
@@ -313,7 +315,8 @@
         whose selector has the given parameter values.
       </p>
       <p>
-        This control MUST be expressed as a form in the Hydra core vocabulary
+        This control MUST be expressed as a form in the
+        <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a> [[!HYDRA-CORE]]
         using triples with the following structure:
       </p>
 <pre><code>&lt;http://example.org/example#dataset&gt;
@@ -438,8 +441,9 @@
       <p class="issue">
         The relation between a page and the associated fragment
         should actually be expressed with a more precise predicate,
-        for instance, one of the Hydra core vocabulary paging predicates.
-        However, this part of the core vocabulary is still in development at the time of writing.
+        for instance, one of the
+        <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a> paging predicates.
+        However, this part of the Core Vocabulary is still in development at the time of writing.
       </p>
 
       <p>
@@ -595,7 +599,8 @@
           <dd>
         </dl>
         <p class="issue">
-          The Hydra core vocabulary could capture the above at some point.
+          The <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a>
+          could capture the above at some point.
           <a href="https://github.com/HydraCG/Specifications/issues/30">See issue 30.</a>
         </p>
         <p>
