@@ -337,7 +337,7 @@
         It furthermore assumes that the parameter names of
         <var>subject</var>, <var>predicate</var>, and <var>object</var>
         are <code>s</code>, <code>p</code>, and <code>o</code>, respectively.
-        All of these MUST be adjusted to fit the configuration of a specific fragment server.
+        All of these MUST be adjusted to fit the configuration of a specific fragments server.
         Note that the form MUST be attached to the <em>dataset</em>,
         as the form filters the dataset and not the fragment,
         and the <em>fragment</em> MUST explicitly be listed as a subset of the dataset,
@@ -508,12 +508,12 @@
   </section>
 
   <section id="server">
-    <h2>Triple Pattern Fragment servers</h2>
+    <h2>Triple Pattern Fragments servers</h2>
     <section>
       <h3>Definition</h3>
       <p>
         A server can host one or more datasets as triple pattern fragments.
-        For a server to be called a <dfn>triple pattern fragment server</dfn>
+        For a server to be called a <dfn>triple pattern fragments server</dfn>
         of a given dataset,
         it MUST offer access to <em>all</em> possible triple fragments of that dataset.
         Each of the fragment resources MUST be accessible through HTTP using a unique URL.
@@ -536,7 +536,7 @@
     <section>
       <h3>Interface</h3>
       <p>
-        Triple pattern fragment servers are HTTP servers
+        Triple pattern fragments servers are HTTP servers
         and hence MUST comply with the HTTP specification [[!RFC2616]].
       </p>
 
@@ -563,7 +563,7 @@
           However, since hypermedia controls generally accept strings as input,
           we need to specify how to convert IRIs, literals, and variables to strings
           for use as <var>subject</var>, <var>predicate</var>, and <var>object</var> parameter values.
-          A triple pattern fragment server MUST at least support the following options:
+          A triple pattern fragments server MUST at least support the following options:
         </p>
         <dl>
           <dt>constant IRI</dt>
@@ -622,7 +622,7 @@
       <section>
         <h4>HTTP GET and HEAD</h4>
         <p>
-          Triple pattern fragment servers MUST support
+          Triple pattern fragments servers MUST support
           the HTTP <code>GET</code> and <code>HEAD</code> methods.
           When an HTTP <code>GET</code> or <code>HEAD</code> request arrives, a server MUST:
         </p>
@@ -673,7 +673,7 @@
           In order to allow browser applications to access fragments,
           Cross-Origin Resource Sharing [[!CORS]] MUST be enabled on the server.
           To this end,
-          triple pattern fragment servers MUST emit the following header and value
+          triple pattern fragments servers MUST emit the following header and value
           on <em>all</em> HTTP responses to requests for triple pattern fragments,
           regardless of their status code:
         </p>
