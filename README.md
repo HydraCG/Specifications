@@ -25,6 +25,6 @@ the [Hydra W3C Community Group][3].
 More information about Hydra is available at http://www.hydra-cg.com/
 
 
-[1]: http://www.hydra-cg.com/hydra/spec/latest/core/
+[1]: http://www.hydra-cg.com/spec/latest/core/
 [2]: http://www.hydra-cg.com/linked-data-fragments/
 [3]: http://m.lanthi.com/HydraCG
