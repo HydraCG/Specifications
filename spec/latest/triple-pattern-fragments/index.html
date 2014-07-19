@@ -51,8 +51,8 @@
       and hypermedia controls to find all other triple pattern fragments of the dataset.
     </p>
     <p>
-      The document additionally specifies requirements
-      for servers of triple pattern fragments.
+      The document additionally specifies requirements for supporting servers
+      by defining constraints for Web APIs of triple pattern fragments.
     </p>
   </section>
 
@@ -512,13 +512,23 @@
     <section>
       <h3>Definition</h3>
       <p>
-        A server can host one or more datasets as triple pattern fragments.
+        A server can make one or more datasets available as triple pattern fragments
+        through a Web API.
         For a server to be called a <dfn>triple pattern fragments server</dfn>
         of a given dataset,
         it MUST offer access to <em>all</em> possible triple fragments of that dataset.
         Each of the fragment resources MUST be accessible through HTTP using a unique URL.
         There MUST at least exist one triple-based format [[!rdf11-concepts]]
         in which the server offers representations of each triple fragment.
+      </p>
+      <p class="note">
+        There is no such thing as <em>the</em> Web API for triple pattern fragments,
+        as many variations on such an API are possible.
+        <br>
+        Therefore, this documents instead lists constraints
+        for servers that expose a triple pattern fragments Web API.
+        If a server follows these constraints,
+        generic triple pattern fragment clients can access all triple pattern fragments on it.
       </p>
       <p>
         Servers MAY have a form of access control;
