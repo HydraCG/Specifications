@@ -361,7 +361,8 @@
           that each representation should contain the controls towards next steps.
           As a result, clients can use triple pattern fragments
           without any prior knowledge.
-          This also means a server can freely choose the URLs of its triple pattern fragments,
+          This also means a server can freely choose
+          the <a href="urls-for-triple-pattern-fragments">URLs of its triple pattern fragments</a>,
           as well as the names of parameters
           (e.g., <code>subject</code>, <code>predicate</code>, <code>object</code>
                  instead of <code>s</code>, <code>p</code>, <code>o</code> in the above snippet).
@@ -554,15 +555,36 @@
       </p>
 
       <section>
-        <h4>URLs for fragments</h4>
+        <h4>URLs for triple pattern fragments</h4>
         <p>
           A server MUST assign URLs to <em>all</em> possible
           (pages of) triple pattern fragments of its datasets.
           <br>
           How URL assignment happens is implementation-dependent;
           this choice is communicated to clients
-          through hypermedia controls of fragments' representations.
+          through the <a href="#controls">hypermedia controls</a> of fragments' representations.
         </p>
+        <aside class="example" title="Choosing URLs for triple pattern fragments">
+          <p>
+            All of the following are possible URI templates [[!RFC6570]]
+            for triple pattern fragments.
+          </p>
+          <ul>
+            <li><code>http://example.org/dataset?subject={subject}&amp;predicate={predicate}&amp;object={object}</code></li>
+            <li><code>http://example.org/dataset?s={subject}&amp;p={predicate}&amp;o={object}</code></li>
+            <li><code>http://example.org/mydata/fragments/{subject}/{predicate}/{object}/</code></li>
+            <li>…</li>
+          </ul>
+          <p>
+            It is entirely up to the server to determine such templates (if desired)
+            as part of its Web API.
+          </p>
+          <p>
+            Given any triple pattern fragment retrieved from a server,
+            clients can determine the correct URL to a fragment for a specific triple pattern
+            by interpreting the <a href="#controls">hypermedia controls</a> in the retrieved fragment.
+          </p>
+        </aside>
         <p>
           A URL of a fragment MUST identify the fragment resource
           and MUST NOT identify a representation thereof.
