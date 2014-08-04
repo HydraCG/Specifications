@@ -163,32 +163,36 @@
       </section>
     </section>
     <section>
-      <h3>Scope and aim</h3>
-      <p>
-        On the Web, machines can access, browse, and query
-        <a href="http://www.w3.org/DesignIssues/LinkedData.html">Linked Data</a>
-        in various ways.
-        For instance,
-        they can extract <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> data
-        from HTML pages,
-        download a large dataset in <a href="http://www.w3.org/TR/rdfa-syntax/">Turtle</a>,
-        or query a <a href="http://www.w3.org/TR/sparql11-protocol/">SPARQL endpoint</a>.
-      </p>
+      <h3>Aim, scope, and intended audience</h3>
       <p>
         The goal of <em>Linked Data Fragments</em> is to provide a uniform view
-        on all current and future ways of publishing Linked Data on the Web.
-        We want to provide a framework that can characterize all Linked Data interfaces
+        on all possible interfaces to Linked Data.
+        Thereby, we want to provide a framework that can characterize all Linked Data interfaces
         in order to allow qualitative and quantitative comparisons.
         Furthermore, we want to stimulate the development of new kinds of interfaces
         that address the current and emerging needs of the
         <a href="http://www.w3.org/standards/semanticweb/">Semantic Web</a>.
+      </p>
+      <p>
+        This documents defines Linked Data Fragments,
+        and specifies what clients and servers of Linked Data Fragments are.
+        It does not redefine existing interfaces or introduce new ones.
+        Instead, it explains how these interfaces can be seen
+        from the Linked Data Fragments perspective.
+      </p>
+      <p>
+        If you want to analyze existing Linked Data interfaces
+        or define new interfaces,
+        we encourage you to read this document.
+        If instead you want to implement one of the discussed interfaces,
+        the individual specifications (which are linked from this document) will help you better.
       </p>
     </section>
     <section>
       <h3>Document conventions</h3>
       <p>
         Triples in this document are expressed
-        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!turtle]].
+        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[turtle]].
         This document uses the following namespace prefixes:
       </p>
 <pre><code>@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
