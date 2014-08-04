@@ -210,9 +210,9 @@
       </aside>
 
       <p>
-        A <dfn>hypermedia control</dfn> is a function that generates an HTTP URL [[!RFC3986]]
+        A <dfn>hypermedia control</dfn> is a function that generates an IRI [[!RFC3987]]
         based on zero or more arguments.
-        In particular, a <dfn>hyperlink</dfn> is a zero-argument function (i.e., a URL),
+        In particular, a <dfn>hyperlink</dfn> is a zero-argument function (i.e., an IRI),
         and a <dfn>hypermedia form</dfn> is a multi-argument function.
         Some Linked Data Fragments might have an empty hypermedia control set.
       </p>
@@ -241,7 +241,7 @@
     <section>
       <h3>Linked Data Fragments server</h3>
       <p>
-        A <dfn>Linked Data Fragments server</dfn> is an HTTP server [[!RFC7230]]
+        A <dfn>Linked Data Fragments server</dfn> is a server
         that offers <em>all</em> possible Linked Data Fragments
         of one or more specific Linked Data Fragment types
         of one or more datasets.
@@ -259,7 +259,7 @@
     <section>
       <h3>Linked Data Fragments client</h3>
       <p>
-        A <dfn>Linked Data Fragments client</dfn> is an HTTP client
+        A <dfn>Linked Data Fragments client</dfn> is a client
         that can access Linked Data Fragments
         of at least one specific Linked Data Fragments type.
         It SHOULD be able to consume at least one triple-based representation
