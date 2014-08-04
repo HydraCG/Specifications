@@ -112,6 +112,55 @@
           <li>RDF triples can be embedded in HTML through RDF-A [[HTML-RDFA]].</li>
         </ul>
       </section>
+      <section>
+        <h4>How Linked Data can be accessed</h4>
+        <p>
+          The most straightforward way to access Linked Data
+          is to follow the URL of a <a href="#linked-data-documents">Linked Data document</a>.
+          In other words, we use the HTTP protocol [[RFC2616]]
+          to retrieve a <em>representation</em>
+          of the <em>resource</em> identified by that URL.
+          This process is called <dfn>dereferencing</dfn>.
+          For instance, you can copy and paste the URL
+          <code><a href="http://dbpedia.org/resource/Walt_Disney" target="_blank">http://dbpedia.org/&#8203;resource/&#8203;Walt_Disney</a></code>
+          in your browser, which will lead to an HTML document with triples in RDFa.
+          Automated clients might ask for other representations of this resource,
+          for instance, in JSON-LD or Turtle.
+        </p>
+        <p>
+          However, such an interface based on Linked Data documents and dereferencing
+          has its limitations.
+          For example, while the URL
+          <code><a href="http://xmlns.com/foaf/0.1/#Person" target="_blank">http://xmlns.com/foaf/0.1/#Person</a></code>
+          describes the notion of “a person”,
+          it does not give access to a list of all persons.
+          This would in fact be impossible:
+          the Web server at <code>xmlns.com</code> is not supposed to know
+          which resources from <code>dbpedia.org</code> use this type.
+          The alternative to scan all documents on <code>dbpedia.org</code>
+          and extract this information would be highly impractical.
+          Therefore, if we want to retrieve the members of this list efficiently,
+          we need another interface.
+        </p>
+        <p>
+          An alternative interface is a <a href="#data-dumps">data dump</a>,
+          which is a typically large file that contains all triples from a certain dataset.
+          Using a data dump of <code>dbpedia.org</code>,
+          we could find the list of all people.
+          Unfortunately, this would involve downloading a lot of information,
+          even though we are only interested in a small fraction.
+          SPARQL endpoints [[RDF-SPARQL-PROTOCOL]] offer an interface
+          that allows to select data much more granularly.
+          This is more convenient for clients,
+          but individual requests are considerably more expensive for servers.
+        </p>
+        <p>
+          The above indicates that each type of interface to Linked Data
+          comes with its own characteristics,
+          which can lead to advantages or disadvantages
+          in particular situations.
+        </p>
+      </section>
     </section>
     <section>
       <h3>Scope and aim</h3>
