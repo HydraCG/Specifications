@@ -655,30 +655,11 @@
       </section>
 
       <section>
-        <h4>HTTP GET and HEAD</h4>
+        <h4>HTTP GET</h4>
         <p>
           Triple pattern fragments servers MUST support
-          the HTTP <code>GET</code> and <code>HEAD</code> methods.
-          When an HTTP <code>GET</code> or <code>HEAD</code> request arrives, a server MUST:
+          the HTTP <code>GET</code> method.
         </p>
-        <ul>
-          <li>
-            reply with status code <code>200 OK</code>
-            if the fragment (page) with the given URL exists and is non-empty,
-            i.e., one or more triples match the selector;
-          </li>
-          <li>
-            reply with status code <code>404 Not Found</code>
-            if the fragment (page) with the given URL does not exist or is empty,
-            i.e., no triples match the selector.
-          </li>
-          <li>
-            reply with status code <code>404 Not Found</code>
-            if the selector is invalid
-            i.e., the parameter values are not in the domain of the selector.
-            This is the case if, for instance, a literal is used as subject.
-          </li>
-        </ul>
         <p>
           For <code>GET</code> requests,
           a server MUST return a representation of the fragment corresponding to the request URL,
