@@ -505,22 +505,22 @@
     <p>
       Since the goal of Linked Data Fragments
       is to provide a uniform view on Linked Data interfaces on the Web,
-      we will describe how existing types of Linked Data interfaces
+      this section describes how existing types of Linked Data interfaces
       fit into the Linked Data Fragments definition.
-      As each fragment is characterized by its selector, metadata set and control set,
-      we will define interfaces through those aspects.
+      Basically, each interface offers Linked Data Fragments of a specific type,
+      which is thus characterized by its data selector, metadata set, and control set.
     </p>
 
     <section>
       <h3>Data dumps</h3>
       <p>
         A <dfn>data dump</dfn> of a dataset
-        can be defined as a Linked Data Fragment with the following characteristics:
+        is an instance of a Linked Data Fragment type with the following characteristics:
       </p>
       <dl>
-        <dt>data / selector</dt>
+        <dt>data</dt>
         <dd>
-          The selector of a data dump is the universal selector
+          The selector is the universal selector
           <code>f(t) = true</code> for all triples <code>t</code>.
           In other words,
           a data dump is an RDF representation
@@ -528,21 +528,22 @@
         </dd>
         <dt>metadata</dt>
         <dd>
-          A data dump can contain metadata such as
+          The metadata set can contain triples that express, for example,
           the file size of the data dump in a particular representation,
           the author and/or publisher of the dataset,
           and/or licensing information.
         </dd>
-        <dt>hypermedia controls</dt>
+        <dt>controls</dt>
         <dd>
-          A data dump can contain links to other entities,
+          The control set can contain links to other entities,
           either through their URLs (dereferencing)
           or through other means.
         </dd>
       </dl>
       <p>
         Many publishers of Linked Data offer such downloadable data dumps of their datasets.
-        They can be used to set up a local triple store.
+        They can be used to set up a local triple store,
+        but are not fit for live querying because of their typically large file size.
       </p>
       <aside class="example" title="Data dumps">
         <p>
@@ -559,28 +560,27 @@
       <h3>Linked Data documents</h3>
       <p>
         A <dfn>Linked Data document</dfn> of a dataset
-        can be defined as a Linked Data Fragment with the following characteristics:
+        is an instance of a Linked Data Fragment type with the following characteristics:
       </p>
       <dl>
-        <dt>data / selector</dt>
+        <dt>data</dt>
         <dd>
-          The selector of a Linked Data document
-          takes a single entity (subject) as argument,
+          The selector takes a single entity (subject) as argument,
           and it matches triples that are related to this entity.
           <br>
           The precise functional definition of the selector is implementation-specific,
-          but it includes those triples that match the triple pattern
+          but it usually contains those triples that match the triple pattern
           <code>{ &lt;s&gt; ?p ?o. }</code>
-          and possibly contains triples matching <code>{ ?o ?p &lt;s&gt;. }</code>,
+          and possibly triples matching <code>{ ?o ?p &lt;s&gt;. }</code>,
           with <code>&lt;s&gt;</code> the chosen entity argument.
         </dd>
         <dt>metadata</dt>
         <dd>
-          A Linked Data document can contain metadata such as
+          The metadata set can contain triples about
           the author and/or publisher of the dataset,
           and/or licensing information.
         </dd>
-        <dt>hypermedia controls</dt>
+        <dt>controls</dt>
         <dd>
           A Linked Data document should contain links to other Linked Data documents,
           in particular through the URLs of entities that are described in the document.
@@ -609,19 +609,19 @@
       <h3>SPARQL query results</h3>
       <p>
         A <dfn>SPARQL query result</dfn> of a dataset
-        can be defined as a Linked Data Fragment with the following characteristics:
+        is an instance of a Linked Data Fragment type with the following characteristics:
       </p>
       <dl>
-        <dt>data / selector</dt>
+        <dt>data</dt>
         <dd>
-          The selector of a SPARQL query result is a SPARQL <code>CONSTRUCT</code> query,
-          so the data consists of those triples that result from executing this query.
+          The selector is a SPARQL <code>CONSTRUCT</code> query;
+          the data consists of those triples that result from executing this query.
         </dd>
         <dt>metadata</dt>
         <dd>
           The metadata set is empty.
         </dd>
-        <dt>hypermedia controls</dt>
+        <dt>controls</dt>
         <dd>
           While most SPARQL result representations do not contain hypermedia controls,
           the SPARQL URL of the endpoint that generates the fragment
@@ -630,18 +630,6 @@
       </dl>
       <p>
         SPARQL results allow to extract very specific fragments of a dataset.
-      </p>
-      <p>
-        Note that only results of <code>CONSTRUCT</code>
-        (and thus not <code>SELECT</code> or <code>ASK</code>) SPARQL queries
-        are considered Linked Data Fragments.
-        This is because only the execution of <code>CONSTRUCT</code> queries
-        results in data triples.
-        However, the <code>CONSTRUCT</code> query can contain <code>SELECT</code> subqueries.
-      </p>
-      <p>
-        The fact that a SPARQL query result is a Linked Data Fragment
-        means that each SPARQL endpoint is, by definition, a Linked Data Fragments server.
       </p>
       <aside class="example" title="SPARQL query results">
         <p>
@@ -669,6 +657,18 @@ WHERE {
           <li><code>http://dbpedia.org/sparql{?query}</code></li>
         </ul>
       </aside>
+      <p>
+        The fact that a SPARQL query result is a Linked Data Fragment
+        means that each SPARQL endpoint is, by definition, a Linked Data Fragments server.
+      </p>
+      <p class="note">
+        Only results of <code>CONSTRUCT</code>
+        (and thus not <code>SELECT</code> or <code>ASK</code>) SPARQL queries
+        are considered Linked Data Fragments.
+        This is because only the execution of <code>CONSTRUCT</code> queries
+        results in data triples.
+        However, the <code>CONSTRUCT</code> query can contain <code>SELECT</code> subqueries.
+      </p>
     </section>
 
     <section>
@@ -676,25 +676,24 @@ WHERE {
       <p>
         A <dfn>triple pattern fragment</dfn>
         (also known as <dfn>basic Linked Data Fragment</dfn>)
-        is a Linked Data Fragment with the following characteristics:
+        is an instance of a Linked Data Fragment type with the following characteristics:
       </p>
       <dl>
-        <dt>data / selector</dt>
+        <dt>data</dt>
         <dd>
-          The selector of a triple pattern fragment is a triple pattern
-          <code>{ ?s ?p ?o. }</code>, in which each of the three components
-          can be variable or constant.
+          The selector of is a triple pattern <code>{ ?s ?p ?o. }</code>,
+          in which each of the three components can be variable or constant.
           The data consists of those triples that match the triple pattern.
         </dd>
         <dt>metadata</dt>
         <dd>
-          The metadata set of a triple pattern fragment contains a triple
+          The metadata set contains a triple
           that expresses the estimated total number of matches for the pattern.
           <br>
           Since fragments can be paged,
           this information cannot always be derived from the data itself.
         </dd>
-        <dt>hypermedia controls</dt>
+        <dt>controls</dt>
         <dd>
           A triple pattern fragment contains hypermedia controls
           that allow to retrieve any other triple pattern fragment of the same dataset.
@@ -702,10 +701,9 @@ WHERE {
       </dl>
       <p>
         Triple pattern fragments can be used to browse a dataset
-        with more flexibility than Linked Data documents.
-        They can also be used to solve more complex queries,
-        such as SPARQL queries,
-        on the client side.
+        with more flexibility than Linked Data documents,
+        because they can also select based on predicates and objects
+        (instead of only subjects).
       </p>
       <aside class="example" title="Triple pattern fragments">
         <p>
