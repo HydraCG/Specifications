@@ -80,22 +80,22 @@
           Most of them are written in natural language,
           which machines cannot understand yet.
           And even if a document contains machine-readable information,
-          the appropriate context is often missing:
-          for instance, what do thousands of numbers in a comma-separated file mean?
+          the appropriate context is often missing.
+          For instance, what do thousands of numbers in a comma-separated file mean?
         <p>
           Machines prefer <em>structured data</em> using <em>unambiguous identifiers</em>.
           Linked Data [[LINKED-DATA]] combines both of those to make it easier for machines
           to process and integrate data from different sources.
-          The unambiguous identifiers of the Web are URLs:
-          not only do they identify a resource,
-          they also allow to retrieve a representation of it.
+          The unambiguous identifiers of the Web are URLs.
+          Not only do they identify a resource,
+          they also allow to retrieve a representation thereof.
           Machine-interpretable structured data is possible
           using the triple-based model of RDF [[rdf11-concepts]].
         </p>
         <p>
           All RDF triples have a <em>subject</em>, <em>predicate</em>, and <em>object</em>,
-          and in the case of Linked Data, each of those is a URL
-          (but objects can also be <a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">literals</a>).
+          and in the case of Linked Data,
+          most of these components are dereferenceable URLs.
           For instance, the following triple expresses that Walt Disney is a person:
         </p>
 <pre><code>&lt;http://dbpedia.org/resource/Walt_Disney&gt;
