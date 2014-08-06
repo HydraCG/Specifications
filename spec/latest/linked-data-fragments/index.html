@@ -77,39 +77,45 @@
         <p>
           A gigantic amount of digital information exists,
           and new documents are created every day.
-          The majority of this can only be consumed by humans,
-          because machines cannot fully understand human language yet.
-          And even if the document contains machine-readable information,
-          often the appropriate context is missing:
-          for instance, what does a CSV file with thousands of numbers mean?
+          Most of them are written in natural language,
+          which machines cannot understand yet.
+          And even if a document contains machine-readable information,
+          the appropriate context is often missing:
+          for instance, what do thousands of numbers in a comma-separated file mean?
+        <p>
+          Machines prefer <em>structured data</em> using <em>unambiguous identifiers</em>.
+          Linked Data [[LINKED-DATA]] combines both of those to make it easier for machines
+          to process and integrate data from different sources.
+          The unambiguous identifiers of the Web are URLs:
+          not only do they identify a resource,
+          they also allow to retrieve a representation of it.
+          Machine-interpretable structured data is possible
+          using the triple-based model of RDF [[rdf11-concepts]].
         </p>
         <p>
-          By publishing Linked Data [[LINKED-DATA]],
-          we enable automated clients to consume information.
-          In practice, this information is available as RDF triples [[rdf11-concepts]],
-          which have a <em>subject</em>, <em>predicate</em>, and <em>object</em>.
+          All RDF triples have a <em>subject</em>, <em>predicate</em>, and <em>object</em>,
+          and in the case of Linked Data, each of those is a URL
+          (but objects can also be <a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">literals</a>).
           For instance, the following triple expresses that Walt Disney is a person:
-          <code>
-            &lt;http://dbpedia.org/resource/Walt_Disney&gt;
-            &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;
-            &lt;http://xmlns.com/foaf/0.1/Person&gt;.
-          </code>
         </p>
+<pre><code>&lt;http://dbpedia.org/resource/Walt_Disney&gt;
+    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;
+        &lt;http://xmlns.com/foaf/0.1/Person&gt;.
+</code></pre>
         <p>
-          Note that each of the three components of this triple are URLs.
-          This is the essence of Linked Data:
+          This combination of structure and URLs is the essence of Linked Data:
           if you don't know what
           <code>http://dbpedia.org/&#8203;resource/&#8203;Walt_Disney</code> or
           <code>http://xmlns.com/&#8203;foaf/&#8203;0.1/#Person</code> mean,
           you can look up information about those topics through their URL.
         </p>
         <p>
-          Linked Data can take many forms:
+          You can convey Linked Data in the RDF model through various concrete forms:
         </p>
         <ul>
           <li>JSON-LD [[JSON-LD]] allows to express Linked Data in the widely used JSON format.</li>
           <li>Dedicated RDF triple formats such as Turtle [[turtle]] exist.</li>
-          <li>RDF triples can be embedded in HTML through RDF-A [[HTML-RDFA]].</li>
+          <li>RDF triples can be embedded in HTML through RDFa [[HTML-RDFA]].</li>
         </ul>
       </section>
       <section>
