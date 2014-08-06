@@ -206,12 +206,20 @@
   <section id="conformance">
   </section>
 
-  <section id="definitions">
-    <h2>Definitions</h2>
+  <section id="concepts">
+    <h2>Concepts</h2>
+
     <section>
-      <h3>Linked Data Fragment</h3>
+      <h3>Datasets</h3>
       <p>
-        A <dfn>Linked Data dataset</dfn> [[!void]] is a collection of RDF triples [[!rdf11-concepts]]
+        Any piece of data always occurs in a certain context; it never stands on its own.
+        Unsurprisingly, this also applies to data structured as RDF triples [[!rdf11-concepts]].
+        In order to refer to collections of RDF triples,
+        we introduce the following definition,
+        derived from the VoID Vocabulary [[void]]:
+      </p>
+      <p>
+        A <dfn>Linked Data dataset</dfn> is a collection of RDF triples
         that are published, maintained or aggregated by a single provider.
       </p>
       <aside class="example" title="Linked Data datasets">
@@ -224,7 +232,134 @@
           <li><a href="http://www.freebase.com/">The latest Freebase version</a></li>
         </ul>
       </aside>
+    </section>
 
+    <section>
+      <h3>Selectors</h3>
+      <p>
+        Often, we are interested in specific parts of a dataset.
+        Such parts can be a few or several triples in size,
+        ranging from an empty part to the whole dataset.
+        To be able to define what a specific part looks like,
+        we introduce the following concept.
+      </p>
+      <p>
+        A <dfn>selector</dfn> is a boolean function that decides
+        whether or not a certain triple (or graph of triples) belongs to a part of a dataset.
+      </p>
+      <aside class="example" title="Selectors">
+        <p>All of the following are examples of selectors:</p>
+        <ul>
+          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
+          <li>
+            The graph pattern
+            <code>{ dbpedia:Germany rdf:type ?t. ?t rdfs:subclassOf ?t2. }</code>.
+          </li>
+          <li>
+            The function <code>f(t) = true</code>
+            <em>(universal selector, matches the entire dataset)</em>.
+          </li>
+          <li>
+            The function <code>f(t) = false</code>
+            <em>(empty selector, always results in an empty part)</em>.
+          </li>
+          <li>
+            The criterion
+            “<code>true</code> if the triple describes a country; <code>false</code> otherwise”.
+          </li>
+          <li>A specific SPARQL query.</li>
+        </ul>
+        <p>
+          Basically, every criterion that unambiguously leads to part of a dataset
+          acts as a selector.
+        </p>
+      </aside>
+      <p>
+        Some selectors are more closely related than others.
+        For instance, a group of selectors might have a similar structure
+        or computational complexity.
+        The following definition allows us to talk about them collectively.
+      </p>
+      <p>
+        A <dfn>selector type</dfn> is a class of <em>selectors</em>
+        with similar structural characteristics.
+      </p>
+      <aside class="example" title="Selector types">
+        <p>The following are examples of different selector <em>types</em>:</p>
+        <ul>
+          <li>Triple pattern selectors.</li>
+          <li>Basic graph pattern selectors.</li>
+          <li>SPARQL query selectors.</li>
+        </ul>
+        <p>These selectors belong to the same selector type (<em>triple pattern selectors</em>):</p>
+        <ul>
+          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
+          <li>The triple pattern <code>?p dbpedia-owl:producer dbpedia:Walt_Disney</code>.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Metadata</h3>
+      <p>
+        Apart from the triples that describe data in a (part of a) dataset,
+        some triples capture data <em>about</em> it.
+        They do not belong to the dataset as such,
+        but they can nonetheless be helpful to understand properties of this dataset.
+      </p>
+      <p>
+        <dfn>Metadata</dfn> of a dataset, or a part thereof,
+        consists of RDF triples that describe data about that dataset or part,
+        but that do not belong to the dataset itself.
+      </p>
+      <aside class="example" title="Metadata">
+        <p>
+          The following triples could be associated as metadata
+          with a specific part of a dataset:
+        </p>
+        <ul>
+          <li>A triple expressing the total number of triples in the entire dataset.</li>
+          <li>A triple expressing the total number of triples in the specific part.</li>
+          <li>Triples expressing the license, author, and publisher of the dataset.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Hypermedia controls</h3>
+      <p>
+        Pieces of data and information on the Web can be connected to each other.
+        This is because the Web is filled with <em>hypermedia controls</em>:
+        most HTML pages contain several <em>hyperlinks</em>,
+        some pages also contain <em>forms</em> with text fields and buttons.
+        HTML is not the only format with hypermedia support;
+        specific RDF vocabularies can be used to express hypermedia controls as well.
+        Regardless of format,
+        what all hypermedia controls on the Web have in common
+        is that they somehow lead to an URL a client can visit.
+        The following definition generalizes this notion.
+      </p>
+      <p>
+        A <dfn>hypermedia control</dfn> is a function that generates an IRI [[!RFC3987]]
+        based on zero or more arguments.
+        In particular, a <dfn>hyperlink</dfn> is a zero-argument function (i.e., an IRI),
+        and a <dfn>hypermedia form</dfn> is a multi-argument function.
+      </p>
+      <aside class="example" title="Hypermedia controls">
+        <p>
+          Pages of datasets could contain hypermedia controls such as:
+        </p>
+        <ul>
+          <li>A link to a data dump of the entire collection.</li>
+          <li>Links to other datasets that refer to this collection.</li>
+          <li>A form that allows users to enter custom selectors,
+              leading to the part of the dataset with the specified selector.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Linked Data Fragments</h3>
       <p>
         A <dfn>Linked Data Fragment</dfn> of a <em>Linked Data dataset</em>
         is the subset of this dataset that matches a specific <em>selector</em>,
@@ -257,83 +392,16 @@
       </aside>
 
       <p>
-        A <dfn>selector</dfn> of a Linked Data Fragment
-        is a boolean function that decides
-        whether or not a certain triple or graph of triples of the corresponding dataset
-        is part of that fragment.
-        A <dfn>selector type</dfn> is a class of <em>selectors</em>
-        with similar characteristics.
-      </p>
-      <p>
         In the general definition of a Linked Data Fragment,
-        there are no restrictions on what these selectors should look like.
+        there are no restrictions on what selectors should look like.
         They could be triple patterns, basic graph patterns,
         SPARQL queries [[!RDF-SPARQL-QUERY]],
         or even natural language queries.
         Specific selector types help us characterize various kinds of Linked Data Fragments.
       </p>
-      <aside class="example" title="Selectors">
-        <p>All of the following are selectors:</p>
-        <ul>
-          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
-          <li>
-            The graph pattern
-            <code>{ dbpedia:Germany rdf:type ?t. ?t rdfs:subclassOf ?t2. }</code>.
-          </li>
-          <li>The function <code>f(t) = true</code> <em>(universal selector)</em>.</li>
-          <li>The function <code>f(t) = false</code> <em>(empty selector)</em>.</li>
-          <li>
-            The criterion
-            “<code>true</code> if the triple describes a country; <code>false</code> otherwise”.
-          </li>
-          <li>A specific SPARQL query.</li>
-        </ul>
-        <p>The following are examples of selector <em>types</em>:</p>
-        <ul>
-          <li>A triple pattern.</li>
-          <li>A basic graph pattern.</li>
-          <li>A SPARQL query.</li>
-        </ul>
-      </aside>
 
       <p>
-        <dfn>Metadata</dfn> of a Linked Data Fragment or dataset consists of
-        information <em>about</em> the data of that fragment or dataset,
-        without being part of the triples in the dataset itself.
-        Some Linked Data Fragments might have an empty metadata set.
-      </p>
-      <aside class="example" title="Metadata">
-        <p>
-          The following properties could be present as metadata of Linked Data Fragments:
-        </p>
-        <ul>
-          <li>The total number of triples in the entire dataset.</li>
-          <li>The total number of triples in the current Linked Data Fragment.</li>
-          <li>The license, author, and publisher of the dataset.</li>
-        </ul>
-      </aside>
-
-      <p>
-        A <dfn>hypermedia control</dfn> is a function that generates an IRI [[!RFC3987]]
-        based on zero or more arguments.
-        In particular, a <dfn>hyperlink</dfn> is a zero-argument function (i.e., an IRI),
-        and a <dfn>hypermedia form</dfn> is a multi-argument function.
-        Some Linked Data Fragments might have an empty hypermedia control set.
-      </p>
-      <aside class="example" title="Hypermedia controls">
-        <p>
-          The following hypermedia controls could be present on (pages of) Linked Data Fragments:
-        </p>
-        <ul>
-          <li>A link to a data dump of the entire collection.</li>
-          <li>Links to documents related to entities in the current Linked Data Fragment.</li>
-          <li>A form that allows to enter custom selectors,
-              leading to a Linked Data Fragment with the specified selector.</li>
-        </ul>
-      </aside>
-
-      <p>
-        Finally, a <dfn>Linked Data Fragment type</dfn>
+        A <dfn>Linked Data Fragment type</dfn>
         is a class of those Linked Data Fragments that share common rules with regard to
         their selector type, metadata set, and hypermedia control set.
       </p>
@@ -343,7 +411,7 @@
       </p>
     </section>
     <section>
-      <h3>Linked Data Fragments server</h3>
+      <h3>Linked Data Fragments servers</h3>
       <p>
         A <dfn>Linked Data Fragments server</dfn> is a server
         that offers <em>all</em> possible Linked Data Fragments
@@ -361,7 +429,7 @@
       </aside>
     </section>
     <section>
-      <h3>Linked Data Fragments client</h3>
+      <h3>Linked Data Fragments clients</h3>
       <p>
         A <dfn>Linked Data Fragments client</dfn> is a client
         that can access Linked Data Fragments
