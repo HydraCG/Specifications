@@ -367,16 +367,29 @@
     <section>
       <h3>Linked Data Fragments</h3>
       <p>
-        A <dfn>Linked Data Fragment</dfn> of a <em>Linked Data dataset</em>
-        is the subset of this dataset that matches a specific <em>selector</em>,
-        together with optional <em>metadata</em> and optional <em>hypermedia controls</em>
-        for these triples and/or the dataset itself.
+        The read aspect of each interface to Linked Data is characterized
+        by its possible set of responses.
+        We therefore introduce a concept to capture such responses.
       </p>
       <p>
-        Any proper or improper subset of a Linked Data dataset,
+        A <dfn>Linked Data Fragment</dfn> of a <em>Linked Data dataset</em>
+        is a set of RDF triples that consists of three parts:
+      </p>
+      <dl>
+        <dt>data</dt>
+        <dd>all triples of this dataset that match a specific <em>selector</em>;</dd>
+        <dt>metadata</dt>
+        <dd>triples that describe the dataset and/or the Linked Data Fragment;</dd>
+        <dt>controls</dt>
+        <dd>hypermedia links and/or forms that lead to other Linked Data Fragments.</dd>
+      </dl>
+      <p>
+        The selector, elements of the metadata set, and elements of the control sets
+        are specific to each Linked Data Fragment.
+        Each of the three parts is allowed to be empty.
+        Any (proper or improper) subset of a Linked Data dataset,
         regardless of how this subset was created,
-        is thus by definition a Linked Data Fragment.
-        Larger Linked Data Fragments can be <em>paged</em>.
+        is by thus definition a Linked Data Fragment.
       </p>
       <aside class="example" title="Linked Data Fragments">
         <p>
@@ -384,8 +397,14 @@
           <a href="http://wiki.dbpedia.org/Downloads39">DBpedia 3.9</a> dataset:
         </p>
         <ul>
-          <li>The triples with <code>dbpedia:Germany</code> as subject.</li>
-          <li>The triples with <code>dbpedia:Germany</code> as object.</li>
+          <li>
+            The triples with <code>dbpedia:Germany</code> as subject
+            (and an empty metadata and control set).
+          </li>
+          <li>
+            The triples with <code>dbpedia:Germany</code> as object
+            (and an empty metadata and control set).
+          </li>
           <li>
             The triples with <code>dbpedia:Germany</code> as subject or object,
             together with the cardinality of all triples about countries,
@@ -401,19 +420,41 @@
         In the general definition of a Linked Data Fragment,
         there are no restrictions on what selectors should look like.
         They could be triple patterns, basic graph patterns,
-        SPARQL queries [[!RDF-SPARQL-QUERY]],
-        or even natural language queries.
-        Specific selector types help us characterize various kinds of Linked Data Fragments.
+        SPARQL queries, or even natural language queries.
+        Like selectors, Linked Data Fragments can be organized in types.
+      </p>
+      <p>
+        A <dfn>Linked Data Fragment type</dfn>
+        is a class of Linked Data Fragments with the same selector type
+        and a common way to create their metadata and control sets.
+      </p>
+      <p>
+        We can analyze existing and new Linked Data interfaces
+        by characterizing their responses as a specific Linked Data Fragment type.
+      </p>
+      <p class="note">
+        Linked Data Fragment types of existing interfaces are listed in
+        <a href="#existing-linked-data-fragments">the next section</a>.
       </p>
 
       <p>
-        A <dfn>Linked Data Fragment type</dfn>
-        is a class of those Linked Data Fragments that share common rules with regard to
-        their selector type, metadata set, and hypermedia control set.
+        The <em>data</em> part of some Linked Data Fragments can become quite large.
+        For instance, the fragment that contains all triples of a dataset
+        can contain millions of triples.
+        To make such large fragments more manageable,
+        their data can be split across multiple pages.
       </p>
       <p>
-        Common Linked Data Fragment types are listed in
-        <a href="#existing-linked-data-fragments">the next section</a>.
+        A <dfn>Linked Data Fragments page</dfn> contains a subset of all data triples
+        of a Linked Data Fragment,
+        together with all its metadata and control triples.
+      </p>
+      <p>
+        Conceptually speaking, each fragment remains one whole,
+        but its data can be retrieved through several requests.
+        This additionally allows to retrieve the metadata and control set
+        without having to download an disproportionally large part of the dataset.
+        Not all fragments support paging.
       </p>
     </section>
     <section>
