@@ -464,7 +464,12 @@
         that offers <em>all</em> possible Linked Data Fragments
         of one or more specific Linked Data Fragment types
         of one or more datasets.
-        It MUST support at least one triple-based representation for each fragment.
+        It MUST support at least one RDF-based representation for each fragment.
+      </p>
+      <p>
+        Servers can choose what types of Linked Data Fragments they offer,
+        whether or not they support paging,
+        and what representations they provide.
       </p>
       <aside class="example" title="Linked Data Fragments servers">
         <p>The following are examples of Linked Data Fragments servers:</p>
@@ -481,7 +486,7 @@
         A <dfn>Linked Data Fragments client</dfn> is a client
         that can access Linked Data Fragments
         of at least one specific Linked Data Fragments type.
-        It SHOULD be able to consume at least one triple-based representation
+        It MUST be able to consume at least one RDF-based representation
         of the fragments it supports.
       </p>
       <aside class="example" title="Linked Data Fragments clients">
