@@ -123,7 +123,7 @@
         <p>
           The most straightforward way to access Linked Data
           is to follow the URL of a <a href="#linked-data-documents">Linked Data document</a>.
-          In other words, we use the HTTP protocol [[RFC2616]]
+          In other words, we use the HTTP protocol [[RFC7230]]
           to retrieve a <em>representation</em>
           of the <em>resource</em> identified by that URL.
           This process is called <dfn>dereferencing</dfn>.
@@ -155,7 +155,7 @@
           we could find the list of all people.
           Unfortunately, this would involve downloading a lot of information,
           even though we are only interested in a small fraction.
-          SPARQL endpoints [[RDF-SPARQL-PROTOCOL]] offer an interface
+          SPARQL endpoints [[SPARQL11-PROTOCOL]] offer an interface
           that allows to select data much more granularly.
           This is more convenient for clients,
           but individual requests are considerably more expensive for servers.
