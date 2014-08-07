@@ -1,6 +1,8 @@
 // extend the bibliography entries
 var localBibliography = {
-    "HYDRA-CORE": "Markus Lanthaler. <cite><a href=\"http://www.hydra-cg.com/spec/latest/core/\">Hydra Core Vocabulary</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/core/\">http://www.hydra-cg.com/spec/latest/core/</a>."
+    "HYDRA-CORE": "Markus Lanthaler. <cite><a href=\"http://www.hydra-cg.com/spec/latest/core/\">Hydra Core Vocabulary</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/core/\">http://www.hydra-cg.com/spec/latest/core/</a>.",
+    "HYDRA-LDF": "Ruben Verborgh. <cite><a href=\"http://www.hydra-cg.com/spec/latest/linked-data-fragments/\">Linked Data Fragments</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/linked-data-fragments/\">http://www.hydra-cg.com/spec/latest/linked-data-fragments/</a>.",
+    "HYDRA-TPF": "Ruben Verborgh. <cite><a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">Triple Pattern Fragments</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/</a>."
 };
 
 var preProc = {
