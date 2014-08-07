@@ -168,7 +168,7 @@
       <h3>Document conventions</h3>
       <p>
         Triples in this document are expressed
-        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!turtle]].
+        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!TURTLE]].
         This document uses the following namespace prefixes:
       </p>
       <pre>
@@ -240,7 +240,7 @@
         In its most abstract form,
         a triple pattern selector consists of three components
         <code>subject</code>, <code>predicate</code>, and <code>object</code>
-        [[!rdf11-concepts]].
+        [[!RDF11-CONCEPTS]].
         The <code>subject</code> MUST either be a variable or an IRI;
         the <code>predicate</code> MUST either be a variable or an IRI;
         the <code>object</code> MUST either be a variable, an IRI, or a literal.
@@ -519,9 +519,9 @@
         of a given dataset,
         it MUST offer access to <em>all</em> possible triple fragments of that dataset.
         Each of the fragment resources MUST be accessible through HTTP using a unique URL.
-        There MUST at least exist one triple-based format [[!rdf11-concepts]]
+        There MUST at least exist one triple-based format [[!RDF11-CONCEPTS]]
         in which the server offers representations of each triple fragment.
-        In particular, it is RECOMMENDED they support Turtle [[!turtle]].
+        In particular, it is RECOMMENDED they support Turtle [[!TURTLE]].
       </p>
       <p class="note">
         There is no such thing as <em>the</em> Web API for triple pattern fragments,
