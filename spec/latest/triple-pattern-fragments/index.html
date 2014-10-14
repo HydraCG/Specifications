@@ -687,11 +687,11 @@
         <h4>Accessibility for Web applications</H4>
         <p>
           In order to allow browser applications to access fragments,
-          Cross-Origin Resource Sharing [[!CORS]] MUST be enabled on the server.
-          To this end,
-          triple pattern fragments servers MUST emit the following header and value
-          on <em>all</em> HTTP responses to requests for triple pattern fragments,
-          regardless of their status code:
+          Cross-Origin Resource Sharing [[!CORS]] has to be enabled on the
+          server. To this end, triple pattern fragments servers SHOULD emit
+          the following header and value on <em>all</em> HTTP responses to
+          requests for triple pattern fragments, regardless of their status
+          code:
         </p>
         <pre><code>Access-Control-Allow-Origin: *</code></pre>
         <p class="note">
