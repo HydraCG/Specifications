@@ -16,7 +16,7 @@
       // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
       specStatus:           "unofficial",
       // if you wish the publication date to be other than today, set this
-      //publishDate:          "2012-08-30",
+      publishDate:          "2013-11-22",
       copyrightStart:       "2012",
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
@@ -143,6 +143,9 @@
   table th:nth-child(4), td:nth-child(4) {
     width: 13em;
   }
+  .issue-title {
+    display: none;
+  }
 </style>
 </head>
 
@@ -154,8 +157,13 @@
 </section>
 
 <section id="sotd">
+  <p class="issue">This document was created to help with the design of
+    <a href="http://blog.schema.org/2014/04/announcing-schemaorg-actions.html">potential Actions in Schema.org</a>.
+    While Hydra hasn't been included in Schema.org (yet), it influenced its design.
+    The document is clearly outdated and serves purely as a historical reference.</p>
+
   <p>To participate in the development of this specification, please join the
-    <a href="http://m.lanthi.com/HydraCG">Hydra W3C Community Group</a>. If you
+    <a href="http://www.hydra-cg.com/#community">Hydra W3C Community Group</a>. If you
     want to suggest a feature or discuss one, you should send a mail to the
     <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-hydra@w3.org mailing list</a>.
     Specification bugs and issues should be reported in the
@@ -467,8 +475,6 @@
       <p>Subclass of <i>WebResource</i> &gt; <i>CreativeWork</i> &gt; <i>Thing</i></p>
 
       <p>Equivalent to <i>hydra:ApiDocumentation</i></p>
-
-      <!-- <p class="issue">hydra:apiDocumentation</p> -->
 
       <table>
         <thead>
