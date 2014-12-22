@@ -830,6 +830,17 @@
       </dl>
     </aside>
 
+    <p class="warning">Although its use of <code>@</code> and <code>^^</code> is similar,
+      <i>ExplicitRepresentation</i> is <em>not</em> the same
+      as the [[Turtle]] representation for literals.
+      Turtle literals require escaping of special characters,
+      surround type IRIs with angular brackets (<code>&lt;</code> and <code>&gt;</code>),
+      and also allow single quotes (<code>'</code>) to indicate literals.
+      <i>ExplicitRepresentation</i> values must not be escaped,
+      IRIs must not be surrounded by any character,
+      and only double quotes can indicate literals.
+      </p>
+
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
       <a class="sectionRef" href="#adding-affordances-to-representations"></a>,
