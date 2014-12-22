@@ -805,6 +805,31 @@
       </dd>
     </dl>
 
+    <aside class="example" title="Different value representations">
+      <p>Below are some example values represented in the different representations.</p>
+      <dl>
+        <dt>The IRI <code>http://example.com</code></dt>
+        <dd><i>BasicRepresentation</i>: <code>http://example.com</code></dd>
+        <dd><i>ExplicitRepresentation</i>: <code>http://example.com</code></dd>
+
+        <dt>The string <code>A simple string</code></dt>
+        <dd><i>BasicRepresentation</i>: <code>A simple string</code></dd>
+        <dd><i>ExplicitRepresentation</i>: <code>"A simple string"</code></dd>
+
+        <dt>The string <code>A string " with a quote</code></dt>
+        <dd><i>BasicRepresentation</i>: <code>A string " with a quote</code></dd>
+        <dd><i>ExplicitRepresentation</i>: <code>"A string " with a quote"</code></dd>
+
+        <dt>The language-tagged string <code>A simple string</code> with language English (US)</dt>
+        <dd><i>BasicRepresentation</i>: <code>A simple string</code></dd>
+        <dd><i>ExplicitRepresentation</i>: <code>"A simple string"@en-us</code></dd>
+
+        <dt>The decimal value <code>5.5</code></dt>
+        <dd><i>BasicRepresentation</i>: <code>5.5</code></dd>
+        <dd><i>ExplicitRepresentation</i>: <code>"5.5"^^http://www.w3.org/2001/XMLSchema#decimal</code></dd>
+      </dl>
+    </aside>
+
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
       <a class="sectionRef" href="#adding-affordances-to-representations"></a>,
