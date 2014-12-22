@@ -729,8 +729,35 @@
       to a <i>property</i> and may optionally specify whether that variable
       is <i>required</i> or not.</p>
 
+    <p>The example below maps the <code>name</code> variable
+      to an external <i>firstName</i> property and marks it as required.
+    </p>
+
     <pre class="example" data-transform="updateExample"
          title="Description of an IRI Template">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        ****"@type": "IriTemplate"****,
+        ****"template": "http://api.example.com/people{?name}"****,
+        ****"mapping"****: [
+          {
+            ****"@type": "IriTemplateMapping"****,
+            ****"variable": "name"****,
+            ****"property": "ex:firstName"****,
+            ****"required": true****
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>Some properties have a special meaning.
+      As its name suggests, the <i>freetextQuery</i> property can be used
+      for free text queries.</p>
+
+    <pre class="example" data-transform="updateExample"
+         title="A free text query in a link template">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -747,11 +774,6 @@
       }
       -->
     </pre>
-
-    <p>The example above maps the variable <code>q</code> to Hydra's
-      <i>freetextQuery</i> property and marks it as required.
-      As its name suggests, the <i>freetextQuery</i> property can be used
-      for free text queries.</p>
 
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
