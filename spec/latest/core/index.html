@@ -775,6 +775,36 @@
       -->
     </pre>
 
+    <p>Since the [[!RFC6570]] specification only details
+      how to replace variables by <em>string</em> values in IRI templates,
+      we might want to specify how IRIs and literals are converted into strings.
+      The <i>variableRepresentation</i> property details
+      how a template's values are serialized.
+      Hydra offers two ways to represent variables:</p>
+
+    <dl>
+      <dt><i>hydra:BasicRepresentation</i></dt>
+      <dd>The basic representation represents entities by their lexical value,
+        not differentiating between IRIs and literals.
+        Characters must not be escaped.
+      </dd>
+      <dt><i>hydra:ExplicitRepresentation</i></dt>
+      <dd>The explicit representation differentiates between IRIs and literals:
+        <ul>
+          <li>IRIs are represented by their lexical value.</li>
+          <li>Literals are represented by their lexical value,
+            surrounded by a single pair of doubles quotes (<code>"</code>).
+            Characters must not be escaped.</li>
+          <li>If a literal has a language,
+            a single <em>at</em> symbol (<code>@</code>) is appended after the double-quoted literal,
+            followed by a non-empty [[!BCP47]] language string.</li>
+          <li>If a literal has a type,
+            two <em>caret</em> symbols (<code>^^</code>) are appended after the double-quoted literal,
+            followed by the full type IRI.</li>
+        </ul>
+      </dd>
+    </dl>
+
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
       <a class="sectionRef" href="#adding-affordances-to-representations"></a>,
