@@ -729,40 +729,14 @@
       to a <i>property</i> and may optionally specify whether that variable
       is <i>required</i> or not.</p>
 
-    <p>The example below maps the <code>name</code> variable
-      to an external <i>firstName</i> property and marks it as required.
-    </p>
-
     <pre class="example" data-transform="updateExample"
          title="Description of an IRI Template">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         ****"@type": "IriTemplate"****,
-        ****"template": "http://api.example.com/people{?name}"****,
-        ****"mapping"****: [
-          {
-            ****"@type": "IriTemplateMapping"****,
-            ****"variable": "name"****,
-            ****"property": "ex:firstName"****,
-            ****"required": true****
-          }
-        ]
-      }
-      -->
-    </pre>
-
-    <p>Some properties have a special meaning.
-      As its name suggests, the <i>freetextQuery</i> property can be used
-      for free text queries.</p>
-
-    <pre class="example" data-transform="updateExample"
-         title="A free text query in a link template">
-      <!--
-      {
-        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        ****"@type": "IriTemplate"****,
         ****"template": "http://api.example.com/issues{?q}"****,
+        ****"variableRepresentation": "BasicRepresentation"****,
         ****"mapping"****: [
           {
             ****"@type": "IriTemplateMapping"****,
@@ -775,71 +749,88 @@
       -->
     </pre>
 
-    <p>Since the [[!RFC6570]] specification only details
-      how to replace variables by <em>string</em> values in IRI templates,
-      we might want to specify how IRIs and literals are converted into strings.
-      The <i>variableRepresentation</i> property details
-      how a template's values are serialized.
-      Hydra offers two ways to represent variables:</p>
+    <p>The example above maps the variable <code>q</code> to Hydra's
+      <i>freetextQuery</i> property and marks it as required.
+      As its name suggests, the <i>freetextQuery</i> property can be used
+      for free text queries.</p>
 
-    <dl>
-      <dt><i>hydra:BasicRepresentation</i></dt>
-      <dd>The basic representation represents entities by their lexical value,
-        not differentiating between IRIs and literals.
-        Characters must not be escaped.
-      </dd>
-      <dt><i>hydra:ExplicitRepresentation</i></dt>
-      <dd>The explicit representation differentiates between IRIs and literals:
-        <ul>
-          <li>IRIs are represented by their lexical value.</li>
-          <li>Literals are represented by their lexical value,
-            surrounded by a single pair of doubles quotes (<code>"</code>).
-            Characters must not be escaped.</li>
-          <li>If a literal has a language,
-            a single <em>at</em> symbol (<code>@</code>) is appended after the double-quoted literal,
-            followed by a non-empty [[!BCP47]] language string.</li>
-          <li>If a literal has a type,
-            two <em>caret</em> symbols (<code>^^</code>) are appended after the double-quoted literal,
-            followed by the full type IRI.</li>
-        </ul>
-      </dd>
-    </dl>
+    <p>[[RFC6570]] only details how to use IRI template variables with
+      string values but not how to use them with typed values,
+      language-tagged strings, or IRIs. Hydra addresses this shortcoming by
+      defining how such values are to be serialized as strings. The
+      serialization of an <i>IriTemplate's</i> variables can be described
+      by setting the <i>variableRepresentation</i> property to
+      <i>BasicRepresentation</i> or <i>ExplicitRepresentation</i>. The
+      <i>BasicRepresentation</i> represents values by their lexical form. It
+      omits type and language information and does not differentiate between
+      IRIs and literals. The <i>ExplicitRepresentation</i>, on the other
+      hand, includes type and language information and differentiates
+      between IRIs and literals by serializing values as follows:</p>
 
-    <aside class="example" title="Different value representations">
-      <p>Below are some example values represented in the different representations.</p>
+    <ul>
+      <li>IRIs are represented as-is</li>
+      <li>literals, i.e., (typed) values and language-tagged strings are
+        represented by their lexical form, surrounded by a single pair of
+        doubles quotes (<code>"</code>)</li>
+      <li>if a literal has a language, a single <code>@</code> symbol is
+        appended after the double-quoted lexical form, followed by a
+        non-empty [[BCP47]] language code.</li>
+      <li>If a literal has a type, two <em>caret</em> symbols
+        (<code>^^</code>) are appended after the double-quoted literal,
+        followed by the full datatype IRI.</li>
+    </ul>
+
+    <p>In both representations characters MUST NOT be escaped. In case the
+      representation format is not explicitly described, clients SHOULD
+      use the <i>BasicRepresentation</i> by default.</p>
+
+    <p class="warning">Although <i>ExplicitRepresentation</i> use of
+      <code>@</code> and <code>^^</code> is similar, it is <em>not</em> the
+      same as the [[Turtle]] representation for literals. Turtle literals
+      require escaping of special characters, surround datatype IRIs with
+      angular brackets (<code>&lt;</code> and <code>&gt;</code>), and also
+      allow single quotes (<code>'</code>) to indicate literals.
+      <i>ExplicitRepresentation</i> values must not be escaped, IRIs must
+      not be surrounded by any character, and only double quotes can
+      indicate literals.</p>
+
+    <p>Below are some example values serialized in the different
+      representations as well as the result of expanding the IRI template
+      <code>http://example.com/find/{value}</code> with the respective
+      value.</p>
+
+    <aside class="example" title="The different variable representations">
       <dl>
-        <dt>The IRI <code>http://example.com</code></dt>
-        <dd><i>BasicRepresentation</i>: <code>http://example.com</code></dd>
-        <dd><i>ExplicitRepresentation</i>: <code>http://example.com</code></dd>
+        <dt>The IRI <code>http://www.hydra-cg.com/</code></dt>
+        <dd>BasicRepresentation: <code>http://www.hydra-cg.com/</code>; resulting IRI:
+          <code>http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F</code></dd>
+        <dd>ExplicitRepresentation: <code>http://www.hydra-cg.com/</code>; resulting IRI:
+          <code>http://example.com/find/http%3A%2F%2Fwww.hydra-cg.com%2F</code></dd>
 
         <dt>The string <code>A simple string</code></dt>
-        <dd><i>BasicRepresentation</i>: <code>A simple string</code></dd>
-        <dd><i>ExplicitRepresentation</i>: <code>"A simple string"</code></dd>
+        <dd>BasicRepresentation: <code>A simple string</code>; resulting IRI:
+          <code>http://example.com/find/A%20simple%20string</code></dd>
+        <dd>ExplicitRepresentation: <code>"A simple string"</code>; resulting IRI:
+          <code>http://example.com/find/%22A%20simple%20string%22</code></dd>
 
         <dt>The string <code>A string " with a quote</code></dt>
-        <dd><i>BasicRepresentation</i>: <code>A string " with a quote</code></dd>
-        <dd><i>ExplicitRepresentation</i>: <code>"A string " with a quote"</code></dd>
+        <dd>BasicRepresentation: <code>A string " with a quote</code>; resulting IRI:
+          <code>http://example.com/find/A%20string%20%22%20with%20a%20quote</code></dd>
+        <dd>ExplicitRepresentation: <code>"A string " with a quote"</code>; resulting IRI:
+          <code>http://example.com/find/%22A%20string%20%22%20with%20a%20quote%22</code></dd>
 
-        <dt>The language-tagged string <code>A simple string</code> with language English (US)</dt>
-        <dd><i>BasicRepresentation</i>: <code>A simple string</code></dd>
-        <dd><i>ExplicitRepresentation</i>: <code>"A simple string"@en-us</code></dd>
+        <dt>The language-tagged string <code>A simple string</code> with language English</dt>
+        <dd>BasicRepresentation: <code>A simple string</code>; resulting IRI:
+          <code>http://example.com/find/A%20simple%20string</code></dd>
+        <dd>ExplicitRepresentation: <code>"A simple string"@en</code>; resulting IRI:
+          <code>http://example.com/find/%22A%20simple%20string%22%40en</code></dd>
 
         <dt>The decimal value <code>5.5</code></dt>
-        <dd><i>BasicRepresentation</i>: <code>5.5</code></dd>
-        <dd><i>ExplicitRepresentation</i>: <code>"5.5"^^http://www.w3.org/2001/XMLSchema#decimal</code></dd>
+        <dd>BasicRepresentation: <code>5.5</code>; resulting IRI: <code>http://example.com/find/5.5</code></dd>
+        <dd>ExplicitRepresentation: <code>"5.5"^^http://www.w3.org/2001/XMLSchema#decimal</code>; resulting IRI:
+          <code>http://example.com/find/%225.5%22%5E%5Ehttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23decimal</code></dd>
       </dl>
     </aside>
-
-    <p class="warning">Although its use of <code>@</code> and <code>^^</code> is similar,
-      <i>ExplicitRepresentation</i> is <em>not</em> the same
-      as the [[Turtle]] representation for literals.
-      Turtle literals require escaping of special characters,
-      surround type IRIs with angular brackets (<code>&lt;</code> and <code>&gt;</code>),
-      and also allow single quotes (<code>'</code>) to indicate literals.
-      <i>ExplicitRepresentation</i> values must not be escaped,
-      IRIs must not be surrounded by any character,
-      and only double quotes can indicate literals.
-      </p>
 
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
