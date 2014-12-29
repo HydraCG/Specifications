@@ -50,6 +50,9 @@
     "TemplatedLink": "hydra:TemplatedLink",
     "IriTemplate": "hydra:IriTemplate",
     "template": "hydra:template",
+    "variableRepresentation": { "@id": "hydra:variableRepresentation", "@type": "@vocab" },
+    "BasicRepresentation": "hydra:BasicRepresentation",
+    "ExplicitRepresentation": "hydra:ExplicitRepresentation",
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
@@ -435,6 +438,30 @@
       "vs:term_status": "testing"
     },
     {
+      "@id": "hydra:variableRepresentation",
+      "@type": "rdf:Property",
+      "label": "variable representation",
+      "comment": "The representation format to use when expanding the IRI template.",
+      "domain": "hydra:IriTemplate",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:BasicRepresentation",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "basic value representation",
+      "comment": "A representation that serializes just the lexical form, but omits language and type information.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:ExplicitRepresentation",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "explicit value representation",
+      "comment": "A representation that serializes a value including its language and type information and thus differentiating between IRIs and literals.",
+      "vs:term_status": "testing"
+    },
+    {
       "@id": "hydra:mapping",
       "@type": "rdf:Property",
       "label": "mapping",
@@ -458,30 +485,6 @@
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:variableRepresentation",
-      "@type": "rdf:Property",
-      "label": "variable representation",
-      "comment": "Explains how values of variables are represented.",
-      "domain": "hydra:IriTemplate",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:BasicRepresentation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
-      "label": "basic value representation",
-      "comment": "A representation that serializes a value to its lexical form",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:ExplicitRepresentation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
-      "label": "explicit value representation",
-      "comment": "A representation that serializes a value, differentiating between IRIs and (typed or language-specific) literals.",
       "vs:term_status": "testing"
     }
   ]
