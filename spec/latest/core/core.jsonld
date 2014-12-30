@@ -442,7 +442,6 @@
       "@type": "rdf:Property",
       "label": "variable representation",
       "comment": "The representation format to use when expanding the IRI template.",
-      "domain": "hydra:IriTemplate",
       "vs:term_status": "testing"
     },
     {
