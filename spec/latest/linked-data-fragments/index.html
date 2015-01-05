@@ -34,19 +34,17 @@
 <body>
   <section id="abstract">
     <p>
-      <em>Linked Data</em> is data on the Web
-      that can be consumed by automated clients.
+      <em>Linked Data</em> means connecting individual pieces of data on the Web,
+      so that automated clients can interpret them more easily.
       Servers can offer access to such data
       through different standardized and non-standardized interfaces,
       the properties of which profoundly influence
       the characteristics of clients and servers during interactions.
-      This document describes <em>Linked Data Fragments</em>,
+      This document defines <em>Linked Data Fragments</em>,
       a uniform view on all possible interfaces to publish Linked Data.
       This view allows us to analyze the properties of existing interfaces,
       and to define new interfaces with different combinations of properties.
-      In addition to defining Linked Data Fragments,
-      and servers and clients thereof,
-      this document explains how existing interfaces
+      Additionally, this document explains how existing interfaces
       fit into this uniform view.
     </p>
   </section>
@@ -77,32 +75,35 @@
         <p>
           A gigantic amount of digital information exists,
           and new documents are created every day.
-          Most of them are written in natural language,
-          which machines cannot understand yet.
-          And even if a document contains machine-readable information,
+          Most of them are written in natural languages,
+          which machines cannot fully interpret yet.
+          And even if a document contains machine-interpretable information,
           the appropriate context is often missing.
           For instance, what do thousands of numbers in a comma-separated file mean?
         <p>
           Machines prefer <em>structured data</em> using <em>unambiguous identifiers</em>.
-          Linked Data [[LINKED-DATA]] combines both of those to make it easier for machines
+          Linked Data [[LINKED-DATA]] combines both to make it easier for machines
           to process and integrate data from different sources.
-          The unambiguous identifiers of the Web are URLs.
-          Not only do they identify a resource,
-          they also allow to retrieve a representation thereof.
+          URLs—the unambiguous identifiers of the Web—not only
+          <em>identify</em> a resource,
+          they also allow to <em>retrieve a representation</em> thereof.
           Machine-interpretable structured data is possible
-          using the triple-based model of RDF [[RDF11-CONCEPTS]].
+          using the <em>triple-based model</em> of RDF [[RDF11-CONCEPTS]].
         </p>
         <p>
           All RDF triples have a <em>subject</em>, <em>predicate</em>, and <em>object</em>,
-          and in the case of Linked Data,
-          most of these components are dereferenceable URLs.
-          For instance, the following triple expresses that Walt Disney is a person:
+          and in the case of Linked Data, these components are dereferenceable URLs.
+          <br>
+          For example, the following triple expresses that Walt Disney is a person:
         </p>
 <pre><code>&lt;http://dbpedia.org/resource/Walt_Disney&gt;
     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;
         &lt;http://xmlns.com/foaf/0.1/Person&gt;.
 </code></pre>
         <p>
+          Linked Data is thus <em>linked</em> on two levels:
+          on one level, we link “Walt Disney” and “Person” together with the “type” relation;
+          on another level, each of those three components is a link toward more information.
           This combination of structure and URLs is the essence of Linked Data:
           if you don't know what
           <code>http://dbpedia.org/&#8203;resource/&#8203;Walt_Disney</code> or
@@ -114,7 +115,7 @@
         </p>
         <ul>
           <li>JSON-LD [[JSON-LD]] allows to express Linked Data in the widely used JSON format.</li>
-          <li>Dedicated RDF triple formats such as Turtle [[TURTLE]] exist.</li>
+          <li>RDF triple formats such as Turtle [[TURTLE]] use a triple-based syntax.</li>
           <li>RDF triples can be embedded in HTML through RDFa [[HTML-RDFA]].</li>
         </ul>
       </section>
@@ -127,7 +128,7 @@
           to retrieve a <em>representation</em>
           of the <em>resource</em> identified by that URL.
           This process is called <dfn>dereferencing</dfn>.
-          For instance, you can copy and paste the URL
+          For example, you can copy and paste the URL
           <code><a href="http://dbpedia.org/resource/Walt_Disney" target="_blank">http://dbpedia.org/&#8203;resource/&#8203;Walt_Disney</a></code>
           in your browser, which will lead to an HTML document with triples in RDFa.
           Automated clients might ask for other representations of this resource,
@@ -173,7 +174,7 @@
       <p>
         The goal of <em>Linked Data Fragments</em> is to provide a uniform view
         on all possible interfaces to Linked Data.
-        Thereby, we want to provide a framework that can characterize all Linked Data interfaces
+        Thereby, we want to provide a framework to characterize all Linked Data interfaces
         in order to allow qualitative and quantitative comparisons.
         Furthermore, we want to stimulate the development of new kinds of interfaces
         that address the current and emerging needs of the
@@ -191,7 +192,7 @@
         or define new interfaces,
         we encourage you to read this document.
         If instead you want to implement one of the discussed interfaces,
-        the individual specifications (which are linked from this document) will help you better.
+        the individual specifications (which are linked from this document) will serve you better.
       </p>
     </section>
     <section>
@@ -367,7 +368,7 @@
     <section>
       <h3>Linked Data Fragments</h3>
       <p>
-        The read aspect of each interface to Linked Data is characterized
+        The <em>read</em> aspect of each interface to Linked Data is characterized
         by its possible set of responses.
         We therefore introduce a concept to capture such responses.
       </p>
@@ -402,10 +403,6 @@
             (and an empty metadata and control set).
           </li>
           <li>
-            The triples with <code>dbpedia:Germany</code> as object
-            (and an empty metadata and control set).
-          </li>
-          <li>
             The triples with <code>dbpedia:Germany</code> as subject or object,
             together with the cardinality of all triples about countries,
             and hyperlinks to fragments about neighbouring countries.
@@ -426,7 +423,7 @@
       <p>
         A <dfn>Linked Data Fragment type</dfn>
         is a class of Linked Data Fragments with the same selector type
-        and a common way to create their metadata and control sets.
+        and metadata and control sets with similar characteristics.
       </p>
       <p>
         We can analyze existing and new Linked Data interfaces
@@ -447,13 +444,13 @@
       <p>
         A <dfn>Linked Data Fragments page</dfn> contains a subset of all data triples
         of a Linked Data Fragment,
-        together with all its metadata and control triples.
+        together with <em>all</em> of its metadata and control triples.
       </p>
       <p>
         Conceptually speaking, each fragment remains one whole,
         but its data can be retrieved through several requests.
         This additionally allows to retrieve the metadata and control set
-        without having to download an disproportionally large part of the dataset.
+        without having to download a disproportionally large part of the dataset.
         Not all fragments support paging.
       </p>
     </section>
@@ -475,7 +472,7 @@
         <p>The following are examples of Linked Data Fragments servers:</p>
         <ul>
           <li>A SPARQL endpoint.</li>
-          <li>A server of Linked Data documents (used for dereferencing).</li>
+          <li>A server of Linked Data documents.</li>
           <li>A server hosting compressed dataset dumps in Turtle format.</li>
         </ul>
       </aside>
@@ -494,7 +491,7 @@
         <ul>
           <li>A Web browser is a client of SPARQL endpoints.</li>
           <li>A client-side script can be client of SPARQL endpoints.</li>
-          <li>A link-traversing bot can be a client of Linked Data documents.</li>
+          <li>A link-traversing algorithm can be a client of Linked Data documents.</li>
         </ul>
       </aside>
     </section>
@@ -566,7 +563,7 @@
         <dt>data</dt>
         <dd>
           The selector takes a single entity (subject) as argument,
-          and it matches triples that are related to this entity.
+          and matches triples that are related to this entity.
           <br>
           The precise functional definition of the selector is implementation-specific,
           but it usually contains those triples that match the triple pattern
@@ -586,8 +583,7 @@
           in particular through the URLs of entities that are described in the document.
           <br>
           The URLs of all entities of the dataset
-          should dereference to the Linked Data document about this entity
-          (i.e., the document with this entity as the argument of the selector).
+          should point to the Linked Data document about them.
         </dd>
       </dl>
       <p>
@@ -623,9 +619,10 @@
         </dd>
         <dt>controls</dt>
         <dd>
-          While most SPARQL result representations do not contain hypermedia controls,
-          the SPARQL URL of the endpoint that generates the fragment
-          can serve as a URI template [[!RFC6570]] to retrieve other SPARQL query results.
+          While SPARQL result representations usually do not contain hypermedia controls
+          (apart from dereferenceable URLs of entities),
+          the SPARQL URL of the endpoint can serve as a URI template
+          to retrieve other SPARQL query results.
         </dd>
       </dl>
       <p>
@@ -654,7 +651,7 @@ WHERE {
           to obtain the fragment corresponding to the above query:
         </p>
         <ul>
-          <li><code>http://dbpedia.org/sparql{?query}</code></li>
+          <li><code>http://dbpedia.org/sparql?query={query}</code></li>
         </ul>
       </aside>
       <p>
