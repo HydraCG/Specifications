@@ -723,11 +723,14 @@
       is to give the client a template to construct such a URL at runtime.
       In Hydra, the <i>IriTemplate</i> class is used to do so.</p>
 
-    <p>A <i>IriTemplate</i> consists of a <i>template</i>, whose syntax is
-      specified in [[!RFC6570]], and a set of <i>mappings</i>. Each
-      <i>IriTemplateMapping</i> maps a <i>variable</i> used in the template
+    <p>An <i>IriTemplate</i> consists of a <i>template</i> literal
+      and a set of <i>mappings</i>.
+      Each <i>IriTemplateMapping</i> maps a <i>variable</i> used in the template
       to a <i>property</i> and may optionally specify whether that variable
-      is <i>required</i> or not.</p>
+      is <i>required</i> or not.
+      The syntax of the template literal is specified by its datatype
+      and defaults to the [[!RFC6570]] URI Template syntax,
+      which can be explicitly indicated by <i>hydra:Rfc6570Template</i>.</p>
 
     <pre class="example" data-transform="updateExample"
          title="Description of an IRI Template">
@@ -754,10 +757,10 @@
       As its name suggests, the <i>freetextQuery</i> property can be used
       for free text queries.</p>
 
-    <p>[[RFC6570]] only details how to use IRI template variables with
-      string values but not how to use them with typed values,
-      language-tagged strings, or IRIs. Hydra addresses this shortcoming by
-      defining how such values are to be serialized as strings. The
+    <p>A template syntax only details how to fill out simple string values,
+      but not how to derive such string values from typed values,
+      language-tagged strings, or IRIs. Hydra addresses this by
+      specifying how such values are to be serialized as strings. The
       serialization of an <i>IriTemplate's</i> variables can be described
       by setting the <i>variableRepresentation</i> property to
       <i>BasicRepresentation</i> or <i>ExplicitRepresentation</i>. The
