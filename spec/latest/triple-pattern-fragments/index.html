@@ -34,25 +34,20 @@
   </script>
   <style>
     dd ul { margin: 0 0 .5em; }
-    pre code { color: black; }
     dl.triple dt { float: left; clear: left; width: 6em; }
   </style>
 </head>
 <body>
   <section id="abstract">
     <p>
-      This document specifies <em>triple pattern fragments</em>,
-      a type of Linked Data Fragment designed for low-cost server usage
-      while enabling efficient client-side execution of common types of queries.
-      Each page of a triple pattern fragment contains
-      (a subset of) those triples of a dataset
-      that match a specific triple pattern,
+      Linked Data can be published and accessed on the Web in a variety of ways.
+      This document specifies the <em>triple pattern fragments</em> interface,
+      designed for low-cost Linked Data publishing
+      and efficient client-side execution of several common types of queries.
+      Each triple pattern fragment contains
+      those triples of a dataset that match a specific triple pattern,
       together with the estimated total number of matching triples,
       and hypermedia controls to find all other triple pattern fragments of the dataset.
-    </p>
-    <p>
-      The document additionally specifies requirements for supporting servers
-      by defining constraints for Web APIs of triple pattern fragments.
     </p>
   </section>
 
@@ -76,93 +71,76 @@
   <section id="introduction" class="informative">
     <h2>Introduction</h2>
     <section>
-      <h3>Scope and aim</h3>
+      <h3>Interfaces to Linked Data</h3>
+      <section>
+        <h4>Linked Data in the RDF model</h4>
+        <p>
+          Linked Data [[LINKED-DATA]] in its most elementary form
+          consists of structured links between pieces of data.
+          For example, we can link the concepts “Al” and “Bill”
+          with a “knows” relationship: <code>Al knows Bill</code>.
+          Yet this alone cannot be interpreted unambiguously by a machine.
+          Which Al and Bill are we talking about?
+          And what does “knowing” mean in this context?
+        </p>
+        <p>
+          By giving each of those three pieces of information a URL,
+          we can identify them clearly:
+        </p>
+<pre><code>&lt;http://dbpedia.org/resource/Al_Gore&gt;
+        &lt;http://xmlns.com/foaf/0.1/knows&gt;
+                &lt;http://dbpedia.org/resource/Bill_Clinton&gt;.
+</code></pre>
+        <p>
+          If you, or a machine, want to know which Al and Bill we are talking about,
+          you can simply follow the above URLs.
+          This is the essence of Linked Data,
+          and the above snippet is a Linked Data triple in the RDF model [[RDF11-CONCEPTS]].
+          RDF data exists in various concrete forms:
+        </p>
+        <ul>
+          <li>JSON-LD [[JSON-LD]] allows to express Linked Data in the JSON format.</li>
+          <li>RDF triple formats such as Turtle [[TURTLE]] use a triple-based syntax.</li>
+          <li>RDF triples can be embedded in HTML through RDFa [[HTML-RDFA]].</li>
+        </ul>
+      </section>
+      <section>
+        <h4>Publishing and accessing Linked Data</h4>
+        <p>
+          In the same way pages in your browser are marked up with HTML,
+          RDF is just a format (albeit for machines).
+          Therefore, data can be structured in different ways across multiple documents.
+          Each server determines which interface it chooses to offer Linked Data.
+          Some of them might publish a few large documents with millions of triples,
+          others might give access to very specific, on-demand parts of a dataset.
+        </p>
+        <p>
+          In order to communicate with each other,
+          clients and servers can reuse agreed-upon interfaces.
+          Each interface comes with its own balance of advantages and disadvantages.
+          An absolutely optimal solution does not exist,
+          since the right balance depends on the use cases and constraints you are dealing with.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h3>Aim, scope, and intended audience</h3>
       <p>
-        The Web has several common types of interfaces
-        to offer access to a dataset of Linked Data through HTTP,
-        each of which have their own advantages and disadvantages:
-      </p>
-      <dl>
-        <dt><a href="../linked-data-fragments/#data-dumps">data dump servers</a></dt>
-        <dd>
-          <em>advantages:</em>
-          <ul>
-            <li>responses can be pre-generated</li>
-            <li>responses are effectively cacheable through HTTP</li>
-          </ul>
-        </dd>
-        <dd>
-          <em>disadvantages:</em>
-          <ul>
-            <li>large HTTP response size</li>
-            <li>large granularity, clients have to download everything before they can query</li>
-            <li>inefficient for data that changes often</li>
-          </ul>
-        </dd>
-        <dt><a href="../linked-data-fragments/#linked-data-documents">Linked Data servers</a></dt>
-        <dd>
-          <em>advantages:</em>
-          <ul>
-            <li>responses are inexpensive to generate</li>
-            <li>responses are effectively cacheable through HTTP</li>
-            <li>small response size</li>
-          </ul>
-        </dd>
-        <dd>
-          <em>disadvantages:</em>
-          <ul>
-            <li>dereferencing can only lead to one particular document about an entity</li>
-            <li>hard to find triples with a certain object (commonly needed for queries)</li>
-          </ul>
-        </dd>
-        <dt><a href="../linked-data-fragments/#sparql-query-results">SPARQL endpoints</a></dt>
-        <dd>
-          <em>advantages:</em>
-          <ul>
-            <li>fine granularity, so clients can ask highly customized parts of a dataset</li>
-            <li>small response size (with relation to the request), few unneeded data is sent</li>
-          </ul>
-        </dd>
-        <dd>
-          <em>disadvantages:</em>
-          <ul>
-            <li>many (but not all) results are expensive to generate</li>
-            <li>not efficiently cacheable though HTTP, since requests are highly individualised</li>
-          </ul>
-        </dd>
-      </dl>
+        The goal of a <em>triple pattern fragments</em> server-side interface
+        is to provide low-cost access to Linked Data,
+        while enabling efficient live querying over the dataset on the client side.
       <p>
-        <a href="../linked-data-fragments/">Linked Data Fragments</a>
-        allow to describe all HTTP interfaces to Linked Data
-        in terms of what parts of the dataset they offer access to.
-        All of the above servers offer access to
-        interface-specific Linked Data Fragments of a dataset.
+        This document defines <em>triple pattern fragments</em>,
+        a <a href="../linked-data-fragments/">Linked Data Fragments</a> type,
+        by specifying their representation and effect on the application state.
+        This allows to publish and consume Linked Data
+        through a triple pattern fragments interface.
       </p>
       <p>
-        In this document, we specify an HTTP interface for <em>triple pattern fragments</em>
-        (also known as <em>basic Linked Data Fragments</em>),
-        which form a type of Linked Data Fragment
-        with a different advantages/disadvantages balance:
+        This document is intended for people who want to implement
+        a client or server of triple pattern fragments,
+        or for those who want to understand how such clients or servers work.
       </p>
-      <dl>
-        <dt>Triple pattern fragments server</dt>
-        <dd>
-          <em>advantages:</em>
-          <ul>
-            <li>responses are inexpensive to generate</li>
-            <li>small response size</li>
-            <li>efficiently cacheable though HTTP</li>
-            <li>clients can efficiently execute basic graph pattern queries</li>
-          </ul>
-        </dd>
-        <dd>
-          <em>disadvantages:</em>
-          <ul>
-            <li>execution of non-trivial queries requires multiple requests and is thus slower</li>
-            <li>no server support for detailed selection of literals (beyond equality)</li>
-          </ul>
-        </dd>
-      </dl>
     </section>
     <section>
       <h3>Document conventions</h3>
