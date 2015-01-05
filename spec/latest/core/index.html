@@ -432,8 +432,8 @@
         ****"supportedClass"****: [
           ####... Classes known to be supported by the Web API ...####
         ],
-        ****"statusCodes"****: [
-          ####... Additional information about HTTP status codes ... ####
+        ****"possibleStatus"****: [
+          ####... Statuses that should be expected and handled properly ... ####
         ]
       }
       -->
@@ -545,8 +545,8 @@
             "method": "POST",
             "expects": "http://api.example.com/doc/#Comment",
             "returns": "http://api.example.com/doc/#Comment",
-            "statusCodes": [****
-              ####... optional information about status codes that might be returned ...####
+            "possibleStatus": [****
+              ####... Statuses that should be expected and handled properly ...####
             ****]
           }****
         ]
@@ -861,7 +861,7 @@
       difficult to understand the real cause of an error. For
       instance, a <code>429 Too Many Requests</code> response is rarely
       informative enough by itself. To address this issue, Hydra defines
-      a <i>StatusCodeDescription</i> class which allows additional
+      a <i>Status</i> class which allows additional
       information to be associated with an HTTP status code.</p>
 
     <pre class="example" data-transform="updateExample"
@@ -869,7 +869,7 @@
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@type": "****StatusCodeDescription****",
+        "@type": "****Status****",
         ****"statusCode": 429****,
         "title": "Too Many Requests",
         "description": "A maximum of 500 requests per hour and user is allowed.",
@@ -880,16 +880,16 @@
 
     <p>An <i>ApiDocumentation</i> or an <i>Operation</i> may document the
       status codes that might be returned by the server using the
-      <i>statusCodes</i> property as described in
+      <i>possibleStatus</i> property as described in
       <a class="sectionRef" href="#documenting-a-web-api"></a>. This allows
       a developer to understand what to expect when invoking an operation.
       It has, however, not to be considered as an extensive list of all
       potentially returned status codes; it is merely a hint. Developers
       should expect to encounter other HTTP status codes as well.</p>
 
-    <p>A server may also return a <i>StatusCodeDescription</i> directly in
+    <p>A server may also return a <i>Status</i> directly in
       a response. When doing so, it often makes sense to subclass the
-      <i>StatusCodeDescription</i> to make its semantics more explicit.
+      <i>Status</i> to make its semantics more explicit.
       Hydra defines just one such subclass, namely the <i>Error</i> class.
       This provides an extensible framework to communicate error details to
       a client.</p>
