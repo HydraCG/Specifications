@@ -29,8 +29,8 @@
     "method": "hydra:method",
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
-    "statusCodes": { "@id": "hydra:statusCodes", "@type": "@id" },
-    "StatusCodeDescription": "hydra:StatusCodeDescription",
+    "possibleStatus": { "@id": "hydra:possibleStatus", "@type": "@id" },
+    "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
     "Error": "hydra:Error",
     "Resource": "hydra:Resource",
@@ -139,11 +139,11 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:statusCodes",
+      "@id": "hydra:possibleStatus",
       "@type": "hydra:Link",
-      "label": "status codes",
-      "comment": "Additional information about status codes that might be returned by the Web API",
-      "range": "hydra:StatusCodeDescription",
+      "label": "possible status",
+      "comment": "A status that might be returned by the Web API (other statuses should be expected and properly handled as well)",
+      "range": "hydra:Status",
       "vs:term_status": "testing"
     },
     {
@@ -274,7 +274,7 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:StatusCodeDescription",
+      "@id": "hydra:Status",
       "@type": "hydra:Class",
       "subClassOf": "hydra:Resource",
       "label": "Status code description",
@@ -286,7 +286,7 @@
       "@type": "rdf:Property",
       "label": "status code",
       "comment": "The HTTP status code",
-      "domain": "hydra:StatusCodeDescription",
+      "domain": "hydra:Status",
       "range": "xsd:integer",
       "vs:term_status": "testing"
     },
@@ -311,7 +311,7 @@
     {
       "@id": "hydra:Error",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:StatusCodeDescription",
+      "subClassOf": "hydra:Status",
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
       "vs:term_status": "testing"
