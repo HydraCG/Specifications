@@ -457,7 +457,6 @@
     {
       "@id": "hydra:BasicRepresentation",
       "@type": "hydra:VariableRepresentation",
-      "subClassOf": "hydra:Resource",
       "label": "basic value representation",
       "comment": "A representation that serializes just the lexical form, but omits language and type information.",
       "vs:term_status": "testing"
@@ -465,7 +464,6 @@
     {
       "@id": "hydra:ExplicitRepresentation",
       "@type": "hydra:VariableRepresentation",
-      "subClassOf": "hydra:Resource",
       "label": "explicit value representation",
       "comment": "A representation that serializes a value including its language and type information and thus differentiating between IRIs and literals.",
       "vs:term_status": "testing"
