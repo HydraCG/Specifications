@@ -50,6 +50,7 @@
     "TemplatedLink": "hydra:TemplatedLink",
     "IriTemplate": "hydra:IriTemplate",
     "template": "hydra:template",
+    "Rfc6570Template": "hydra:Rfc6570Template",
     "variableRepresentation": { "@id": "hydra:variableRepresentation", "@type": "@vocab" },
     "BasicRepresentation": "hydra:BasicRepresentation",
     "ExplicitRepresentation": "hydra:ExplicitRepresentation",
@@ -431,9 +432,16 @@
       "@id": "hydra:template",
       "@type": "rdf:Property",
       "label": "template",
+      "comment": "A templated string with placeholders. The literal's datatype indicates the template syntax; if not specified, hydra:Rfc6570Template is assumed.",
+      "seeAlso": "hydra:Rfc6570Template",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:Rfc6570Template",
+      "@type": "rdfs:Datatype",
+      "label": "RFC6570 IRI template",
       "comment": "An IRI template as defined by RFC6570.",
       "seeAlso": "http://tools.ietf.org/html/rfc6570",
-      "domain": "hydra:IriTemplate",
       "range": "xsd:string",
       "vs:term_status": "testing"
     },
