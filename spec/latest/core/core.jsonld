@@ -52,6 +52,7 @@
     "template": "hydra:template",
     "Rfc6570Template": "hydra:Rfc6570Template",
     "variableRepresentation": { "@id": "hydra:variableRepresentation", "@type": "@vocab" },
+    "VariableRepresentation": "hydra:VariableRepresentation",
     "BasicRepresentation": "hydra:BasicRepresentation",
     "ExplicitRepresentation": "hydra:ExplicitRepresentation",
     "mapping": "hydra:mapping",
@@ -450,22 +451,29 @@
       "@type": "rdf:Property",
       "label": "variable representation",
       "comment": "The representation format to use when expanding the IRI template.",
+      "range": "hydra:VariableRepresentation",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:VariableRepresentation",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "VariableRepresentation",
+      "comment": "A representation specifies how to serialize variable values into strings.",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:BasicRepresentation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
-      "label": "basic value representation",
-      "comment": "A representation that serializes just the lexical form, but omits language and type information.",
+      "@type": "hydra:VariableRepresentation",
+      "label": "BasicRepresentation",
+      "comment": "A representation that serializes just the lexical form of a variable value, but omits language and type information.",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:ExplicitRepresentation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
-      "label": "explicit value representation",
-      "comment": "A representation that serializes a value including its language and type information and thus differentiating between IRIs and literals.",
+      "@type": "hydra:VariableRepresentation",
+      "label": "ExplicitRepresentation",
+      "comment": "A representation that serializes a variable value including its language and type information and thus differentiating between IRIs and literals.",
       "vs:term_status": "testing"
     },
     {
