@@ -342,7 +342,7 @@
         using triples with the following structure:
       </p>
 <pre><code>&lt;http://example.org/example#dataset&gt;
-    void:subset &lt;http://example.org/example?s=http%3A%2F%2Fexample.org%2Fsubject&gt;;
+    void:subset &lt;http://example.org/example?s=http%3A%2F%2Fexample.org%2Ftopic&gt;;
     hydra:search [
         hydra:template "http://example.org/example{?s,p,o}";
         hydra:mapping  [ hydra:variable "s"; hydra:property rdf:subject ],
@@ -353,9 +353,9 @@
         The above snippet assumes the dataset IRI is
         <code>http://example.org/example#dataset</code>,
         the fragment (or fragment page) URL is
-        <code>http://example.org/example?subject=http%3A%2F%2Fexample.org%2Fsubject</code>,
+        <code>http://example.org/example?s=http%3A%2F%2Fexample.org%2Ftopic</code>,
         and the URI template [[!RFC6570]] to retrieve Triple Pattern Fragments of the dataset is
-        <code>http://example.org/example{?subject,predicate,object}</code>.
+        <code>http://example.org/example{?s,p,o}</code>.
         It furthermore assumes that the parameter names of
         <var>subject</var>, <var>predicate</var>, and <var>object</var>
         are <code>s</code>, <code>p</code>, and <code>o</code>, respectively.
