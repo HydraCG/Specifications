@@ -73,56 +73,47 @@
     <h2>Introduction</h2>
     <section>
       <h3>Interfaces to Linked Data</h3>
-      <section>
-        <h4>Linked Data in the RDF model</h4>
-        <p>
-          Linked Data [[LINKED-DATA]] in its most elementary form
-          consists of structured links between pieces of data.
-          For example, we can link the concepts “Thomas” and “Nikola”
-          with a “knows” relationship: <code>Thomas knows Nikola</code>.
-          Yet this alone cannot be interpreted unambiguously by a machine.
-          Which Thomas and Nikola are we talking about?
-          And what does “knowing” mean in this context?
-        </p>
-        <p>
-          By giving each of those three pieces of information a URL,
-          we can identify them clearly:
-        </p>
+      <p>
+        Linked Data [[LINKED-DATA]] consists of structured links between pieces of data.
+        For example, we can link the concepts “Thomas” and “Nikola”
+        with a “knows” relationship: <code>Thomas knows Nikola</code>.
+        Yet this alone cannot be interpreted unambiguously.
+        Which Thomas and Nikola are we talking about?
+        And what does “knowing” mean in this context?
+      </p>
+      <p>
+        By giving each of those three pieces of information a URL,
+        we can identify them clearly:
+      </p>
 <pre><code>&lt;http://dbpedia.org/resource/Thomas_Edison&gt;
-        &lt;http://xmlns.com/foaf/0.1/knows&gt;
-                &lt;http://dbpedia.org/resource/Nikola_Tesla&gt;.
+      &lt;http://xmlns.com/foaf/0.1/knows&gt;
+              &lt;http://dbpedia.org/resource/Nikola_Tesla&gt;.
 </code></pre>
-        <p>
-          If you, or a machine, want to know which Thomas and Nikola we are talking about,
-          you can simply follow the above URLs.
-          This is the essence of Linked Data,
-          and the above snippet is a Linked Data triple in the RDF model [[RDF11-CONCEPTS]].
-          RDF data exists in various concrete forms:
-        </p>
-        <ul>
-          <li>JSON-LD [[JSON-LD]] allows to express Linked Data in the JSON format.</li>
-          <li>RDF triple formats such as Turtle [[TURTLE]] use a triple-based syntax.</li>
-          <li>RDF triples can be embedded in HTML through RDFa [[HTML-RDFA]].</li>
-        </ul>
-      </section>
-      <section>
-        <h4>Publishing and accessing Linked Data</h4>
-        <p>
-          In the same way pages in your browser are marked up with HTML,
-          RDF is just a format (albeit for machines).
-          Therefore, data can be structured in different ways across multiple documents.
-          Each server determines which interface it chooses to offer Linked Data.
-          Some of them might publish a few large documents with millions of triples,
-          others might give access to very specific, on-demand parts of a dataset.
-        </p>
-        <p>
-          In order to communicate with each other,
-          clients and servers can reuse agreed-upon interfaces.
-          Each interface comes with its own balance of advantages and disadvantages.
-          An absolutely optimal solution does not exist,
-          since the right balance depends on the use cases and constraints you are dealing with.
-        </p>
-      </section>
+      <p>
+        If you, or a machine, want to know which
+        “<a href="http://dbpedia.org/resource/Thomas_Edison" target="_blank">Thomas</a>”,
+        “<a href="http://dbpedia.org/resource/Nikola_Tesla" target="_blank">Nikola</a>”, or
+        “<a href="http://xmlns.com/foaf/0.1/knows" target="_blank">knows</a>”
+        is mentioned, you can simply follow their URLs.
+        This is the essence of Linked Data,
+        and the above snippet depicts a Linked Data triple in the RDF model [[RDF11-CONCEPTS]].
+        RDF data exists in various concrete syntaxes:
+      </p>
+      <ul>
+        <li>JSON-LD [[JSON-LD]] allows to express Linked Data in the JSON format.</li>
+        <li>RDF triple formats such as Turtle [[TURTLE]] use a triple-based syntax.</li>
+        <li>RDF triples can be embedded in HTML through RDFa [[HTML-RDFA]].</li>
+      </ul>
+      <p>
+        Just like HTML, RDF is simply a format for documents—publishers
+        can choose freely how they divide data across different documents.
+        Each server determines which interface it chooses to offer Linked Data.
+        Some of them might publish a few large documents with millions of triples,
+        others might give access to very specific, on-demand parts of a dataset.
+        In order to communicate with each other,
+        clients and servers can reuse agreed-upon interfaces,
+        each of which comes with its own balance of advantages and disadvantages.
+      </p>
     </section>
     <section>
       <h3>Aim, scope, and intended audience</h3>
@@ -146,18 +137,16 @@
     <section>
       <h3>Document conventions</h3>
       <p>
-        Triples in this document are expressed
-        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!TURTLE]].
-        This document uses the following namespace prefixes:
+        We write triples in this document
+        in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!TURTLE]]
+        using the following namespace prefixes:
       </p>
-      <pre>
-@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
+      <pre><code>@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
 @prefix rdfs:        &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
 @prefix dbpedia:     &lt;http://dbpedia.org/resource/&gt;.
 @prefix dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;.
 @prefix hydra:       &lt;http://www.w3.org/ns/hydra/core#&gt;.
-@prefix void:        &lt;http://rdfs.org/ns/void#&gt;.
-      </pre>
+@prefix void:        &lt;http://rdfs.org/ns/void#&gt;.</code></pre>
     </section>
   </section>
 
