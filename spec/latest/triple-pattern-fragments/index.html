@@ -233,7 +233,7 @@
         </dd>
         <dd>
           A Triple Pattern Fragment MAY contain additional hypermedia controls.
-          In particular, the URLs of the entities of the data, metadata, and control triples
+          In particular, the IRIs of the entities of the data, metadata, and control triples
           SHOULD be dereferenceable.
         </dd>
       </dl>
@@ -307,7 +307,7 @@
       </p>
       <dl class="triple">
         <dt>subject</dt>
-        <dd>the URI of the fragment</dd>
+        <dd>the IRI of the fragment</dd>
         <dt>predicate</dt>
         <dd>the <code>void:triples</code> predicate</dd>
         <dt>object</dt>
@@ -347,8 +347,7 @@
       <p>
         Each Triple Pattern Fragment,
         and each page of a Triple Pattern Fragment,
-        MUST contain a hypermedia control
-        that can generate the URL
+        MUST contain a hypermedia control that can generate the IRI
         of each other Triple Pattern Fragment of the same dataset.
       </p>
       <p>
@@ -357,7 +356,7 @@
         each of which can either be
         a variable, a constant IRI, or (in the case of <var>object</var>) a constant literal.
         It MUST then map these parameters
-        to the URL of the dataset's Triple Pattern Fragment
+        to the IRI of the dataset's Triple Pattern Fragment
         whose selector has the given parameter values.
       </p>
       <p>
@@ -376,9 +375,9 @@
       <p>
         The above snippet assumes the dataset IRI is
         <code>http://example.org/example#dataset</code>,
-        the fragment (or fragment page) URL is
+        the fragment (or fragment page) IRI is
         <code>http://example.org/example?s=http%3A%2F%2Fexample.org%2Ftopic</code>,
-        and the URI template [[!RFC6570]] to retrieve Triple Pattern Fragments of the dataset is
+        and the IRI template [[!RFC6570]] to retrieve Triple Pattern Fragments of the dataset is
         <code>http://example.org/example{?s,p,o}</code>.
         It furthermore assumes that the parameter names of
         <var>subject</var>, <var>predicate</var>, and <var>object</var>
@@ -391,15 +390,15 @@
       </p>
       <p>
         This hypermedia control MUST be present
-        because there purposely does not exist a fixed URI format
+        because there purposely does not exist a fixed IRI format
         that servers of Triple Pattern Fragments need to follow.
         This means that clients of Triple Pattern Fragments
         MUST NOT need prior knowledge of a server,
-        i.e., they MUST NOT assume a certain URL pattern.
+        i.e., they MUST NOT assume a certain IRI pattern.
         Instead, clients MUST interpret the hypermedia control in each Triple Pattern Fragment
         in order to retrieve another fragment.
-        Clients MUST NOT attempt to deconstruct the URL of a fragment,
-        i.e., they MUST treat fragment URLs as opaque identifiers.
+        Clients MUST NOT attempt to deconstruct the IRI of a fragment,
+        i.e., they MUST treat fragment IRIs as opaque identifiers.
       </p>
       <div class="note">
         <p>
@@ -408,7 +407,7 @@
           As a result, clients can use Triple Pattern Fragments
           without any prior knowledge.
           This also means a server can freely choose
-          the <a href="urls-for-triple-pattern-fragments">URLs of its Triple Pattern Fragments</a>,
+          the IRIs of its Triple Pattern Fragments,
           as well as the names of parameters
           (e.g., <code>subject</code>, <code>predicate</code>, <code>object</code>
                  instead of <code>s</code>, <code>p</code>, <code>o</code> in the above snippet).
@@ -427,6 +426,56 @@
   &lt;p&gt;&lt;input type="submit" /&gt;&lt;/p&gt;
 &lt;/form&gt;</code></pre>
       </div>
+
+      <p>
+        Clients can obtain the IRI of a specific fragment
+        through a hypermedia control in fragments' representations.
+        However, since hypermedia controls generally accept strings as input,
+        we need to specify how to convert IRIs, literals, and variables to strings
+        for use as <var>subject</var>, <var>predicate</var>, and <var>object</var> parameter values.
+        The interface MUST at least support the following options:
+      </p>
+      <dl>
+        <dt>constant IRI</dt>
+        <dd>
+          the text value of the IRI,
+          e.g., <code>http://example.org/bar</code>
+        </dd>
+        <dt>constant text literal</dt>
+        <dd>
+          the text value of the literal, surrounded by double quotes <code>"</code>,
+          e.g., <code>"my text"</code>
+        </dd>
+        <dt>constant literal with language</dt>
+        <dd>
+          the text value of the literal, surrounded by double quotes <code>"</code>
+          followed by <code>@</code> and the lowercase language code [[!BCP47]]
+          e.g., <code>"my text"@en-gb</code>
+        </dd>
+        <dd>
+        <dt>constant literal with type</dt>
+        <dd>
+          the text value of the literal, surrounded by double quotes <code>"</code>
+          followed by <code>^^</code> and the text value of the IRI
+          e.g., <code>"42"^^http://www.w3.org/2001/XMLSchema#integer</code>
+        </dd>
+        <dt>variable</dt>
+        <dd>
+          either as the empty string,
+          or as a string starting with a question mark,
+          followed by one or more word characters,
+          e.g., <code>?var</code>.
+        </dd>
+        <dd>
+      </dl>
+      <p class="issue">
+        The <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a>
+        captures the above (<a href="https://github.com/HydraCG/Specifications/issues/30">see issue 30</a>).
+        Maybe it should not be repeated here.
+      </p>
+      <p class="issue">
+        We should talk about support for patterns such as <code>{ ?s ?p ?s }</code>.
+      </p>
 
       <p>
         If the RDF syntax supports multiple graphs,
@@ -488,11 +537,11 @@
       </p>
       <dl class="triple">
         <dt>subject</dt>
-        <dd>the URL of the fragment</dd>
+        <dd>the IRI of the fragment</dd>
         <dt>predicate</dt>
         <dd>the <code>void:subset</code> predicate</dd>
         <dt>object</dt>
-        <dd>the URL of the page</dd>
+        <dd>the IRI of the page</dd>
       </dl>
       <p class="issue">
         The relation between a page and the associated fragment
@@ -508,11 +557,11 @@
       </p>
       <dl class="triple">
         <dt>subject</dt>
-        <dd>the URL of the current page</dd>
+        <dd>the IRI of the current page</dd>
         <dt>predicate</dt>
         <dd>the appropriate <code>hydra:previousPage</code> or <code>hydra:nextPage</code> predicate</dd>
         <dt>object</dt>
-        <dd>the URL of the previous/next page</dd>
+        <dd>the IRI of the previous/next page</dd>
       </dl>
       <p>
         If there is no directly preceding/following page (or if that page would be empty),
@@ -520,18 +569,18 @@
       </p>
 
       <p>
-        In all metadata and control triples, the URL of the current page
-        MUST exactly match the URL through which the client has accessed the page.
+        In all metadata and control triples, the IRI of the current page
+        MUST exactly match the IRI through which the client has accessed the page.
         <br>
         If the fragment itself instead of a page is requested,
-        the URL of the fragment in all metadata and control triples
-        MUST match the requested fragment URL.
+        the IRI of the fragment in all metadata and control triples
+        MUST match the requested fragment IRI.
       </p>
       <div class="note">
         <p>
-          The use of the requested URL in the representation
+          The use of the requested IRI in the representation
           is especially important in the common case in which
-          fragments or pages are accessible through (subtly) different URLs,
+          fragments or pages are accessible through (subtly) different IRIs,
           such as <code>http://example.org/example?s=a&amp;page=3</code>
           and <code>http://example.org/example?page=3&amp;s=a</code>.
         </p>
@@ -546,7 +595,7 @@
         </p>
 <pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:nextPage &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
         <p>
-          Using the requested URL helps the client correctly relate the requested resource (the page)
+          Using the requested IRI helps the client correctly relate the requested resource (the page)
           to other resources (other pages).
         </p>
       </div>
@@ -555,209 +604,97 @@
         Fragment pages MAY be accessible by page number,
         but this is not an obligation,
         as previous/next is sufficient for most clients.
-        Clients MUST NOT assume a particular URL structure for pages;
+        Clients MUST NOT assume a particular IRI structure for pages;
         paging MUST be fully accessible through hypermedia controls.
-        Clients MUST NOT attempt to deconstruct a fragment URL's possible paging structure,
-        i.e., they MUST treat page URLs as opaque identifiers.
+        Clients MUST NOT attempt to deconstruct a fragment IRI's possible paging structure,
+        i.e., they MUST treat page IRIs as opaque identifiers.
       </p>
     </section>
   </section>
 
   <section id="server">
     <h2>Triple Pattern Fragments servers</h2>
-    <section>
+    <section id="server-definition">
       <h3>Definition</h3>
       <p>
-        A server can make one or more datasets available as Triple Pattern Fragments
-        through a Web API.
+        A server can make one or more datasets available as Triple Pattern Fragments.
         For a server to be called a <dfn>Triple Pattern Fragments server</dfn>
         of a given dataset,
-        it MUST offer access to <em>all</em> possible triple fragments of that dataset.
-        Each of the fragment resources MUST be accessible through HTTP using a unique URL.
-        There MUST at least exist one triple-based format [[!RDF11-CONCEPTS]]
-        in which the server offers representations of each triple fragment.
-        In particular, it is RECOMMENDED they support Turtle [[!TURTLE]].
-      </p>
-      <p class="note">
-        There is no such thing as <em>the</em> Web API for Triple Pattern Fragments,
-        as many variations on such an API are possible.
-        <br>
-        Therefore, this documents instead lists constraints
-        for servers that expose a Triple Pattern Fragments Web API.
-        If a server follows these constraints,
-        generic Triple Pattern Fragment clients can access all Triple Pattern Fragments on it.
+        it MUST offer access to <em>all</em> possible Triple Pattern Fragments of that dataset.
+        Triple Pattern Fragments MAY be accessible through one or more representations,
+        at least one of which MUST be RDF-based [[!RDF11-CONCEPTS]].
       </p>
       <p>
-        Servers MAY have a form of access control;
-        in this case, for all read-only operations,
-        the same access control principles
-        MUST apply to <em>all</em> Triple Pattern Fragments of the dataset.
-        I.e., if a client can access one Triple Pattern Fragment,
-        it MUST be able to access all Triple Pattern Fragments of this dataset.
-        Different datasets MAY be exposed with different access levels,
-        as long as the access levels for any given dataset are consistent.
+        Each Triple Pattern Fragment MUST follow the document type
+        defined in <a href="#document-type"></a> and MUST be accessible through a canonical IRI.
+        All representations supported by the server MUST be accessible through this canonical IRI;
+        individual representations SHOULD NOT have their own IRI.
+        Support for representations must be consistent,
+        that is, if a Triple Pattern Fragment is available in a certain representation,
+        then all of the Triple Pattern Fragments MUST be available in that representation.
       </p>
       <p>
         Triple Pattern Fragments servers MAY additionally offer access
         to other Linked Data Fragments of the dataset.
       </p>
     </section>
-    <section>
-      <h3>Interface</h3>
+    <section class="informative">
+      <h3>HTTP-based implementation</h3>
       <p>
-        Triple Pattern Fragments servers are HTTP servers
-        and hence MUST comply with the HTTP specification [[!RFC7230]].
+        As an example, we consider how a Triple Pattern Fragments interface
+        could be implemented on top of the HTTP protocol [[RFC7230]].
       </p>
 
-      <section>
-        <h4>URLs for Triple Pattern Fragments</h4>
+      <p>
+        A server assigns IRIs to all possible
+        (pages of) Triple Pattern Fragments of its datasets.
+        How IRI assignment happens is implementation-dependent;
+        this choice is communicated to clients
+        through the <a href="#controls">hypermedia controls</a> of fragments' representations.
+      </p>
+      <aside class="example" title="Choosing IRIs for Triple Pattern Fragments">
         <p>
-          A server MUST assign URLs to <em>all</em> possible
-          (pages of) Triple Pattern Fragments of its datasets.
-          <br>
-          How URL assignment happens is implementation-dependent;
-          this choice is communicated to clients
-          through the <a href="#controls">hypermedia controls</a> of fragments' representations.
+          All of the following are possible IRI templates [[!RFC6570]]
+          for Triple Pattern Fragments.
         </p>
-        <aside class="example" title="Choosing URLs for Triple Pattern Fragments">
-          <p>
-            All of the following are possible URI templates [[!RFC6570]]
-            for Triple Pattern Fragments.
-          </p>
-          <ul>
-            <li><code>http://example.org/dataset?subject={subject}&amp;predicate={predicate}&amp;object={object}</code></li>
-            <li><code>http://example.org/dataset?s={subject}&amp;p={predicate}&amp;o={object}</code></li>
-            <li><code>http://example.org/mydata/fragments/{subject}/{predicate}/{object}/</code></li>
-            <li>…</li>
-          </ul>
-          <p>
-            It is entirely up to the server to determine such templates (if desired)
-            as part of its Web API.
-          </p>
-          <p>
-            Given any Triple Pattern Fragment retrieved from a server,
-            clients can determine the correct URL to a fragment for a specific triple pattern
-            by interpreting the <a href="#controls">hypermedia controls</a> in the retrieved fragment.
-          </p>
-        </aside>
+        <ul>
+          <li><code>http://example.org/dataset?subject={subject}&amp;predicate={predicate}&amp;object={object}</code></li>
+          <li><code>http://example.org/dataset?s={subject}&amp;p={predicate}&amp;o={object}</code></li>
+          <li><code>http://example.org/mydata/fragments/{subject}/{predicate}/{object}/</code></li>
+          <li>…</li>
+        </ul>
         <p>
-          A URL of a fragment MUST identify the fragment resource
-          and MUST NOT identify a representation thereof.
-          All representations MUST be accessible through the fragment's canonical URL
-          using content negotiation [[!RFC7230]].
-          Servers SHOULD NOT have representation-specific fragment URLs.
+          It is entirely up to the server to determine such templates (if desired)
+          as part of its Web API.
         </p>
         <p>
-          Clients can obtain the URL of a specific fragment
-          through a hypermedia control in fragments' representations.
-          However, since hypermedia controls generally accept strings as input,
-          we need to specify how to convert IRIs, literals, and variables to strings
-          for use as <var>subject</var>, <var>predicate</var>, and <var>object</var> parameter values.
-          A Triple Pattern Fragments server MUST at least support the following options:
+          Given any Triple Pattern Fragment retrieved from a server,
+          clients can determine the correct IRI to a fragment for a specific triple pattern
+          by interpreting the <a href="#controls">hypermedia controls</a> in the retrieved fragment.
         </p>
-        <dl>
-          <dt>constant IRI</dt>
-          <dd>
-            the text value of the IRI,
-            e.g., <code>http://example.org/bar</code>
-          </dd>
-          <dt>constant text literal</dt>
-          <dd>
-            the text value of the literal, surrounded by double quotes <code>"</code>,
-            e.g., <code>"my text"</code>
-          </dd>
-          <dt>constant literal with language</dt>
-          <dd>
-            the text value of the literal, surrounded by double quotes <code>"</code>
-            followed by <code>@</code> and the lowercase language code [[!BCP47]]
-            e.g., <code>"my text"@en-gb</code>
-          </dd>
-          <dd>
-          <dt>constant literal with type</dt>
-          <dd>
-            the text value of the literal, surrounded by double quotes <code>"</code>
-            followed by <code>^^</code> and the text value of the IRI
-            e.g., <code>"42"^^http://www.w3.org/2001/XMLSchema#integer</code>
-          </dd>
-          <dt>variable</dt>
-          <dd>
-            either as the empty string,
-            or as a string starting with a question mark,
-            followed by one or more word characters,
-            e.g., <code>?var</code>.
-          </dd>
-          <dd>
-        </dl>
-        <p class="issue">
-          The <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a>
-          could capture the above at some point.
-          <a href="https://github.com/HydraCG/Specifications/issues/30">See issue 30.</a>
-        </p>
-        <p>
-          All values MUST be URL encoded during the process of applying the hypermedia control.
-          However, they MUST NOT be encoded before being sent to the hypermedia control,
-          as this would result in double encoding.
-        </p>
-        <p>
-          A server MUST interpret variables encoded as an empty string
-          as unique variables.
-          A server MUST interpret identical non-empty variable names
-          as referring to the same variable.
-        </p>
-        <p class="issue">
-          We should talk about support for patterns such as <code>{ ?s ?p ?s }</code>.
-        </p>
-      </section>
+      </aside>
+      <p>
+        A IRI of a fragment identifies the fragment resource, not a representation thereof.
+        All representations are accessible through the fragment's canonical IRI
+        using content negotiation [[RFC7230]].
+        No specific IRIs are necessary for individual representations.
+      </p>
 
-      <section>
-        <h4>HTTP GET</h4>
-        <p>
-          Triple Pattern Fragments servers MUST support
-          the HTTP <code>GET</code> method.
-        </p>
-        <p>
-          For <code>GET</code> requests,
-          a server MUST return a representation of the fragment corresponding to the request URL,
-          even if no triples match the selector.
-          In particular, even empty (pages of) fragments
-          MUST contain the hypermedia control that allows clients
-          to request other Triple Pattern Fragments of the same dataset.
-        </p>
-        <p>
-          A server MUST try to satisfy the client's content type preferences
-          to the extent possible.
-          If no acceptable content type has been found,
-          a server SHOULD return a triple-based representation
-          instead of sending a response with status code <code>406 Not Acceptable</code>.
-        </p>
-        <p>
-          Other HTTP methods MAY be supported by a server,
-          although this is implementation-specific.
-          If a certain method is unsupported,
-          a server MUST send a response with status code <code>405 Method Not Allowed</code>.
-        </p>
-      </section>
+      <p>
+        In order to allow browser applications to access fragments,
+        Cross-Origin Resource Sharing [[CORS]] has to be enabled on the server.
+        To this end, Triple Pattern Fragments servers should emit
+        the following header and value on <em>all</em> HTTP responses to
+        requests for Triple Pattern Fragments, regardless of their status code:
+      </p>
+      <pre><code>Access-Control-Allow-Origin: *</code></pre>
 
-      <section>
-        <h4>Accessibility for Web applications</H4>
-        <p>
-          In order to allow browser applications to access fragments,
-          Cross-Origin Resource Sharing [[!CORS]] has to be enabled on the
-          server. To this end, Triple Pattern Fragments servers SHOULD emit
-          the following header and value on <em>all</em> HTTP responses to
-          requests for Triple Pattern Fragments, regardless of their status
-          code:
-        </p>
-        <pre><code>Access-Control-Allow-Origin: *</code></pre>
-        <p class="note">
-          A value of <code>*</code> (all origins) has been chosen
-          instead of a specific originating server,
-          to improve the cacheability of resources.
-        </p>
-        <p class="issue">
-          This section should probably also mention cacheability separately.
-        </p>
-      </section>
+      <p>
+        As this example indicates, a Triple Pattern Fragments interface
+        is fully defined by its document type (<a href="#document-type"></a>).
+        No protocol-level agreements are necessary.
+        In the case of HTTP, these are provided by the HTTP protocol itself.
+      </p>
     </section>
   </section>
 </body>
