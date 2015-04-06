@@ -142,11 +142,9 @@
         using the following namespace prefixes:
       </p>
       <pre><code>@prefix rdf:         &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;.
-@prefix rdfs:        &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
-@prefix dbpedia:     &lt;http://dbpedia.org/resource/&gt;.
-@prefix dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;.
 @prefix hydra:       &lt;http://www.w3.org/ns/hydra/core#&gt;.
 @prefix void:        &lt;http://rdfs.org/ns/void#&gt;.</code></pre>
+@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt;.
     </section>
   </section>
 
@@ -154,7 +152,7 @@
   </section>
 
   <section>
-    <h2>The Triple Pattern Fragments interface</h2>
+    <h2>Document type</h2>
     <section class="informative">
       <h2>Overview</h2>
       <p>
@@ -162,7 +160,10 @@
       </p>
       <ul>
         <li>What kind of <em>requests</em> can clients make?</li>
-        <li>What kind of <em>responses</em> do servers send to answer each of these requests?</li>
+        <li>
+          With what kind of <em>responses</em> do servers reply,
+          or in other words, what <em>document types</em> do they use?
+        </li>
       </ul>
       <p>
         These essential design decisions also determine
@@ -189,7 +190,7 @@
       </p>
       <p>
         The Triple Pattern Fragments interface consists solely
-        of the definition of the Triple Pattern Fragment <em>document type</em>.
+        of the definition of the Triple Pattern Fragment document type.
         No protocol-specific details are specified,
         since each Triple Pattern Fragment contains hypermedia controls
         that explain in-band how clients can engage in an interaction through a specific protocol.
@@ -203,20 +204,17 @@
       <h2>Definition</h2>
       <p>
         A <dfn>Triple Pattern Fragment</dfn>
-        (also known as a <dfn>basic Linked Data Fragment</dfn>)
-        is a Linked Data Fragment [[!HYDRA-LDF]] with the following characteristics:
+        is a Linked Data Fragment [[!HYDRA-LDF]] of a dataset with the following characteristics:
       </p>
       <dl>
-        <dt>data / selector</dt>
+        <dt>data</dt>
         <dd>
-          The selector of a Triple Pattern Fragment MUST be a triple pattern
-          <code>{ ?s ?p ?o. }</code>, in which each of the three components
-          MUST be either a <em>variable</em>,
-          a <em>constant IRI</em>,
-          or (in the case of <code>?o</code>) a <em>constant literal</em>.
-          These components MUST NOT be blank nodes.
-          The data MUST contain those triples that match the triple pattern,
-          but MAY additionally contain other, related triples.
+          A Triple Pattern Fragment MUST contain
+          all triples of the dataset that match a given triple pattern
+          “<code>?subject ?predicate ?object.</code>”,
+        </dd>
+        <dd>
+          A Triple Pattern Fragment MAY additionally contain other data triples.
         </dd>
         <dt>metadata</dt>
         <dd>
@@ -224,7 +222,7 @@
           that express the estimated total number of matches for the triple pattern.
         </dd>
         <dd>
-          The fragment MAY contain additional metadata.
+          A Triple Pattern Fragment MAY contain additional metadata.
         </dd>
         <dt>hypermedia controls</dt>
         <dd>
@@ -234,17 +232,11 @@
           that allows to choose subject, predicate, and object of the selector's triple pattern.
         </dd>
         <dd>
-          The fragment MAY contain additional hypermedia controls.
+          A Triple Pattern Fragment MAY contain additional hypermedia controls.
           In particular, the URLs of the entities of the data, metadata, and control triples
           SHOULD be dereferenceable.
         </dd>
       </dl>
-
-      <p>The following sections will detail each of the components.</p>
-    </section>
-
-    <section id="data">
-      <h3>Data</h3>
       <p>
         A Triple Pattern Fragment of a dataset is fully determined
         by its <dfn>triple pattern selector</dfn>.
@@ -255,19 +247,52 @@
         The <code>subject</code> MUST either be a variable or an IRI;
         the <code>predicate</code> MUST either be a variable or an IRI;
         the <code>object</code> MUST either be a variable, an IRI, or a literal.
+        These components MUST NOT be blank nodes.
+      </p>
+
+      <p>
+        The above constraints define the Triple Pattern Fragment document type,
+        and are detailed in the following sections
+        <a href="#data"></a>, <a href="#metadata"></a>, and <a href="#controls"></a>.
+      </p>
+
+      <p>
+        Triple Pattern Fragments are not bound to a specific syntax,
+        since the data, metadata, and controls can be represented in different ways.
+        The server MUST, however, support at least one RDF-based representation.
+        Servers MUST indicate the corresponding MIME type
+        when responding with a Triple Pattern Fragment,
+        so clients can correctly parse it.
       </p>
       <p>
-        Variable names MAY be substituted,
-        i.e., two Triple Pattern Fragments of a dataset are identical
-        if and only if there exists an injective substitution function for variable names
-        such that all three components of the fragment are equal.
+        For RDF syntaxes without multiple graph support
+        (such as <a href="http://www.w3.org/TR/turtle/">Turtle</a>
+        or <a href="http://www.w3.org/TR/n-triples/">N-Triples</a>),
+        the data, metadata, and controls MUST necessarily be serialized to the same graph.
+        For RDF syntaxes with multiple graph support
+        (such as <a href="http://www.w3.org/TR/json-ld/">JSON-LD</a>,
+        <a href="http://www.w3.org/TR/trig/">TriG</a>
+        or <a href="http://www.w3.org/TR/n-quads/">N-Quads</a>),
+        the data MUST be serialized to the default graph
+        and the metadata and controls MUST be serialized to one or multiple non-default graphs.
       </p>
+    </section>
+
+    <section id="data">
+      <h3>Data</h3>
       <p>
-        The data of a fragment is obtained
-        by selecting those triples of its dataset
-        that match the triple pattern selector.
+        The data of a Triple Pattern Fragment is obtained
+        by selecting all triples of a dataset
+        that match the fragment's triple pattern selector.
         These triples SHOULD be ordered in some consistent way,
         such that Triple Pattern Fragments can be paged consistently.
+        Triples SHOULD NOT contain blank nodes
+        (if the original triples contain blank nodes,
+        they SHOULD be <a href="http://www.w3.org/TR/rdf11-concepts/#section-skolemization">skolemized</a>).
+      </p>
+      <p>
+        If the RDF syntax supports multiple graphs,
+        data triples MUST be serialized to the default graph.
       </p>
     </section>
 
@@ -281,7 +306,7 @@
       </p>
       <dl class="triple">
         <dt>subject</dt>
-        <dd>the URL of the fragment</dd>
+        <dd>the URI of the fragment</dd>
         <dt>predicate</dt>
         <dd>the <code>void:triples</code> predicate</dd>
         <dt>object</dt>
@@ -300,10 +325,19 @@
         </li>
       </ul>
       <p>
-        The metadata set MAY additionally contain variations of the above triple.
+        The metadata MAY additionally contain variations of the above triple.
         For instance,
         it is RECOMMENDED to add a triple with the same subject and object
         and the <code>hydra:totalItems</code> predicate.
+      </p>
+
+      <p>
+        If the RDF syntax supports multiple graphs,
+        metadata triples MUST be serialized to a non-default graph.
+        This non-default graph SHOULD be explicitly related to the Triple Pattern Fragment
+        (for instance, using the <code>foaf:primaryTopic</code> predicate),
+        so clients can interpret what resource this metadata belongs to.
+        This graph MAY be the same as the graph containing the hypermedia controls.
       </p>
     </section>
 
@@ -356,7 +390,7 @@
       </p>
       <p>
         This hypermedia control MUST be present
-        because there purposely does not exist a fixed URL format
+        because there purposely does not exist a fixed URI format
         that servers of Triple Pattern Fragments need to follow.
         This means that clients of Triple Pattern Fragments
         MUST NOT need prior knowledge of a server,
@@ -392,6 +426,15 @@
   &lt;p&gt;&lt;input type="submit" /&gt;&lt;/p&gt;
 &lt;/form&gt;</code></pre>
       </div>
+
+      <p>
+        If the RDF syntax supports multiple graphs,
+        control triples MUST be serialized to a non-default graph.
+        This non-default graph SHOULD be explicitly related to the Triple Pattern Fragment
+        (for instance, using the <code>foaf:primaryTopic</code> predicate),
+        so clients can interpret what resource the controls are related to.
+        This graph MAY be the same as the graph containing the metadata.
+      </p>
     </section>
 
     <section id="paging">
@@ -677,7 +720,7 @@
           even if no triples match the selector.
           In particular, even empty (pages of) fragments
           MUST contain the hypermedia control that allows clients
-          to request other basic Triple Pattern Fragments of the same dataset.
+          to request other Triple Pattern Fragments of the same dataset.
         </p>
         <p>
           A server MUST try to satisfy the client's content type preferences
