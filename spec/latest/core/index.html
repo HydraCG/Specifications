@@ -647,7 +647,7 @@
       a set of somehow related resources. Results of a search query or
       entries of an address book are just two examples. To simplify such
       use cases, Hydra defines the two classes <i>hydra:Collection</i> and
-      <i>hydra:PagedCollection</i>.</p>
+      <i>hydra:PartialCollectionView</i>.</p>
 
     <p>A <i>hydra:Collection</i> can be used to reference a set of resources
       as follows:</p>
@@ -659,6 +659,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
+        ****"totalItems": "4980"****,
         ****"member"****: [
           {
             "@id": "/comments/429"
@@ -681,35 +682,38 @@
 
     <p>Since collections may become very large, Web APIs often chose to
       split a collection into multiple pages. In Hydra, that can be achieved
-      with a <i>hydra:PagedCollection</i>. In addition to the
-      <i>member</i> property, a <i>PagedCollection</i> may also include
-      links to the <i>firstPage</i>, <i>nextPage</i>, <i>previousPage</i>,
-      or <i>lastPage</i> as well as information about the
-      <i>itemsPerPage</i> and the <i>totalItems</i> as shown in the
-      following example.</p>
+      with a <i>hydra:PartialCollectionView</i>. It describes a specific
+      view on the collection which represents only a subset of the collection's
+      members. A <i>PartialCollectionView</i> may contain links to the
+      the <i>first</i>, <i>next</i>, <i>previous</i>, and <i>last</i>
+      <i>PartialCollectionView</i> which allows a client to find all members
+      of a <i>Collection</i>.</p>
 
     <pre class="example" data-transform="updateExample"
-         title="A Hydra PagedCollection splites a collection into multiple pages">
+         title="A Hydra PartialCollectionView splits a collection into multiple views">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@id": "http://api.example.com/an-issue/comments?page=3",
-        ****"@type": "PagedCollection"****,
-        ****"totalItems": "4980"****,
-        ****"itemsPerPage": "10"****,
-        ****"firstPage": "/an-issue/comments?page=1"****,
-        ****"nextPage": "/an-issue/comments?page=4"****,
-        ****"previousPage": "/an-issue/comments?page=2"****,
-        ****"lastPage": "/an-issue/comments?page=498"****,
+        "@id": "http://api.example.com/an-issue/comments",
+        "@type": "Collection",
+        "totalItems": "4980",
         "member": [
-          ####... the members of this PagedCollection ...####
-        ]
+          ####... a subset of the members of the Collection ...####
+        ],
+        ****"view"****: {
+          "@id": "http://api.example.com/an-issue/comments?page=3",
+          ****"@type": "PartialCollectionView"****,
+          ****"first": "/an-issue/comments?page=1"****,
+          ****"next": "/an-issue/comments?page=4"****,
+          ****"previous": "/an-issue/comments?page=2"****,
+          ****"last": "/an-issue/comments?page=498"****
+        }
       }
       -->
     </pre>
 
     <p class="issue">Say that all these properties are optional? What about
-      <i>firstPage</i> and, more interestingly, <i>lastPage</i>?</p>
+      <i>first</i> and, perhaps more interestingly, <i>last</i>?</p>
   </section>
 
   <section>
