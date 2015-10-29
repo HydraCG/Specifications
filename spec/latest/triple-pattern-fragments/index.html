@@ -601,7 +601,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
           However, if the client requests <code>http://example.org/example?page=3&amp;s=a</code>
           the <em>next page</em> triple should look like:
         </p>
-<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:next &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
+<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:next &lt;http://example.org/example?page=4&amp;s=a&gt;.</code></pre>
         <p>
           Using the requested IRI helps the client correctly relate the requested resource (the page)
           to other resources (other pages).
