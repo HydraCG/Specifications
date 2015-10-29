@@ -560,10 +560,17 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dt>subject</dt>
         <dd>the IRI of the current page</dd>
         <dt>predicate</dt>
-        <dd>the appropriate <code>hydra:previousPage</code> or <code>hydra:nextPage</code> predicate</dd>
+        <dd>the appropriate <code>hydra:previous</code> or <code>hydra:next</code> predicate</dd>
         <dt>object</dt>
         <dd>the IRI of the previous/next page</dd>
       </dl>
+      <p class="warning">
+        The predicates used to be named
+        <del><code>hydra:previousPage</code></del>
+        and
+        <del><code>hydra:nextPage</code></del>,
+        but these have changed in the <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a>.
+      </p>
       <p>
         If there is no directly preceding/following page (or if that page would be empty),
         the above triple(s) MUST NOT be present.
@@ -589,12 +596,12 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
           For example, if the client requests <code>http://example.org/example?s=a&amp;page=3</code>
           the <em>next page</em> triple should look like:
         </p>
-<pre><code><strong>&lt;http://example.org/example?s=a&amp;page=3&gt;</strong> hydra:nextPage &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
+<pre><code><strong>&lt;http://example.org/example?s=a&amp;page=3&gt;</strong> hydra:next &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
         <p>
           However, if the client requests <code>http://example.org/example?page=3&amp;s=a</code>
           the <em>next page</em> triple should look like:
         </p>
-<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:nextPage &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
+<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:next &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
         <p>
           Using the requested IRI helps the client correctly relate the requested resource (the page)
           to other resources (other pages).
