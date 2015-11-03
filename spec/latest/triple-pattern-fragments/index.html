@@ -516,8 +516,11 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         </dd>
         <dt>metadata</dt>
         <dd>
+          The page MUST be linked to its corresponding Triple Pattern Fragment
+          using <code>hydra:view</code>.
+        </dd>
+        <dd>
           The page SHOULD contain all metadata of the fragment.
-
           In particular, it MUST contain a triple
           with a <code>void:triples</code> predicate
           that expresses the estimated total number of matches for the fragment's triple pattern.
@@ -559,18 +562,10 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dt>subject</dt>
         <dd>the IRI of the fragment</dd>
         <dt>predicate</dt>
-        <dd>the <code>void:subset</code> predicate</dd>
+        <dd>the <code>hydra:view</code> predicate</dd>
         <dt>object</dt>
         <dd>the IRI of the page</dd>
       </dl>
-      <p class="issue">
-        The relation between a page and the associated fragment
-        should actually be expressed with a more precise predicate,
-        for instance, one of the
-        <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a> paging predicates.
-        However, this part of the Core Vocabulary is still in development at the time of writing.
-      </p>
-
       <p>
         If the page has directly preceding or directly following pages,
         this relationship MUST be indicated explicitly using the following triple(s):
