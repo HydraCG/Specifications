@@ -205,7 +205,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
       <h2>Definition</h2>
       <p>
         A <dfn>Triple Pattern Fragment</dfn>
-        is a Linked Data Fragment [[!HYDRA-LDF]] of a dataset with the following characteristics:
+        is a Linked Data Fragment [[!HYDRA-LDF]] of a dataset that consists of three parts:
       </p>
       <dl>
         <dt>data</dt>
@@ -215,7 +215,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
           “<code>?subject ?predicate ?object.</code>”.
         </dd>
         <dd>
-          A Triple Pattern Fragment MAY additionally contain other data triples.
+          A Triple Pattern Fragment MAY additionally contain other triples of the dataset.
         </dd>
         <dt>metadata</dt>
         <dd>
@@ -499,7 +499,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
       <p>
         Triple Pattern Fragments SHOULD be paged to avoid overly large responses.
         A <dfn title="Triple Pattern Fragment page">page</dfn> of a Triple Pattern Fragment
-        has the following characteristics:
+        consists of the following three parts:
       </p>
       <dl>
         <dt>data / selector</dt>
@@ -555,53 +555,8 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
       </p>
 
       <p>
-        The relation between a page and its fragment MUST be indicated explicitly
-        using the following triple:
-      </p>
-      <dl class="triple">
-        <dt>subject</dt>
-        <dd>the IRI of the fragment</dd>
-        <dt>predicate</dt>
-        <dd>the <code>hydra:view</code> predicate</dd>
-        <dt>object</dt>
-        <dd>the IRI of the page</dd>
-      </dl>
-      <p>
-        If the page has directly preceding or directly following pages,
-        this relationship MUST be indicated explicitly using the following triple(s):
-      </p>
-      <dl class="triple">
-        <dt>subject</dt>
-        <dd>the IRI of the current page</dd>
-        <dt>predicate</dt>
-        <dd>the appropriate <code>hydra:previous</code> or <code>hydra:next</code> predicate</dd>
-        <dt>object</dt>
-        <dd>the IRI of the previous/next page</dd>
-      </dl>
-      <p class="warning">
-        The predicates used to be named
-        <del><code>hydra:previousPage</code></del>
-        and
-        <del><code>hydra:nextPage</code></del>,
-        but these have changed in the <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a>.
-      </p>
-      <p>
-        If there is no directly preceding/following page (or if that page would be empty),
-        the above triple(s) MUST NOT be present.
-      </p>
-
-      <p>
-        In all metadata and control triples, any IRIs pointing to the requested resource
-        SHOULD exactly match the IRI through which the client has requested that resource.
-      </p>
-
-      <p>
-        Fragment pages MAY be accessible by page number,
-        but this is not an obligation,
-        as previous/next is sufficient for most clients.
-        Clients MUST NOT assume a particular IRI structure for pages;
-        paging MUST be fully accessible through hypermedia controls.
-        Clients MUST NOT attempt to deconstruct IRIs of pages,
+        Pages MAY be accessible by page number through an additional hypermedia control.
+        In any case, clients MUST NOT attempt to deconstruct IRIs of pages,
         i.e., they MUST treat these as opaque identifiers.
       </p>
     </section>
