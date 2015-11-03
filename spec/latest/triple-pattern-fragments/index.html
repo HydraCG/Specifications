@@ -596,36 +596,9 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
       </p>
 
       <p>
-        In all metadata and control triples, the IRI of the current page
-        MUST exactly match the IRI through which the client has accessed the page.
-        <br>
-        If the fragment itself instead of a page is requested,
-        the IRI of the fragment in all metadata and control triples
-        MUST match the requested IRI of the fragment.
+        In all metadata and control triples, any IRIs pointing to the requested resource
+        SHOULD exactly match the IRI through which the client has requested that resource.
       </p>
-      <div class="note">
-        <p>
-          The use of the requested IRI in the representation
-          is especially important in the common case in which
-          fragments or pages are accessible through (subtly) different IRIs,
-          such as <code>http://example.org/example?s=a&amp;page=3</code>
-          and <code>http://example.org/example?page=3&amp;s=a</code>.
-        </p>
-        <p>
-          For example, if the client requests <code>http://example.org/example?s=a&amp;page=3</code>
-          the <em>next page</em> triple should look like:
-        </p>
-<pre><code><strong>&lt;http://example.org/example?s=a&amp;page=3&gt;</strong> hydra:next &lt;http://example.org/example?s=a&amp;page=4&gt;.</code></pre>
-        <p>
-          However, if the client requests <code>http://example.org/example?page=3&amp;s=a</code>
-          the <em>next page</em> triple should look like:
-        </p>
-<pre><code><strong>&lt;http://example.org/example?page=3&amp;s=a&gt;</strong> hydra:next &lt;http://example.org/example?page=4&amp;s=a&gt;.</code></pre>
-        <p>
-          Using the requested IRI helps the client correctly relate the requested resource (the page)
-          to other resources (other pages).
-        </p>
-      </div>
 
       <p>
         Fragment pages MAY be accessible by page number,
