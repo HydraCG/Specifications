@@ -212,15 +212,16 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dd>
           A Triple Pattern Fragment MUST contain
           all triples of the dataset that match a given triple pattern
-          “<code>?subject ?predicate ?object.</code>”,
+          “<code>?subject ?predicate ?object.</code>”.
         </dd>
         <dd>
           A Triple Pattern Fragment MAY additionally contain other data triples.
         </dd>
         <dt>metadata</dt>
         <dd>
-          A Triple Pattern Fragment MUST contain one or more triples
-          that express the estimated total number of matches for the triple pattern.
+          A Triple Pattern Fragment MUST contain a triple
+          with a <code>void:triples</code> predicate
+          that expresses the estimated total number of matches for the triple pattern.
         </dd>
         <dd>
           A Triple Pattern Fragment MAY contain additional metadata.
@@ -228,7 +229,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dt>hypermedia controls</dt>
         <dd>
           A Triple Pattern Fragment MUST contain hypermedia controls
-          that allow to retrieve any other Triple Pattern Fragment of the same dataset.
+          that allow retrieving any other Triple Pattern Fragment of the same dataset.
           This MUST be provided as a form
           that allows to choose subject, predicate, and object of the selector's triple pattern.
         </dd>
@@ -249,6 +250,11 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         the <code>predicate</code> MUST either be a variable or an IRI;
         the <code>object</code> MUST either be a variable, an IRI, or a literal.
         These components MUST NOT be blank nodes.
+      </p>
+
+      <p>
+        A Triple Pattern Fragment is considered <dfn title="empty Triple Pattern Fragment">empty</dfn>
+        if it does not contain any data triples (regardless of metadata and controls).
       </p>
 
       <p>
@@ -498,21 +504,23 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
       <dl>
         <dt>data / selector</dt>
         <dd>
-          The page MUST contain a non-empty subset of data of the corresponding Triple Pattern Fragment,
-          unless that fragment is empty.
-          The data of a fragment is distributed over pages of a given page size <var>n</var>
-          by dividing the ordered list of matching triples
-          in chunks of size <var>n</var>;
-          only the last page can have fewer than <var>n</var> data triples.
+          The page MUST contain a subset of data of the corresponding Triple Pattern Fragment.
+          The data of a fragment SHOULD be distributed over pages of a given page size <var>n</var>
+          by dividing an ordered list of matching triples in chunks of size <var>n</var>.
         </dd>
         <dd>
-          The page MAY additionally contain other, relevant triples.
+          Each data triple SHOULD only occur on one page of any given fragment.
+        </dd>
+        <dd>
+          The page MAY additionally contain other triples of the dataset.
         </dd>
         <dt>metadata</dt>
         <dd>
           The page SHOULD contain all metadata of the fragment.
-          In particular, it MUST contain those metadata triples that express
-          the estimated total number of matches of the fragment's triple pattern.
+
+          In particular, it MUST contain a triple
+          with a <code>void:triples</code> predicate
+          that expresses the estimated total number of matches for the fragment's triple pattern.
         </dd>
         <dd>
           The page MAY contain additional metadata.
@@ -521,16 +529,27 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dd>
           A page SHOULD contain all hypermedia controls of the fragment.
           In particular, it MUST contain those controls
-          that allow to retrieve any Triple Pattern Fragment of the dataset.
+          that allow retrieving any Triple Pattern Fragment of the dataset.
         </dd>
         <dd>
-          If there is a directly preceding or directly following page of the Triple Pattern Fragment,
-          links to this page / these pages MUST be present.
+          If a previous page directly precedes the page,
+          this page MUST link to it using <code>hydra:previous</code>.
+          The previous page SHOULD NOT be empty.
+        </dd>
+        <dd>
+          If a next page directly follows the page,
+          this page MUST link to it using <code>hydra:next</code>.
+          The next page SHOULD NOT be empty.
         </dd>
         <dd>
           The page MAY contain additional hypermedia controls.
         </dd>
       </dl>
+
+      <p>
+        A page is considered <dfn title="empty page">empty</dfn>
+        if it does not contain any data triples (regardless of metadata and controls).
+      </p>
 
       <p>
         The relation between a page and its fragment MUST be indicated explicitly
