@@ -404,8 +404,8 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         i.e., they MUST NOT assume a certain IRI pattern.
         Instead, clients MUST interpret the hypermedia control in each Triple Pattern Fragment
         in order to retrieve another fragment.
-        Clients MUST NOT attempt to deconstruct the IRI of a fragment,
-        i.e., they MUST treat fragment IRIs as opaque identifiers.
+        Clients MUST NOT attempt to deconstruct IRIs of fragments,
+        i.e., they MUST treat these as opaque identifiers.
       </p>
       <div class="note">
         <p>
@@ -601,7 +601,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <br>
         If the fragment itself instead of a page is requested,
         the IRI of the fragment in all metadata and control triples
-        MUST match the requested fragment IRI.
+        MUST match the requested IRI of the fragment.
       </p>
       <div class="note">
         <p>
@@ -633,8 +633,8 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         as previous/next is sufficient for most clients.
         Clients MUST NOT assume a particular IRI structure for pages;
         paging MUST be fully accessible through hypermedia controls.
-        Clients MUST NOT attempt to deconstruct a fragment IRI's possible paging structure,
-        i.e., they MUST treat page IRIs as opaque identifiers.
+        Clients MUST NOT attempt to deconstruct IRIs of pages,
+        i.e., they MUST treat these as opaque identifiers.
       </p>
     </section>
   </section>
