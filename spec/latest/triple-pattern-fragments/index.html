@@ -82,8 +82,8 @@
         And what does “knowing” mean in this context?
       </p>
       <p>
-        By giving each of those three pieces of information a URL,
-        we can identify them clearly:
+        We use URLs to clearly and unambiguosly identify each of those
+        three pieces of information:
       </p>
 <pre><code>&lt;http://dbpedia.org/resource/Thomas_Edison&gt;
       &lt;http://xmlns.com/foaf/0.1/knows&gt;
@@ -120,7 +120,7 @@
       <p>
         The goal of a <em>Triple Pattern Fragments</em> server-side interface
         is to provide low-cost access to Linked Data,
-        while enabling efficient live querying over the dataset on the client side.
+        and enable efficient live querying over the dataset on the client side.
       <p>
         This document defines <em>Triple Pattern Fragments</em>,
         a <a href="../linked-data-fragments/">Linked Data Fragments</a> type,
@@ -139,7 +139,7 @@
       <p>
         We write triples in this document
         in the <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle RDF syntax</a> [[!TURTLE]]
-        using the following namespace prefixes:
+        and use the following namespace prefixes:
       </p>
 <pre><code>PREFIX rdf:   &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 PREFIX hydra: &lt;http://www.w3.org/ns/hydra/core#&gt;
@@ -229,7 +229,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dt>hypermedia controls</dt>
         <dd>
           A Triple Pattern Fragment MUST contain hypermedia controls
-          that allow retrieving any other Triple Pattern Fragment of the same dataset.
+          that allow retrieval of any other Triple Pattern Fragment of the same dataset.
           This MUST be provided as a form
           that allows to choose subject, predicate, and object of the selector's triple pattern.
         </dd>
@@ -532,7 +532,7 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         <dd>
           A page SHOULD contain all hypermedia controls of the fragment.
           In particular, it MUST contain those controls
-          that allow retrieving any Triple Pattern Fragment of the dataset.
+          that allow retrieval of any Triple Pattern Fragment of the dataset.
         </dd>
         <dd>
           If a previous page directly precedes the page,
