@@ -568,14 +568,13 @@ PREFIX dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;
       <dl>
         <dt>data</dt>
         <dd>
-          The selector takes a single entity (subject) as argument,
+          The selector takes a single entity as argument,
           and matches triples that are related to this entity.
           <br>
           The precise functional definition of the selector is implementation-specific,
           but it usually contains those triples that match the triple pattern
-          <code>{ &lt;s&gt; ?p ?o. }</code>
-          and possibly triples matching <code>{ ?o ?p &lt;s&gt;. }</code>,
-          with <code>&lt;s&gt;</code> the chosen entity argument.
+          <code>{ &lt;entity&gt; ?p ?o. }</code>
+          and possibly triples matching <code>{ ?o ?p &lt;entity&gt;. }</code>.
         </dd>
         <dt>metadata</dt>
         <dd>
