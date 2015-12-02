@@ -263,17 +263,17 @@ PREFIX dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;
       <aside class="example" title="Selectors">
         <p>All of the following are examples of selectors:</p>
         <ul>
-          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
+          <li>The triple pattern <code>dbpedia:Germany ?predicate ?object</code>.</li>
           <li>
             The graph pattern
-            <code>{ dbpedia:Germany rdf:type ?t. ?t rdfs:subclassOf ?t2. }</code>.
+            <code>{ dbpedia:Germany rdf:type ?class. ?class rdfs:subclassOf ?other. }</code>.
           </li>
           <li>
-            The function <code>f(t) = true</code>
+            The function <code>f(triple) = true</code>
             <em>(universal selector, matches the entire dataset)</em>.
           </li>
           <li>
-            The function <code>f(t) = false</code>
+            The function <code>f(triple) = false</code>
             <em>(empty selector, always results in an empty part)</em>.
           </li>
           <li>
@@ -306,8 +306,8 @@ PREFIX dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;
         </ul>
         <p>These selectors belong to the same selector type (<em>triple pattern selectors</em>):</p>
         <ul>
-          <li>The triple pattern <code>dbpedia:Germany ?p ?o</code>.</li>
-          <li>The triple pattern <code>?p dbpedia-owl:producer dbpedia:Walt_Disney</code>.</li>
+          <li>The triple pattern <code>dbpedia:Germany ?predicate ?object</code>.</li>
+          <li>The triple pattern <code>?subject dbpedia-owl:producer dbpedia:Walt_Disney</code>.</li>
         </ul>
       </aside>
     </section>
@@ -524,7 +524,7 @@ PREFIX dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;
         <dt>data</dt>
         <dd>
           The selector is the universal selector
-          <code>f(t) = true</code> for all triples <code>t</code>.
+          <code>f(triple) = true</code> for all triples.
           In other words,
           a data dump is an RDF representation
           of <em>all</em> triples of its dataset.
@@ -573,8 +573,8 @@ PREFIX dbpedia-owl: &lt;http://dbpedia.org/ontology/&gt;
           <br>
           The precise functional definition of the selector is implementation-specific,
           but it usually contains those triples that match the triple pattern
-          <code>{ &lt;entity&gt; ?p ?o. }</code>
-          and possibly triples matching <code>{ ?o ?p &lt;entity&gt;. }</code>.
+          <code>{ &lt;entity&gt; ?predicate ?object. }</code>
+          and possibly triples matching <code>{ ?subject ?predicate &lt;entity&gt;. }</code>.
         </dd>
         <dt>metadata</dt>
         <dd>
@@ -683,7 +683,7 @@ WHERE {
       <dl>
         <dt>data</dt>
         <dd>
-          The selector of is a triple pattern <code>{ ?s ?p ?o. }</code>,
+          The selector of is a triple pattern <code>{ ?subject ?predicate ?object. }</code>,
           in which each of the three components can be variable or constant.
           The data consists of those triples that match the triple pattern.
         </dd>
@@ -714,10 +714,10 @@ WHERE {
         <ul>
           <li>
             A Turtle representation of the triples matching
-            <code>{ ?s ?p dbpedia:Germany. }</code>,
+            <code>{ ?subject ?predicate dbpedia:Germany. }</code>,
             together with a triple that represents the total number of matches,
             as well as a form that represents the URI template
-            <code>http://example.org/fragments{?s,p,o}</code>.
+            <code>http://example.org/fragments{?subject,predicate,object}</code>.
           </li>
         </ul>
       </aside>
