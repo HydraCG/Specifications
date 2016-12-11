@@ -2,7 +2,7 @@
 
 This document describes the representation of collections in Hydra.
 
-**Tracking issue:*** [ISSUE-41](https://github.com/HydraCG/Specifications/issues/41)
+**Tracking issue:** [ISSUE-41](https://github.com/HydraCG/Specifications/issues/41)
 
 
 ## Requirements
