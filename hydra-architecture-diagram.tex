@@ -20,6 +20,14 @@
   font = {\Large\bf}, align=left,
   minimum height=13em, text width=40em, inner sep=1em,
 ]
+\tikzstyle{component} = [
+  rectangle, draw, fill=Khaki!50,
+  font = {\large\bf},
+  text width=8em, text centered, rounded corners, minimum height=4em,
+]
+\tikzstyle{arrow} = [
+  draw, -latex', line width=1pt,
+]
 
 \begin{tikzpicture}[
     node distance = 2em, auto
@@ -30,6 +38,15 @@
         (modeling) {API Modeling};
   \node[package, fill=DarkOrange!50, above=of modeling]
         (hypermedia) {Hypermedia\\Controls};
+
+  % Nodes
+  \node[component, above left=of modeling.south east, anchor=south east]
+        (resources) {Resources};
+  \node[component, above=of resources]
+        (collections) {Collections};
+
+  % Arrows
+  \path[arrow] (collections) -- (resources);
 
 \end{tikzpicture}
 
