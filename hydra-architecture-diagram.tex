@@ -15,4 +15,22 @@
 \begin{document}
 \pagestyle{empty}
 
+\tikzstyle{package} = [
+  rectangle, draw,
+  font = {\Large\bf}, align=left,
+  minimum height=13em, text width=40em, inner sep=1em,
+]
+
+\begin{tikzpicture}[
+    node distance = 2em, auto
+  ]
+
+  % Packages
+  \node[package, fill=CornflowerBlue!50]
+        (modeling) {API Modeling};
+  \node[package, fill=DarkOrange!50, above=of modeling]
+        (hypermedia) {Hypermedia\\Controls};
+
+\end{tikzpicture}
+
 \end{document}
