@@ -20,6 +20,11 @@
   font = {\Large\bf}, align=left,
   minimum height=13em, text width=40em, inner sep=1em,
 ]
+\tikzstyle{subpackage} = [
+  rectangle, draw,
+  font = {\large\it}, align=left,
+  minimum height=10em, text width=11em, text height=-6em, inner sep=1em,
+]
 \tikzstyle{component} = [
   rectangle, draw, fill=Khaki!50,
   font = {\large\bf},
@@ -38,6 +43,10 @@
         (modeling) {API Modeling};
   \node[package, fill=DarkOrange!50, above=of modeling]
         (hypermedia) {Hypermedia\\Controls};
+  \node[subpackage, above left=of hypermedia.south east, anchor=south east]
+        (write) {Write/Update/Delete};
+  \node[subpackage, left=of write]
+        (read) {Read};
 
   % Nodes
   \node[component, above left=of modeling.south east, anchor=south east]
