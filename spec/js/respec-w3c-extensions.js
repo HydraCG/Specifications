@@ -5,8 +5,8 @@ var localBibliography = {
     "HYDRA-TPF": "Ruben Verborgh. <cite><a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">Triple Pattern Fragments</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/</a>."
 };
 
-var preProc = {
-    apply:  function(c) {
+var preProc = 
+    function(c) {
         if (0 === $('#vocabulary-classes').length) {
             return;
         }
@@ -116,7 +116,7 @@ var preProc = {
             alert("Can't load the vocabulary.");
         });
     }
-};
+;
 
 function _esc(s) {
     s = s.replace(/&/g,'&amp;');
