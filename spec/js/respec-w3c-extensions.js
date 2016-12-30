@@ -11,7 +11,7 @@ var preProc =
             return;
         }
 
-        $.getJSON('core.jsonld', function(vocab) {
+        window.fetch('core.jsonld').then(function(vocab) {
             var options = { "base": "http://www.w3.org/ns/hydra/" };
             var context = {
                 "hydra": "http://www.w3.org/ns/hydra/core#",
