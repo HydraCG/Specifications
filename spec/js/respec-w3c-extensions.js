@@ -11,7 +11,9 @@ var preProc =
             return;
         }
 
-        window.fetch('core.jsonld').then(function(vocab) {
+        window.fetch('core.jsonld')
+        .then(function(res) { return res.text(); })
+        .then(function(vocab) {
             var options = { "base": "http://www.w3.org/ns/hydra/" };
             var context = {
                 "hydra": "http://www.w3.org/ns/hydra/core#",
