@@ -52,10 +52,12 @@
         (forms) {Forms};
 
   % Nodes
-  \node[component, above left=of modeling.south, anchor=south]
+  \node[component, above left=of modeling.south, anchor=south, xshift=6em]
         (resources) {Resources};
   \node[component, above=of resources]
         (collections) {Collections};
+  \node[component, right=5.5em of resources]
+        (errors) {Errors};
   \node[component, above right=of read.south west, anchor=south west]
         (paging) {Paging};
   \node[component, right=of paging]
@@ -69,6 +71,7 @@
 
   % Arrows
   \path[arrow] (collections.south) -- (resources);
+  \path[arrow] (resources)         -- (errors);
   \path[arrow] (paging.south)      -- (collections);
   \path[arrow] (filtering.south)   -- (collections);
   \path[arrow] (actions.south)     -- (collections.east);
