@@ -14,7 +14,7 @@ cd gh-pages
 if [[ `git log -1 --pretty=%B` == *$TRAVIS_COMMIT* ]]; then exit; fi
 
 # Update documents
-cp $REPO_PATH/*.pdf .
+cp $REPO_PATH/*.{pdf,svg} .
 
 # Commit and push latest version
 git add .
