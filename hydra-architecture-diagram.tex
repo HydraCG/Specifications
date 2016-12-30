@@ -23,7 +23,7 @@
 \tikzstyle{subpackage} = [
   rectangle, draw,
   font = {\large\it}, align=left,
-  minimum height=10em, text width=11em, text height=-6em, inner sep=1em,
+  minimum height=8em, text width=11em, text height=-5em, inner sep=1em,
 ]
 \tikzstyle{component} = [
   rectangle, draw, fill=Khaki!50,
@@ -41,12 +41,15 @@
   % Packages
   \node[package, fill=CornflowerBlue!50]
         (modeling) {API Modeling};
-  \node[package, fill=DarkOrange!50, above=of modeling]
+  \node[package, fill=DarkOrange!50, above=of modeling, minimum height=21em]
         (hypermedia) {Hypermedia\\Controls};
-  \node[subpackage, above left=of hypermedia.south east, anchor=south east]
+  \node[subpackage, above left=of hypermedia.south east, anchor=south east,
+        minimum height=11em, text height=-7em]
         (write) {Write/Update/Delete};
-  \node[subpackage, left=of write, text width=23.5em]
+  \node[subpackage, left=of write.south west, anchor=south east, text width=23.5em]
         (read) {Read};
+  \node[subpackage, above=of read, text width=23.5em]
+        (forms) {Forms};
 
   % Nodes
   \node[component, above left=of modeling.south, anchor=south]
@@ -57,6 +60,10 @@
         (paging) {Paging};
   \node[component, right=of paging]
         (filtering) {Filtering};
+  \node[component, above right=of forms.south west, anchor=south west]
+        (templates) {URI Templates};
+  \node[component, right=of templates]
+        (fields) {Fields};
   \node[component, above right=of write.south west, anchor=south west]
         (actions) {Actions};
 
@@ -66,6 +73,11 @@
   \path[arrow] (filtering.south)   -- (collections);
   \path[arrow] (actions.south)     -- (collections.east);
   \path[arrow] (actions.south)     -- (resources.east);
+  \path[arrow] (paging.north)      -- (templates.south);
+  \path[arrow] (filtering.north)   -- (templates.south);
+  \path[arrow] (filtering.north)   -- (fields.south);
+  \path[arrow] (actions.north)     -- (templates.south);
+  \path[arrow] (actions.north)     -- (fields.south);
 
 \end{tikzpicture}
 
