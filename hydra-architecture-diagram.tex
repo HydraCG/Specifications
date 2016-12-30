@@ -29,7 +29,7 @@
 \tikzstyle{component} = [
   rectangle, draw, fill=Khaki!50,
   font = {\large\bf},
-  text width=9.5em, text centered, rounded corners, minimum height=4em,
+  minimum width=10em, rounded corners, minimum height=4em,
 ]
 \tikzstyle{arrow} = [
   draw, -latex', line width=1pt,
@@ -47,13 +47,13 @@
   \node[subpackage, above left=of hypermedia.south east, anchor=south east,
         minimum height=11em, text height=-7em]
         (write) {Write/Update/Delete};
-  \node[subpackage, left=of write.south west, anchor=south east, text width=23.5em]
+  \node[subpackage, left=of write.south west, anchor=south east, text width=23em]
         (read) {Read};
-  \node[subpackage, above=of read, text width=23.5em]
+  \node[subpackage, above=of read, text width=23em]
         (forms) {Forms};
 
   % Nodes
-  \node[component, above left=of modeling.south, anchor=south, xshift=6em]
+  \node[component, above left=of modeling.south, anchor=south, xshift=6.4em]
         (resources) {Resources};
   \node[component, above=of resources]
         (collections) {Collections};
