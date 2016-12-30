@@ -57,11 +57,15 @@
         (paging) {Paging};
   \node[component, right=of paging]
         (filtering) {Filtering};
+  \node[component, above right=of write.south west, anchor=south west]
+        (actions) {Actions};
 
   % Arrows
-  \path[arrow] (collections) -- (resources);
-  \path[arrow] (paging)      -- (collections);
-  \path[arrow] (filtering)   -- (collections);
+  \path[arrow] (collections.south) -- (resources);
+  \path[arrow] (paging.south)      -- (collections);
+  \path[arrow] (filtering.south)   -- (collections);
+  \path[arrow] (actions.south)     -- (collections.east);
+  \path[arrow] (actions.south)     -- (resources.east);
 
 \end{tikzpicture}
 
