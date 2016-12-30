@@ -5,3 +5,5 @@ before_install:
   - sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-latex-recommended latex-xcolor pgf
 script:
   - pdflatex -interaction=nonstopmode -halt-on-error hydra-architecture-diagram.tex
+after_success:
+  - ./.travis_build_pages.sh
