@@ -44,12 +44,11 @@
         (modeling) {API Modeling};
   \node[package, fill=DarkOrange!50, above=of modeling, minimum height=21em]
         (hypermedia) {Hypermedia\\Controls};
-  \node[subpackage, above left=of hypermedia.south east, anchor=south east,
-        minimum height=11em, text height=-7em]
-        (write) {Write/Update/Delete};
-  \node[subpackage, left=of write.south west, anchor=south east, text width=23em]
-        (read) {Read};
-  \node[subpackage, above=of read, text width=23em]
+  \node[subpackage, above left=of hypermedia.south east, anchor=south east, align=right]
+        (unsafe) {Unsafe};
+  \node[subpackage, left=of unsafe.south west, anchor=south east, text width=23em]
+        (safe) {Safe};
+  \node[subpackage, above=of safe, text width=23em]
         (forms) {Forms};
 
   % Nodes
@@ -59,7 +58,7 @@
         (collections) {Collections};
   \node[component, right=5.5em of resources]
         (errors) {Errors};
-  \node[component, above right=of read.south west, anchor=south west]
+  \node[component, above right=of safe.south west, anchor=south west]
         (paging) {Paging};
   \node[component, right=of paging]
         (filtering) {Filtering};
@@ -67,7 +66,7 @@
         (templates) {URI Templates};
   \node[component, right=of templates]
         (fields) {Fields};
-  \node[component, above right=of write.south west, anchor=south west]
+  \node[component, above right=of unsafe.south west, anchor=south west]
         (actions) {Actions};
 
   % Arrows
