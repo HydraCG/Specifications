@@ -114,7 +114,7 @@ var preProc =
                 classOverview += '<ul>';
                 $('#vocabulary-overview').append(classOverview);
             });
-        }).error(function(jqxhr) {
+        }).catch(function(jqxhr) {
             alert("Can't load the vocabulary.");
         });
     }
