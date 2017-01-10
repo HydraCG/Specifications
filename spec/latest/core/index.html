@@ -3,6 +3,7 @@
 <head>
 <title>Hydra Core Vocabulary</title>
 <meta charset="utf-8">
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch|gated"></script>
 <script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" async class="remove"></script>
 <script type="text/javascript" src="../../js/jsonld.js" class="remove"></script>
 <script type="text/javascript" src="../../js/respec-w3c-extensions.js" class="remove"></script>
@@ -74,7 +75,9 @@
           // { uri: "diff-20120712.html", label: "diff to previous version" }
           { uri: "core.jsonld", label: "JSON-LD" },
           { uri: "core.ttl", label: "Turtle" },
-      ]
+      ],
+    
+      format: "markdown"
   };
 //]]>
 </script>
@@ -164,26 +167,7 @@
     granularity.</p>
 </section>
 
-<section>
-  <h2>Conformance</h2>
-
-  <p>This specification describes the conformance criteria for
-    <dfn data-lt="Hydra API documentation">Hydra API documentations</dfn>
-    and <dfn data-lt="Hydra client">Hydra clients</dfn>. These criteria are
-    relevant to authors, authoring tool implementers, and client
-    implementers. All authoring guidelines, diagrams, examples, and notes
-    in this specification are non-normative, as are all sections
-    explicitly marked as non-normative. Everything else in this
-    specification is normative.</p>
-
-  <p class="issue">Conformance for Hydra clients should probably not be
-    specified in this document.</p>
-
-  <p class="issue">Add normative statements</p>
-
-  <p>The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD,
-    SHOULD NOT, RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this
-    specification have the meaning defined in [[!RFC2119]].</p>
+<section id="conformance" data-include="section/conformance.html">
 </section>
 
 <section class="informative">
@@ -950,12 +934,12 @@
 </section>
 
 <section class="informative">
-  <h2>Acknowledgements</h2>
+  ## Acknowledgements
 
-  <p>The authors would like to thank the following individuals for contributing
-    their ideas and providing feedback for writing this specification:
-    Arnau Siches, Mark Baker, Martijn Faassen, Matthias Lehmann, Ruben Verborgh,
-    Ryan J. McDonough, Sam Goto, Thomas Hoppe, @wasabiwimp (on GitHub).</p>
+  The authors would like to thank the following individuals for contributing
+  their ideas and providing feedback for writing this specification:
+  Arnau Siches, Mark Baker, Martijn Faassen, Matthias Lehmann, Ruben Verborgh,
+  Ryan J. McDonough, Sam Goto, Thomas Hoppe, @wasabiwimp (on GitHub).
 </section>
 
 <section class="appendix informative">
