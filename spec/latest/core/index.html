@@ -483,11 +483,11 @@
       associated with.</p>
 
     <pre class="example" data-transform="updateExample"
-         title="Defining a class and documenting its supported properties">
+         title="Defining/augmenting a class and documenting its supported properties">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@id": "http://api.example.com/doc/#Comment",
+        "@id": "http://schema.org/Comment",
         ****"@type": "Class"****,
         ****"title"****: ####"The name of the class"####,
         ****"description"****: ####"A short description of the class."####,
@@ -495,10 +495,17 @@
           ####... Properties known to be supported by the class ...####
           {
             ****"@type": "SupportedProperty"****,
-            ****"property"****: "#property", ####// The property####
+            ****"property"****: "http://schema.org/text", ####// URI of the property####
             ****"required"****: true, ####// Is the property required in a request to be valid?####
-            ****"readable"****: false, ####// Can the client retrieve the property's value?####
+            ****"readable"****: true, ####// Can the client retrieve the property's value?####
             ****"writeable"****: true ####// Can the client change the property's value?####
+          },
+          {
+            "@type": "SupportedProperty",
+            "property": "http://schema.org/dateCreated",
+            "required": false,
+            "readable": true,
+            "writeable": false
           }
         ]
       }
@@ -511,11 +518,11 @@
       a class.</p>
 
     <pre class="example" data-transform="updateExample"
-         title="Defining a class and documenting its supported operations">
+         title="Defining/augmenting a class and documenting its supported operations">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@id": "http://api.example.com/doc/#Comment",
+        "@id": "http://schema.org/Comment",
         "@type": "Class",
         "title": ####"The name of the class"####,
         "description": ####"A short description of the class."####,
@@ -550,8 +557,8 @@
             "@type": "CreateResourceOperation",
             "title": "Creates a new comment",
             "method": "POST",
-            "expects": "http://api.example.com/doc/#Comment",
-            "returns": "http://api.example.com/doc/#Comment",
+            "expects": "http://schema.org/Comment",
+            "returns": "http://schema.org/Comment",
             "possibleStatus": [****
               ####... Statuses that should be expected and handled properly ...####
             ****]
