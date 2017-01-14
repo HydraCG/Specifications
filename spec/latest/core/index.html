@@ -252,7 +252,7 @@
       shows how such a typed link is used in HTML to reference a
       stylesheet.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="A typed link referencing a stylesheet as used in HTML">
       <!--
       <link ****rel="stylesheet"**** href="http://www.example.com/styles.css" />
@@ -262,7 +262,7 @@
     <p>In Linked Data, the link relation type corresponds to the property
       itself. An example in JSON-LD would thus look as follows.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Referencing a stylesheet in JSON-LD">
       <!--
       {
@@ -294,7 +294,7 @@
       throughout this section, it can, e.g., be used to define a property
       linking issues to their comments:</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Defining properties representing hyperlinks using Hydra's Link class">
       <!--
       {
@@ -312,7 +312,7 @@
       <code>comments</code> property in the following example is intended
       to be dereferenced.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Using a property defined to be a hyperlink">
       <!--
       {
@@ -332,7 +332,7 @@
       using JSON-LD's type-coercion feature, the representation can be
       made even more idiomatic:</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Using JSON-LD's type-coercion feature to create idiomatic representations">
       <!--
       {
@@ -376,7 +376,7 @@
       the example below can be deleted by sending an HTTP DELETE
       request.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="A representation of an issue augmented with a delete operation">
       <!--
       {
@@ -426,7 +426,7 @@
       may be used to automatically generate documentations in natural
       language.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="The overall structure of a Hydra API documentation">
       <!--
       {
@@ -482,7 +482,7 @@
       whether it is read-only or write-only depending on the class it is
       associated with.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Defining a class and documenting its supported properties">
       <!--
       {
@@ -510,7 +510,7 @@
       property which defines the operations supported by all instances of
       a class.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Defining a class and documenting its supported operations">
       <!--
       {
@@ -536,7 +536,7 @@
       user has the permission to delete the resource. Otherwise, the link
       would simply be hidden in the representation.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Documenting the supported operations of link properties">
       <!--
       {
@@ -589,7 +589,7 @@
       return a message-body in the response whereas the latter will not;
       otherwise they are identical.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Discovering Hydra API documentation documents">
       <!--
       HEAD / HTTP/1.1
@@ -610,7 +610,7 @@
       <a>Hydra API documentation</a> defining the API's main entry
       point:</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Retrieving a Hydra API documentation to obtain the main entry point">
       <!--
       GET /doc/ HTTP/1.1
@@ -659,7 +659,7 @@
     <p>A <i>hydra:Collection</i> can be used to reference a set of resources
       as follows:</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Referencing related resources using a Hydra Collection">
       <!--
       {
@@ -696,7 +696,7 @@
       <i>PartialCollectionView</i> which allows a client to find all members
       of a <i>Collection</i>.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="A Hydra PartialCollectionView splits a collection into multiple views">
       <!--
       {
@@ -742,7 +742,7 @@
       defaults to the [[!RFC6570]] URI Template syntax, which can be
       explicitly indicated by <i>hydra:Rfc6570Template</i>.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Description of an IRI Template">
       <!--
       {
@@ -812,7 +812,7 @@
       <code>http://example.com/find/{value}</code> with the respective
       value.</p>
 
-    <aside class="example" title="The different variable representations">
+    <aside class="example nohighlight" title="The different variable representations">
       <dl>
         <dt>The IRI <code>http://www.hydra-cg.com/</code></dt>
         <dd>BasicRepresentation: <code>http://www.hydra-cg.com/</code>; resulting IRI:
@@ -853,7 +853,7 @@
       namely the <i>search</i> property which can be used to document
       available search interfaces.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="The definition of Hydra's search property (extract)">
       <!--
       {
@@ -877,7 +877,7 @@
       a <i>Status</i> class which allows additional
       information to be associated with an HTTP status code.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Associating additional information to an HTTP status code">
       <!--
       {
@@ -907,7 +907,7 @@
       This provides an extensible framework to communicate error details to
       a client.</p>
 
-    <pre class="example" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Using Hydra's Error class to describe errors">
       <!--
       HTTP/1.1 400 Bad Request
