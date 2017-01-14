@@ -3,7 +3,7 @@
 <head>
 <title>Hydra Core Vocabulary</title>
 <meta charset="utf-8">
-<script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+<script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" async class="remove"></script>
 <script type="text/javascript" src="../../js/jsonld.js" class="remove"></script>
 <script type="text/javascript" src="../../js/respec-w3c-extensions.js" class="remove"></script>
 <script type="text/javascript" class="remove">
@@ -69,6 +69,7 @@
       // wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/??????/status",
 
       maxTocLevel: 4,
+      postProcess: [ postProc ],
       alternateFormats: [
           // { uri: "diff-20120712.html", label: "diff to previous version" }
           { uri: "core.jsonld", label: "JSON-LD" },
