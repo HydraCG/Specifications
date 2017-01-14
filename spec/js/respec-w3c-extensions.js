@@ -5,10 +5,12 @@ var localBibliography = {
     "HYDRA-TPF": "Ruben Verborgh. <cite><a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">Triple Pattern Fragments</a>.</cite> Unofficial Draft. URL: <a href=\"http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/\">http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/</a>."
 };
 
-var preProc = {
-    apply:  function(c) {
+document
+  .querySelector('script[src="https://www.w3.org/Tools/respec/respec-w3c-common"]')
+  .onload = function() {
+      document.respecIsReady.then(function() {
         if (0 === $('#vocabulary-classes').length) {
-            return;
+          return;
         }
 
         $.getJSON('core.jsonld', function(vocab) {
@@ -115,8 +117,9 @@ var preProc = {
         }).error(function(jqxhr) {
             alert("Can't load the vocabulary.");
         });
-    }
-};
+    });
+  };
+
 
 function _esc(s) {
     s = s.replace(/&/g,'&amp;');
