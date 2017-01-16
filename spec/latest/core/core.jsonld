@@ -23,9 +23,6 @@
     "writeable": "hydra:writeable",
     "supportedOperation": { "@id": "hydra:supportedOperation", "@type": "@id" },
     "Operation": "hydra:Operation",
-    "CreateResourceOperation": "hydra:CreateResourceOperation",
-    "ReplaceResourceOperation": "hydra:ReplaceResourceOperation",
-    "DeleteResourceOperation": "hydra:DeleteResourceOperation",
     "method": "hydra:method",
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
@@ -222,30 +219,6 @@
       "subClassOf": "hydra:Resource",
       "label": "Operation",
       "comment": "An operation.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:CreateResourceOperation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Operation",
-      "label": "CreateResourceOperation",
-      "comment": "A CreateResourceOperation is a HTTP operation which expects an input of the type specified by hydra:expects and creates a resource of the type specified by hydra:returns.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:ReplaceResourceOperation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Operation",
-      "label": "ReplaceResourceOperation",
-      "comment": "A ReplaceResourceOperation is a HTTP operation which overwrites a resource. It expects data of the type specified in hydra:expects and results in a resource of the type specified by hydra:returns.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:DeleteResourceOperation",
-      "@type": "hydra:Class",
-      "subClassOf": "hydra:Operation",
-      "label": "DeleteResourceOperation",
-      "comment": "A DeleteResourceOperation is a HTTP operation that deletes a resource.",
       "vs:term_status": "testing"
     },
     {

@@ -362,19 +362,9 @@
       HTTP status codes might be returned and program their clients
       accordingly.</p>
 
-    <p>Hydra has three predefined operation classes, namely
-      <i>CreateResourceOperation</i>, <i>ReplaceResourceOperation</i>,
-      and <i>DeleteResourceOperation</i>. As their names suggest, they
-      can be used to implement simple
-      <abbr title="Create, replace, update, and delete">CRUD</abbr>
-      functionality. More specialized operations can be easily created
-      by subclassing these classes or their base class <i>Operation</i>.</p>
-
     <p>The following example illustrates how representations can be
       augmented with information that enables clients to interact with
-      them. A client would be able to understand that the resource in
-      the example below can be deleted by sending an HTTP DELETE
-      request.</p>
+      them.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="A representation of an issue augmented with a delete operation">
@@ -386,7 +376,7 @@
         "description": "This issue can be deleted with an HTTP DELETE request",
         ****"operation"****: [
           ****{
-            "@type": "DeleteResourceOperation",
+            "@type": "Operation",
             "method": "DELETE"
           }****
         ]
@@ -396,7 +386,7 @@
 
     <p>The example above references Hydra's context to map properties such
       as <code>operation</code> and <code>method</code> and values like
-      <code>DeleteResourceOperation</code> to URLs that unambiguously
+      <code>Operation</code> to URLs that unambiguously
       identify these concepts. It would be similarly valid JSON-LD if
       these mappings would be directly embedded into the representation
       or if the full URLs would be used instead. Typically, however, the
@@ -547,7 +537,7 @@
         "description": "A link to comments with an operation to create a new comment.",
         ****"supportedOperation"****: [
           ****{
-            "@type": "CreateResourceOperation",
+            "@type": "Operation",
             "title": "Creates a new comment",
             "method": "POST",
             "expects": "http://api.example.com/doc/#Comment",
