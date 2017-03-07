@@ -54,7 +54,23 @@ and possible ways to address it.**
 - connecting errors to resources
 
 ### Paging
-TODO: add details
+**Pages partition collections into subsets such that
+each child resource appears on exactly one page.**
+
+#### Defined by Hydra
+- page navigation
+    - next, previous
+    - first, last
+    - jump to specific page
+- page metadata
+    - current page number
+    - total number of pages
+    - number of items per page
+- ordering
+    - based on resource attributes
+- client-initiated paging
+    - determine ordering
+    - determine number of items per page
 
 ### Filtering
 TODO: add details
