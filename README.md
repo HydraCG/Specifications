@@ -26,7 +26,9 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
 
 #### Defined by Hydra
 - how resources can incorporate Hydra descriptions and/or controls
-    - in particular, in which graph this should happen
+  - in particular, in which graph this should happen
+- describing representations
+  - properties that a resource representation will list
 
 
 ### Collections
@@ -37,7 +39,9 @@ Collections are resources themselves.
 
 #### Defined by Hydra
 - describing kinds of collections
-  - what their elements look like
+  - properties of their elements (type etc.)
+- describing representations
+  - properties of resources that a collection representation will list
 - describing operations on collections
   - creation
   - addition
