@@ -32,6 +32,7 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
 **Collections are sets of resources and associated behavior.**
 
 Collections can contain zero or more resources.
+Collections are resources themselves.
 
 #### Defined by Hydra
 - describing kinds of collections
