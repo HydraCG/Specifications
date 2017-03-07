@@ -10,6 +10,13 @@ An arrow represents a dependency from a component on another.
 
 ## Components
 
+### Web API
+**Web APIs consist of resources and collections.**
+
+#### Defined by Hydra
+- structural description of an API
+- metadata of an API
+
 ### Resources
 **Resources are the atoms of (Hydra-enabled) REST Web APIs.**
 
