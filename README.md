@@ -73,7 +73,10 @@ each child resource appears on exactly one page.**
     - determine number of items per page
 
 ### Filtering
-TODO: add details
+**Filters select subsets of collections based on resource attributes.**
+
+#### Defined by Hydra
+- how field inputs result in a selection
 
 ### URI Templates
 TODO: add details
