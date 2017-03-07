@@ -37,11 +37,11 @@ Collections are resources themselves.
 
 #### Defined by Hydra
 - describing kinds of collections
-    - what their elements look like
+  - what their elements look like
 - describing operations on collections
-    - creation
-    - addition
-    - deletion
+  - creation
+  - addition
+  - deletion
 
 
 ### Errors
@@ -51,8 +51,8 @@ and possible ways to address it.**
 #### Defined by Hydra
 - types of errors 
 - error metadata
-    - possible causes
-    - possible fixes
+  - possible causes
+  - possible fixes
 - connecting errors to resources
 
 
@@ -79,8 +79,8 @@ and possible ways to address it.**
 
 #### Defined by Hydra
 - entity structure
-    - JSON(-LD)
-    - other RDF formats
+  - JSON(-LD)
+  - other RDF formats
 - field serialization
 
 
@@ -90,18 +90,18 @@ each child resource appears on exactly one page.**
 
 #### Defined by Hydra
 - page navigation
-    - next, previous
-    - first, last
-    - jump to specific page
+  - next, previous
+  - first, last
+  - jump to specific page
 - page metadata
-    - current page number
-    - total number of pages
-    - number of items per page
+  - current page number
+  - total number of pages
+  - number of items per page
 - ordering
-    - based on resource attributes
+  - based on resource attributes
 - client-initiated paging
-    - determine ordering
-    - determine number of items per page
+  - determine ordering
+  - determine number of items per page
 
 
 ### Filtering
