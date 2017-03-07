@@ -11,7 +11,15 @@ An arrow represents a dependency from a component on another.
 ## Components
 
 ### Resources
-TODO: add details
+**Resources are the atoms of (Hydra-enabled) REST Web APIs.**
+
+Resources can have one or more representations.
+If those representations are RDF-based formats (or support embedding RDF),
+then they describe the resource using elements from the Hydra Core Vocabulary.
+
+#### Defined by Hydra
+- how resources can incorporate Hydra descriptions and/or controls
+    - in particular, in which graph this should happen
 
 ### Collections
 TODO: add details
