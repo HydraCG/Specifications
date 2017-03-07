@@ -30,6 +30,9 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
 - describing representations
   - properties that a resource representation will list
 
+#### Dependencies
+- on Errors, since resources can generate errors
+
 
 ### Collections
 **Collections are sets of resources and associated behavior.**
@@ -47,6 +50,9 @@ Collections are resources themselves.
   - addition
   - deletion
 
+#### Dependencies
+- on Resources, since a collection is a resource and contains resources
+
 
 ### Errors
 **Errors describe what can go wrong during the interaction with a resource,
@@ -59,6 +65,9 @@ and possible ways to address it.**
   - possible fixes
 - connecting errors to resources
 
+#### Dependencies
+none
+
 
 ### Fields
 **Fields are places where clients can provide input.**
@@ -70,12 +79,18 @@ and possible ways to address it.**
   - range
   - validation
 
+#### Dependencies
+none
+
 
 ### URI Templates
 **URI Templates express how field values are combined into an URL.**
 
 #### Defined by Hydra
 - field serialization
+
+#### Dependencies
+- on Fields, since they are needed to fill out templates
 
 
 ### Entity Bodies
@@ -86,6 +101,9 @@ and possible ways to address it.**
   - JSON(-LD)
   - other RDF formats
 - field serialization
+
+#### Dependencies
+- on Fields, since they are needed to fill out entity bodies
 
 
 ### Paging
@@ -109,6 +127,10 @@ Pages (only) change [application state](https://www.safaribooksonline.com/librar
   - determine ordering
   - determine number of items per page
 
+#### Dependencies
+- on Collections, since they are being paged
+- on URI Templates, since some paging options require generating a page URI
+
 
 ### Filtering
 **Filters select subsets of collections based on resource attributes.**
@@ -121,6 +143,11 @@ Filters (only) change [application state](https://www.safaribooksonline.com/libr
 - the effect of a filter
   - how a filter maps input values to a selection
 
+#### Dependencies
+- on Collections, since they are being filtered
+- on URI Templates, since some filters require generating a page URI
+- on Fields, since they relate the filter to its effect
+
 
 ### Actions
 **Actions express manipulations of resources through representations.**
@@ -131,3 +158,9 @@ Actions change [resource state](https://www.safaribooksonline.com/library/view/r
 - availability of actions
 - conditions for executing an action
 - the effect of executing an action
+
+#### Dependencies
+- on Resources, since actions can be executed on them
+- on Collections, since actions can be executed on them
+- on Fields, since they relate the action to its effect
+- on Entity Bodies, since some actions require sending a request body
