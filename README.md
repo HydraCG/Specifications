@@ -22,7 +22,17 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
     - in particular, in which graph this should happen
 
 ### Collections
-TODO: add details
+**Collections are sets of resources and associated behavior.**
+
+Collections can contain zero or more resources.
+
+#### Defined by Hydra
+- describing kinds of collections
+    - what their elements look like
+- describing operations on collections
+    - creation
+    - addition
+    - deletion
 
 ### Errors
 TODO: add details
