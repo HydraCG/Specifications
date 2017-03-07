@@ -109,7 +109,11 @@ each child resource appears on exactly one page.**
 
 
 ### Filtering
-TODO: add details
+**Filters select subsets of collections based on resource attributes.**
+
+#### Defined by Hydra
+- mapping of input results to a selection
+
 
 ### Actions
 TODO: add details
