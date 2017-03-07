@@ -72,14 +72,17 @@ each child resource appears on exactly one page.**
     - determine ordering
     - determine number of items per page
 
+### URI Templates
+**URI Templates express how to combine input values into an URL.**
+
+#### Defined by Hydra
+- parameter serialization
+
 ### Filtering
 **Filters select subsets of collections based on resource attributes.**
 
 #### Defined by Hydra
 - how field inputs result in a selection
-
-### URI Templates
-TODO: add details
 
 ### Fields
 TODO: add details
