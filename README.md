@@ -28,6 +28,7 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
 - how resources can incorporate Hydra descriptions and/or controls
     - in particular, in which graph this should happen
 
+
 ### Collections
 **Collections are sets of resources and associated behavior.**
 
@@ -42,6 +43,7 @@ Collections are resources themselves.
     - addition
     - deletion
 
+
 ### Errors
 **Errors describe what can go wrong during the interaction with a resource,
 and possible ways to address it.**
@@ -52,6 +54,35 @@ and possible ways to address it.**
     - possible causes
     - possible fixes
 - connecting errors to resources
+
+
+### Fields
+**Fields are places where clients can provide input.**
+
+#### Defined by Hydra
+- parameter description
+  - name
+- constraints
+  - range
+  - validation
+
+
+### URI Templates
+**URI Templates express how field values are combined into an URL.**
+
+#### Defined by Hydra
+- field serialization
+
+
+### Entity Bodies
+**Entity Bodies express field values are combined into an request body (e.g., for `POST`/`PUT`/`PATCH`).**
+
+#### Defined by Hydra
+- entity structure
+    - JSON(-LD)
+    - other RDF formats
+- field serialization
+
 
 ### Paging
 **Pages partition collections into subsets such that
@@ -72,19 +103,8 @@ each child resource appears on exactly one page.**
     - determine ordering
     - determine number of items per page
 
-### URI Templates
-**URI Templates express how to combine input values into an URL.**
-
-#### Defined by Hydra
-- parameter serialization
 
 ### Filtering
-**Filters select subsets of collections based on resource attributes.**
-
-#### Defined by Hydra
-- how field inputs result in a selection
-
-### Fields
 TODO: add details
 
 ### Actions

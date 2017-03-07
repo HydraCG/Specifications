@@ -48,7 +48,7 @@
         (unsafe) {Unsafe};
   \node[subpackage, left=of unsafe.south west, anchor=south east, text width=23em]
         (safe) {Safe};
-  \node[subpackage, above=of safe, text width=23em]
+  \node[subpackage, above=of unsafe.north east, anchor=south east, text width=38em]
         (forms) {Forms};
 
   % Nodes
@@ -66,7 +66,9 @@
         (filtering) {Filtering};
   \node[component, above right=of forms.south west, anchor=south west]
         (templates) {URI Templates};
-  \node[component, right=of templates]
+  \node[component,  above left=of forms.south east, anchor=south east]
+        (bodies) {Entity Bodies};
+  \node[component,  right=of templates]
         (fields) {Fields};
   \node[component, above right=of unsafe.south west, anchor=south west]
         (actions) {Actions};
@@ -77,14 +79,16 @@
   \path[arrow] (collections.south) -- (resources);
   \path[arrow] (resources)         -- (errors);
   \path[arrow] (paging.south)      -- (collections);
+  \path[arrow] (paging.north)      -- (templates.south);
   \path[arrow] (filtering.south)   -- (collections);
+  \path[arrow] (filtering.north)   -- (templates.south);
+  \path[arrow] (filtering.north)   -- (fields);
   \path[arrow] (actions.south)     -- (collections.east);
   \path[arrow] (actions.south)     -- (resources.east);
-  \path[arrow] (paging.north)      -- (templates.south);
-  \path[arrow] (filtering.north)   -- (templates.south);
-  \path[arrow] (filtering.north)   -- (fields.south);
-  \path[arrow] (actions.north)     -- (templates.south);
-  \path[arrow] (actions.north)     -- (fields.south);
+  \path[arrow] (actions.north)     -- (bodies);
+  \path[arrow] (actions.north)     -- (fields);
+  \path[arrow] (templates)         -- (fields);
+  \path[arrow] (bodies)            -- (fields);
 
 \end{tikzpicture}
 
