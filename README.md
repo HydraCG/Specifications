@@ -43,7 +43,15 @@ Collections are resources themselves.
     - deletion
 
 ### Errors
-TODO: add details
+**Errors describe what can go wrong during the interaction with a resource,
+and possible ways to address it.**
+
+#### Defined by Hydra
+- types of errors 
+- error metadata
+    - possible causes
+    - possible fixes
+- connecting errors to resources
 
 ### Paging
 TODO: add details
