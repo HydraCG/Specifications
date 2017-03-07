@@ -56,6 +56,8 @@
         (resources) {Resources};
   \node[component, above=of resources]
         (collections) {Collections};
+  \node[component, left=of collections]
+        (api) {Web API};
   \node[component, right=5.5em of resources]
         (errors) {Errors};
   \node[component, above right=of safe.south west, anchor=south west]
@@ -70,6 +72,8 @@
         (actions) {Actions};
 
   % Arrows
+  \path[arrow] (api)               -- (collections);
+  \path[arrow] (api.south east)    -- (resources.north west);
   \path[arrow] (collections.south) -- (resources);
   \path[arrow] (resources)         -- (errors);
   \path[arrow] (paging.south)      -- (collections);
