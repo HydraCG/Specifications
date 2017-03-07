@@ -92,6 +92,8 @@ and possible ways to address it.**
 **Pages partition collections into subsets such that
 each child resource appears on exactly one page.**
 
+Pages (only) change [application state](https://www.safaribooksonline.com/library/view/restful-web-services/9780596529260/ch04s05.html#id3189296).
+
 #### Defined by Hydra
 - page navigation
   - next, previous
@@ -111,9 +113,21 @@ each child resource appears on exactly one page.**
 ### Filtering
 **Filters select subsets of collections based on resource attributes.**
 
+Filters (only) change [application state](https://www.safaribooksonline.com/library/view/restful-web-services/9780596529260/ch04s05.html#id3189296).
+
 #### Defined by Hydra
-- mapping of input results to a selection
+- availability of filters
+- conditions for applying a filter
+- the effect of a filter
+  - how a filter maps input values to a selection
 
 
 ### Actions
-TODO: add details
+**Actions express manipulations of resources through representations.**
+
+Actions change [resource state](https://www.safaribooksonline.com/library/view/restful-web-services/9780596529260/ch04s05.html#id3189296).
+
+#### Defined by Hydra
+- availability of actions
+- conditions for executing an action
+- the effect of executing an action
