@@ -36,8 +36,8 @@ if(menu && menu.methods["GET"])
         hydra.execute("GET", menu, "application/pdf")
         saveFile(hydra.resource, "menu.pdf")
         hydra.back()
-        // download pdf without making it the current resource (uses GET) 
-        hydra.download(menu, "application/pdf", "menu.pdf")
+        // download pdf without making it the current resource 
+        hydra.download("GET", menu, "application/pdf", "menu.pdf")
     
 
 ```
