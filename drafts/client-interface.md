@@ -49,7 +49,7 @@ Assuming that apiurl is known as API entrypoint and that it is a [FoodEstablishm
 Related action: [DownloadAction](http://schema.org/DownloadAction)
 
 The client has a downloadAction() method for downloading a resource to a file rather than making that 
-resource the new current resource. The API looks for the operation of type DownloadAction 
+resource the new current resource. The client looks for the operation of type DownloadAction 
 on the given control and executes its method.
 
 This assumes that the Hydra client shall have a limited number of convenience methods which make use of 
