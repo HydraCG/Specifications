@@ -12,7 +12,7 @@ Hydra has a special mechanism to discover API entrypoints.
 
 ```
 hydra.findEntrypoint(website)
-print hydra.resource 
+print hydra.representation 
 // the API entrypoint is now the current representation
 ```
 
@@ -35,11 +35,11 @@ hydra.setLocation(apiurl);
 menu = hydra.controls["http://schema.org/hasMenu"]
 if(menu && menu.methods["GET"])
     hydra.execute("GET", menu)
-    print hydra.resource
+    print hydra.representation
     hydra.back()
     if(menu.methods["GET"].supportsMediaType("application/pdf")) 
         hydra.execute("GET", menu, "application/pdf")
-        saveFile(hydra.resource, "menu.pdf")
+        saveFile(hydra.representation, "menu.pdf")
         hydra.back()
         // download pdf without making it the current resource 
         hydra.download("GET", menu, "application/pdf", "menu.pdf")
