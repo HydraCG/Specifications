@@ -13,7 +13,7 @@ Hydra has a special mechanism to discover API entrypoints.
 ```
 hydra.findEntrypoint(website)
 print hydra.resource 
-// the API entrypoint is now the current resource
+// the API entrypoint is now the current representation
 ```
 
 ## Retrieve a resource
@@ -21,10 +21,15 @@ print hydra.resource
 
 ### Using uniform interface
 
-Assuming that apiurl is known as API entrypoint and that it is a [FoodEstablishment](http://schema.org/FoodEstablishment)
+Assuming that apiurl is known as API entrypoint and that it is a 
+[FoodEstablishment](http://schema.org/FoodEstablishment). The menu information is not embedded, but there is only a link to the menu, 
+i.e. the FoodEstablishment representation has a control to retrieve the menu. 
+
+This assumes that the client is aware of the uniform interface of the underlying protocol. 
+In the example below the client knows that it uses the uniform interface of HTTP.
 ```
 hydra.setLocation(apiurl);
-// api url is now the current resource
+// apiurl is now the current representation
 
 // we want to retrieve or download the menu of the food establishment
 menu = hydra.controls["http://schema.org/hasMenu"]
