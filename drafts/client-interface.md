@@ -6,6 +6,8 @@ library in pseudo code.
 The hydra client works similar to a browser. You point it to a URL. The URL becomes the current resource. 
 Then you interact with the controls of the resource.
 
+The examples show how a cli application could use the hydra client for interaction with an API.
+
 ## Find API entrypoint for website
 
 Hydra has a special mechanism to discover API entrypoints.
