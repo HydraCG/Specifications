@@ -1,20 +1,22 @@
 # Hydra Reference Client Interface
 
 This document describes the interface of a yet-to-be-built reference client
-library in pseudo code.
+library for ReST APIs supporting the Hydra vocabulary. In the following we call 
+that client library "Hydra client".
 
-The hydra client works similar to a browser. You point it to a URL. The URL becomes the current resource. 
-Then you interact with the controls of the resource.
+The Hydra client works similar to a browser. You point it to a URL. The URL becomes the current resource. 
+Then you interact with the controls of the representation.
 
-The examples show how a cli application could use the hydra client for interaction with an API.
+The examples show in pseudocode how a commandline interface application could use the Hydra client 
+for interaction with an API.
 
 ## Find API entrypoint for website
 
-Hydra has a special mechanism to discover API entrypoints.
+The Hydra vocabulary has a special mechanism to discover API entrypoints.
 
 ```
-hydra.findEntrypoint(website)
-print hydra.representation 
+hydraClient.gotoEntrypoint(website)
+print hydraClient.representation 
 // the API entrypoint is now the current representation
 ```
 
@@ -22,59 +24,40 @@ print hydra.representation
 
 ### Using uniform interface
 
-Assuming that apiurl is known as API entrypoint and that it is a 
-[FoodEstablishment](http://schema.org/FoodEstablishment). The menu information is not embedded, but there is only a link to the menu, 
-i.e. the FoodEstablishment representation has a control to retrieve the menu. 
+Assuming that `apiurl` is known as the API's entrypoint and that it is a 
+[schema:FoodEstablishment](http://schema.org/FoodEstablishment) which offers a menu from which users 
+can choose food items. The menu information is not embedded in the
+`FoodEstablishment` representation, 
+rather there is only a link to the menu. I.e. the `FoodEstablishment` representation 
+has a control to retrieve the menu. 
 
-This assumes that the client is aware of the uniform interface of the underlying protocol. 
+The following code assumes that the client is aware of the uniform interface of the underlying protocol. 
 In the example below the client knows that it uses the uniform interface of HTTP.
 ```
-hydra.setLocation(apiurl);
+hydraClient.setLocation(apiurl);
 // apiurl is now the current representation
 
 // we want to retrieve or download the menu of the food establishment
-menu = hydra.controls["http://schema.org/hasMenu"]
+menu = hydraClient.controls["http://schema.org/hasMenu"]
 if(menu && menu.methods["GET"])
-    hydra.execute("GET", menu.href)
-    print hydra.representation
-    hydra.back()
+    hydraClient.execute("GET", menu.href)
+    print hydraClient.representation
+    hydraClient.back()
     if(menu.methods["GET"].supportsMediaType("application/pdf")) 
-        hydra.execute("GET", menu.href, {"Accept": application/pdf"})
-        saveFile(hydra.representation, "menu.pdf")
-        hydra.back()
+        hydraClient.execute("GET", menu.href, {"Accept": application/pdf"})
+        saveFile(hydraClient.representation, "menu.pdf")
+        hydraClient.back()
         // download pdf without making it the current resource 
-        hydra.download("GET", menu.href, {"Accept": application/pdf"}, "menu.pdf")
-    
-
-```
-
-### Using schema.org action
-
-Assuming that apiurl is known as API entrypoint and that it is a [FoodEstablishment](http://schema.org/FoodEstablishment)
-
-Related action: [DownloadAction](http://schema.org/DownloadAction)
-
-The client has a downloadAction() method for downloading a resource to a file rather than making that 
-resource the new current resource. The client looks for the operation of type DownloadAction 
-on the given control and executes its method.
-
-This assumes that the Hydra client shall have a limited number of convenience methods which make use of 
-known schema.org Actions. 
-```
-hydra.setLocation(apiurl);
-menu = hydra.controls["http://schema.org/hasMenu"]
-if (menu && menu.actions["http://schema.org/DownloadAction"] && !menu.templated)
-    hydra.downloadAction(menu, "menu.pdf")
-    
+        hydraClient.download("GET", menu.href, {"Accept": application/pdf"}, "menu.pdf")
 ```
 
 ## Sending a Request Body
 
-Assuming that producturl has a schema:orderedItem control
+Assuming that the resource at `producturl` has a [schema:orderedItem](http://schema.org/orderedItem) control:
 
 ```
-hydra.setLocation(producturl);
-ordered = hydra.controls["http://schema.org/orderedItem"]
+hydraClient.setLocation(producturl);
+ordered = hydraClient.controls["http://schema.org/orderedItem"]
 if(ordered && ordered.methods["POST"])
     expectations = ordered.methods["POST"].expectations();
     // there may be header, uritemplate and body expectations - here: body
@@ -88,27 +71,25 @@ if(ordered && ordered.methods["POST"])
                 expectedProperty.required ? "(*)" : ""
             input value
             data[expectation.kind][expectation.variable] = value
-    hydra.execute("POST", uri, headers={}, data["body"])
-    print hydra.representation
+    hydraClient.execute("POST", uri, headers={}, data["body"])
+    print hydraClient.representation
 ```
 
-## Working with Resources in a URI space
+## Working with IRI Templates
 
-Using IriTemplate. 
-
-URI Templates provide a mechanism for abstracting a space of resource identifiers such that the variable 
+> URI Templates provide a mechanism for abstracting a space of resource identifiers such that the variable 
 parts can be easily identified and described.
 -- rfc6570
 
 The resulting URI identifies a resource that may support all methods of the uniform interface.
 
-### Retrieving Resource from URI Space
+### Retrieving Resource from IRI Template
 
-Assuming that apiurl has a hydra:search control
+Assuming that `apiurl` has a [hydra:search](http://www.w3.org/ns/hydra/core#search) control.
 
 ```
-hydra.setLocation(apiurl);
-search = hydra.controls["http://www.w3.org/ns/hydra/core#search"]
+hydraClient.setLocation(apiurl);
+search = hydraClient.controls["http://www.w3.org/ns/hydra/core#search"]
 if(search && search.methods["GET"])
     expectations = search.methods["GET"].expectations();
     // there may be header, uritemplate and body expectations - here: uritemplate
@@ -123,16 +104,16 @@ if(search && search.methods["GET"])
             input value
             data[expectation.kind][expectation.variable] = value
     uri = search.expandTemplate(data["uritemplate"])
-    hydra.execute("GET", uri)
-    print hydra.representation
+    hydraClient.execute("GET", uri)
+    print hydraClient.representation
 ```
 
-### Sending a Request Body to URI Space
+### Sending a Request Body to IRI Template
 
 ```
-hydra.setLocation(producturl);
-ordered = hydra.controls["http://schema.org/orderedItem"]
-if(ordered && ordered.methods["POST"] && ordered.templated)
+hydraClient.setLocation(producturl);
+ordered = hydraClient.controls["http://schema.org/orderedItem"]
+if(ordered && ordered.methods["POST"])
     expectations = ordered.methods["POST"].expectations();
     // there are header, uritemplate and body expectations: here: uritemplate and body
     data = {}
@@ -146,7 +127,7 @@ if(ordered && ordered.methods["POST"] && ordered.templated)
             input value
             data[expectation.kind][expectation.variable] = value
     uri = ordered.expandTemplate(data["uritemplate"])    
-    hydra.execute("POST", uri, headers, data["body"])
-    print hydra.representation
+    hydraClient.execute("POST", uri, headers, data["body"])
+    print hydraClient.representation
 ```
  
