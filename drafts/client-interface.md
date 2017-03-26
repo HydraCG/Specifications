@@ -16,8 +16,7 @@ print hydra.representation
 // the API entrypoint is now the current representation
 ```
 
-## Retrieve a resource
-
+## Retrieve a resource from URI
 
 ### Using uniform interface
 
@@ -34,15 +33,15 @@ hydra.setLocation(apiurl);
 // we want to retrieve or download the menu of the food establishment
 menu = hydra.controls["http://schema.org/hasMenu"]
 if(menu && menu.methods["GET"])
-    hydra.execute("GET", menu)
+    hydra.execute("GET", menu.href)
     print hydra.representation
     hydra.back()
     if(menu.methods["GET"].supportsMediaType("application/pdf")) 
-        hydra.execute("GET", menu, "application/pdf")
+        hydra.execute("GET", menu.href, {"Accept": application/pdf"})
         saveFile(hydra.representation, "menu.pdf")
         hydra.back()
         // download pdf without making it the current resource 
-        hydra.download("GET", menu, "application/pdf", "menu.pdf")
+        hydra.download("GET", menu.href, {"Accept": application/pdf"}, "menu.pdf")
     
 
 ```
@@ -62,7 +61,90 @@ known schema.org Actions.
 ```
 hydra.setLocation(apiurl);
 menu = hydra.controls["http://schema.org/hasMenu"]
-if (menu && menu.actions["http://schema.org/DownloadAction"])
+if (menu && menu.actions["http://schema.org/DownloadAction"] && !menu.templated)
     hydra.downloadAction(menu, "menu.pdf")
     
 ```
+
+## Sending a Request Body
+
+Assuming that producturl has a schema:orderedItem control
+
+```
+hydra.setLocation(producturl);
+ordered = hydra.controls["http://schema.org/orderedItem"]
+if(ordered && ordered.methods["POST"])
+    expectations = ordered.methods["POST"].expectations();
+    // there may be header, uritemplate and body expectations - here: body
+    data = {}
+    forEach(expectation in expectations)
+        print "expects " + expectation.kind // "expects body"
+        data[expectation.kind] = {}
+        forEach(expectedProperty in expectation.properties)
+            print "enter " + expectedProperty.property + 
+                "[default " + expectedProperty.defaultValue + "]" +
+                expectedProperty.required ? "(*)" : ""
+            input value
+            data[expectation.kind][expectation.variable] = value
+    hydra.execute("POST", uri, headers={}, data["body"])
+    print hydra.representation
+```
+
+## Working with Resources in a URI space
+
+Using IriTemplate. 
+
+URI Templates provide a mechanism for abstracting a space of resource identifiers such that the variable 
+parts can be easily identified and described.
+-- rfc6570
+
+The resulting URI identifies a resource that may support all methods of the uniform interface.
+
+### Retrieving Resource from URI Space
+
+Assuming that apiurl has a hydra:search control
+
+```
+hydra.setLocation(apiurl);
+search = hydra.controls["http://www.w3.org/ns/hydra/core#search"]
+if(search && search.methods["GET"])
+    expectations = search.methods["GET"].expectations();
+    // there may be header, uritemplate and body expectations - here: uritemplate
+    data = {}
+    forEach(expectation in expectations)
+        print "expects " + expectation.kind // "expects uritemplate"
+        data[expectation.kind] = {}
+        forEach(expectedProperty in expectation.properties)
+            print "enter " + expectedProperty.property + 
+                "[default" + expectedProperty.defaultValue + "]" +
+                expectedProperty.required ? "(*)" : ""
+            input value
+            data[expectation.kind][expectation.variable] = value
+    uri = search.expandTemplate(data["uritemplate"])
+    hydra.execute("GET", uri)
+    print hydra.representation
+```
+
+### Sending a Request Body to URI Space
+
+```
+hydra.setLocation(producturl);
+ordered = hydra.controls["http://schema.org/orderedItem"]
+if(ordered && ordered.methods["POST"] && ordered.templated)
+    expectations = ordered.methods["POST"].expectations();
+    // there are header, uritemplate and body expectations: here: uritemplate and body
+    data = {}
+    forEach(expectation in expectations)
+        print "expects" + expectation.kind
+        data[expectation.kind] = {}
+        forEach(expectedProperty in expectation.properties)
+            print "enter " + expectedProperty.property + 
+                "[default " + expectedProperty.defaultValue + "]" +
+                expectedProperty.required ? "(*)" : ""
+            input value
+            data[expectation.kind][expectation.variable] = value
+    uri = ordered.expandTemplate(data["uritemplate"])    
+    hydra.execute("POST", uri, headers, data["body"])
+    print hydra.representation
+```
+ 
