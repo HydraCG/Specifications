@@ -44,7 +44,7 @@ Collections are resources themselves.
 - describing kinds of collections
   - properties of their elements (type etc.)
 - describing representations
-  - properties of resources that a collection representation will list
+  - (optional) properties of resources that a collection representation will list
 - describing operations on collections
   - creation
   - addition
