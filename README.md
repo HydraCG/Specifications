@@ -26,7 +26,7 @@ then they describe the resource using elements from the Hydra Core Vocabulary.
 
 #### Defined by Hydra
 - how resources can incorporate Hydra descriptions and/or controls
-  - in particular, in which graph this should happen
+  - in particular, how descriptions and controls can be separated from data
 - describing representations
   - properties that a resource representation will list
 
