@@ -98,8 +98,8 @@ none
 
 #### Defined by Hydra
 - entity structure
-  - JSON(-LD)
-  - other RDF formats
+  - JSON-LD and other RDF formats
+  - non-RDF formats
 - field serialization
 
 #### Dependencies
