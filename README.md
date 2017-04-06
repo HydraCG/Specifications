@@ -94,7 +94,7 @@ none
 
 
 ### Entity Bodies
-**Entity Bodies express field values are combined into an request body (e.g., for `POST`/`PUT`/`PATCH`).**
+**Entity Bodies express how field values are combined into a request body (e.g., for `POST`/`PUT`/`PATCH`).**
 
 #### Defined by Hydra
 - entity structure
