@@ -10,6 +10,14 @@ Then you interact with the controls of the representation.
 The examples show in pseudocode how a commandline interface application could use the Hydra client 
 for interaction with an API.
 
+## Current Status
+
+This document is in its early stages, a number of points are still under discussion, with no final consensus.
+
+* How does an application which uses the Hydra client maintain state? A Hydra API may have a combined state: On the one hand there is the `ApiDocumentation`, on the other hand there is the current representation. In order to determine available hypermedia affordances for the current state, both the `ApiDocumentation` and the current representation must be considered. The `ApiDocumentation` is not static but must be kept up to date at all times. Question: should the Hydra client maintain the combined application state or should it be stateless and leave the management of the combined state to the application?
+* Should the Hydra client expose the uniform interface of the underlying protocol, e.g. by handing out information about the methods supported by a resource and by expecting the caller to understand their semantics and make use of that methods - e.g. by telling the caller that the methods GET, PATCH etc. are supported in the case of HTTP? Or should the Hydra client abstract the methods of the uniform interface away, posing the challenge that other protocols may have different method semantics than HTTP and that it might not always be clear how to map from the abstraction method to a concrete protocol method (e.g. CoAP has a restricted set of methods).
+* There may be multiple affordances in a given representation that match a given linked data predicate. Consider a representation which contains a list of items where each item has the same predicate whose value is a URL pointing to some related resource (addresses of friends). Another example is a representation which happens to use a certain predicate in several places (address of a location, billing address, delivery address). Obviously the predicate alone is not sufficient for a client to work with a related resource, rather it seems that the caller of the Hydra client needs to be able to determine the context where a predicate occurs. How much context is needed for that? How can the client enable the caller to determine that context, also considering the `ApiDocumentation`?
+
 ## Find API entrypoint for website
 
 The Hydra vocabulary has a special mechanism to discover API entrypoints.
