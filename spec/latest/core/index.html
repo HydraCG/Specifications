@@ -277,21 +277,21 @@
       which defines this URN pattern.</p> -->
 
     <p>Generally, a client decides whether to follow a link or not based on
-      the link relation (or the property in general, in the case of
+      the link relation (or property in the case of
       Linked Data) which defines its semantics. There are however also
-      clients such as Web crawlers which simply follow every which is
+      clients such as Web crawlers which simply follow every link
       intended to be dereferenced. In HTML this usually means that all
       links in anchor elements (the <code>&lt;a&gt;</code> tag) are
-      followed but, e.g., most references in link elements (the
+      followed but most references in link elements (the
       <code>&lt;link&gt;</code> tag), such as used in the example above,
       are ignored. Since in RDF serializations no such distinction exists,
       the best a client can do is to blindly try to dereference all URIs.
       It would thus be beneficial to describe in a machine-readable manner
-      whether a property represents a link that is intended to be
-      dereferenced or whether it solely represents an identifier. Hydra's
+      if a property represents a link intended to be
+      dereferenced or solely an identifier. Hydra's
       <i>Link</i> class does just that. It can be used to define properties
       that represent dereferenceable links. In the exemplary Web API used
-      throughout this section, it can, e.g., be used to define a property
+      throughout this section, it can be used to define a property
       linking issues to their comments:</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
