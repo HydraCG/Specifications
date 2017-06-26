@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% Page setup
+\usepackage[a4paper,landscape,margin=2cm]{geometry}
+
+% Typography
+\usepackage[scaled]{helvet}
+\let\familydefault\sfdefault
+
+% Graphics
+\usepackage[usenames,svgnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning}
+
+\begin{document}
+\pagestyle{empty}
+
+\tikzstyle{package} = [
+  rectangle, draw,
+  font = {\Large\bf}, align=left,
+  minimum height=13em, text width=54em, inner sep=1em,
+]
+\tikzstyle{subpackage} = [
+  rectangle, draw,
+  font = {\large\it}, align=left,
+  minimum height=8em, text width=11em, text height=-5em, inner sep=1em,
+]
+\tikzstyle{component} = [
+  rectangle, draw, fill=Khaki!50,
+  font = {\large\bf},
+  minimum width=10em, rounded corners, minimum height=4em,
+]
+\tikzstyle{arrow} = [
+  draw, -latex', line width=1pt,
+]
+
+\begin{tikzpicture}[
+    node distance = 2em, auto
+  ]
+
+  % Packages
+  \node[package, fill=CornflowerBlue!50]
+        (modeling) {API Modeling};
+  \node[package, fill=DarkOrange!50, above=of modeling, minimum height=21em]
+        (hypermedia) {Hypermedia\\Controls};
+  \node[subpackage, above left=of hypermedia.south east, anchor=south east, align=right]
+        (unsafe) {Unsafe};
+  \node[subpackage, left=of unsafe.south west, anchor=south east, text width=23em]
+        (safe) {Safe};
+  \node[subpackage, above=of unsafe.north east, anchor=south east, text width=38em]
+        (forms) {Forms};
+
+  % Nodes
+  \node[component, above left=of modeling.south, anchor=south, xshift=6.4em]
+        (resources) {Resources};
+  \node[component, above=of resources]
+        (collections) {Collections};
+  \node[component, left=of collections]
+        (api) {Web API};
+  \node[component, right=5.5em of resources]
+        (errors) {Errors};
+  \node[component, above right=of safe.south west, anchor=south west]
+        (paging) {Paging};
+  \node[component, right=of paging]
+        (filtering) {Filtering};
+  \node[component, above right=of forms.south west, anchor=south west]
+        (templates) {URI Templates};
+  \node[component,  above left=of forms.south east, anchor=south east]
+        (bodies) {Entity Bodies};
+  \node[component,  right=of templates]
+        (fields) {Fields};
+  \node[component, above right=of unsafe.south west, anchor=south west]
+        (actions) {Actions};
+
+  % Arrows
+  \path[arrow] (api)               -- (collections);
+  \path[arrow] (api.south east)    -- (resources.north west);
+  \path[arrow] (collections.south) -- (resources);
+  \path[arrow] (resources)         -- (errors);
+  \path[arrow] (paging.south)      -- (collections);
+  \path[arrow] (paging.north)      -- (templates.south);
+  \path[arrow] (filtering.south)   -- (collections);
+  \path[arrow] (filtering.north)   -- (templates.south);
+  \path[arrow] (filtering.north)   -- (fields);
+  \path[arrow] (actions.south)     -- (collections.east);
+  \path[arrow] (actions.south)     -- (resources.east);
+  \path[arrow] (actions.north)     -- (bodies);
+  \path[arrow] (actions.north)     -- (fields);
+  \path[arrow] (templates)         -- (fields);
+  \path[arrow] (bodies)            -- (fields);
+
+\end{tikzpicture}
+
+\end{document}
