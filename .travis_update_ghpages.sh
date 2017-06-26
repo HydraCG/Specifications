@@ -1,6 +1,6 @@
 #!/bin/bash
 # Only publish from the main repository's master branch
-REPO_NAME="RubenVerborgh/Hydra-Architecture-Diagram"
+REPO_NAME="HydraCG/Specifications"
 if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then exit; fi
 echo -e "Generating gh-pages...\n"
 
@@ -14,7 +14,7 @@ cd gh-pages
 if [[ `git log -1 --pretty=%B` == *$TRAVIS_COMMIT* ]]; then exit; fi
 
 # Update documents
-cp $REPO_PATH/*.{pdf,svg} .
+cp -r $REPO_PATH .
 
 # Commit and push latest version
 git add .
