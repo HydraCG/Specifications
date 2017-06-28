@@ -1,9 +1,16 @@
-sudo: required
 dist: trusty
-before_install:
-  # Install LaTeX (for architecture diagram)
-  - sudo apt-get -qq update
-  - sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-latex-recommended texlive-extra-utils latex-xcolor pgf
+addons:
+  apt:
+    packages:
+      # Install LaTeX (for architecture diagram)
+      - texlive-latex-base
+      - texlive-fonts-recommended
+      - texlive-latex-extra
+      - texlive-fonts-extra
+      - texlive-latex-recommended
+      - texlive-extra-utils
+      - latex-xcolor
+      - pgf
 script:
   # Build architecture diagram
   - cd drafts/diagram
