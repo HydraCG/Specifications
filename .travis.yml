@@ -19,4 +19,4 @@ script:
   - dvisvgm --no-fonts hydra-architecture-diagram.dvi hydra-architecture-diagram.svg
 after_success:
   # Update gh-pages branch
-  - ./.travis_update_ghpages.sh
+  - ../../travis_update_ghpages.sh
