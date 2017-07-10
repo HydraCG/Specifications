@@ -1,0 +1,22 @@
+dist: trusty
+addons:
+  apt:
+    packages:
+      # Install LaTeX (for architecture diagram)
+      - texlive-latex-base
+      - texlive-fonts-recommended
+      - texlive-latex-extra
+      - texlive-fonts-extra
+      - texlive-latex-recommended
+      - texlive-extra-utils
+      - latex-xcolor
+      - pgf
+script:
+  # Build architecture diagram
+  - cd drafts/diagram
+  - pdflatex -interaction=nonstopmode -halt-on-error hydra-architecture-diagram.tex
+  - latex    -interaction=nonstopmode -halt-on-error hydra-architecture-diagram.tex
+  - dvisvgm --no-fonts hydra-architecture-diagram.dvi hydra-architecture-diagram.svg
+after_success:
+  # Update gh-pages branch
+  - ./.travis_update_ghpages.sh
