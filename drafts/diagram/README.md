@@ -4,7 +4,7 @@ This repository contains work in progress for an architecture diagram of the [Hy
 
 ## Overview
 
-![Latest diagram version](https://rubenverborgh.github.io/Hydra-Architecture-Diagram/hydra-architecture-diagram.svg)
+![Latest diagram version](https://hydracg.github.io/Specifications/drafts/diagram/hydra-architecture-diagram.svg)
 
 An arrow represents a dependency from a component on another.
 
@@ -59,7 +59,7 @@ Collections are resources themselves.
 and possible ways to address it.**
 
 #### Defined by Hydra
-- types of errors 
+- types of errors
 - error metadata
   - possible causes
   - possible fixes
