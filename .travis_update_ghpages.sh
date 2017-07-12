@@ -2,6 +2,11 @@
 
 set -o errexit -o nounset
 
+YELLOW=$'\e[1;33m'
+GREEN=$'\e[1;32m'
+RESET=$'\e[0m'
+
+
 # Only publish from the main repository's master branch
 REPO_NAME="HydraCG/Specifications"
 # if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
@@ -20,7 +25,7 @@ pushd $HOME
 pwd
 ls
 
-echo -e "\n${YELLOW}Checking out GitHub repository{RESET}"
+echo -e "\n${YELLOW}Checking out GitHub repository${RESET}"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 cd gh-pages
 mkdir -p drafts/diagram/
@@ -39,5 +44,5 @@ git status
 git commit -m "Update to $TRAVIS_COMMIT."
 git push -q origin gh-pages
 
-echo -e "${GREEN}Successfully updated gh-pages{RESET}"
+echo -e "${GREEN}Successfully updated gh-pages${RESET}"
 popd
