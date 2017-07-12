@@ -18,10 +18,13 @@ ls drafts/diagram
 # Checkout the gh-pages branch
 REPO_PATH=$PWD
 pushd $HOME
+pwd
+ls
 
 git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 git config user.name  "Travis"
 git config user.email "travis@hydra-cg.com"
+ls
 
 cd gh-pages
 pwd
