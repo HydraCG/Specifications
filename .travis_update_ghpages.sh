@@ -21,7 +21,7 @@ pushd $HOME
 pwd
 ls
 
-git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
+git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 git config user.name  "Travis"
 git config user.email "travis@hydra-cg.com"
 ls
