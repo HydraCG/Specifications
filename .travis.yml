@@ -13,10 +13,11 @@ addons:
       - pgf
 script:
   # Build architecture diagram
-  - cd drafts/diagram
+  - pushd drafts/diagram
   - pdflatex -interaction=nonstopmode -halt-on-error hydra-architecture-diagram.tex
   - latex    -interaction=nonstopmode -halt-on-error hydra-architecture-diagram.tex
   - dvisvgm --no-fonts hydra-architecture-diagram.dvi hydra-architecture-diagram.svg
+  - popd
 after_success:
   # Update gh-pages branch
   - ../../travis_update_ghpages.sh
