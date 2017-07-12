@@ -22,16 +22,12 @@ ls drafts/diagram
 # Checkout the gh-pages branch
 REPO_PATH=$PWD
 pushd $HOME
-pwd
-ls
 
-echo -e "\n${YELLOW}Checking out GitHub repository${RESET}"
+echo -e "${YELLOW}Cloning and updating GitHub repository${RESET}"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 cd gh-pages
 mkdir -p drafts/diagram/
 
-echo -e "${YELLOW}Files in $PWD${RESET}"
-ls
 
 # Update documents
 cp -rf $REPO_PATH/drafts/diagram/* drafts/diagram/
@@ -44,5 +40,6 @@ git status
 git commit -m "Update to $TRAVIS_COMMIT."
 git push -q origin gh-pages
 
-echo -e "${GREEN}Successfully updated gh-pages${RESET}"
 popd
+
+echo -e "${GREEN}Successfully updated gh-pages${RESET}"
