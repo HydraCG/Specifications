@@ -20,4 +20,4 @@ script:
   - popd
 after_success:
   # Update gh-pages branch
-  - ../../travis_update_ghpages.sh
+  - ./.travis_update_ghpages.sh
