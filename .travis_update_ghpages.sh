@@ -3,7 +3,7 @@
 set -o errexit -o nounset
 
 # Only publish from the main repository's master branch
-# REPO_NAME="HydraCG/Specifications"
+REPO_NAME="HydraCG/Specifications"
 # if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
 #   echo "This commit was made against $TRAVIS_BRANCH and not the master. Don't generate gh-pages."
 #   exit;
@@ -28,7 +28,7 @@ pwd
 mkdir -p drafts/diagram/
 
 # Update documents
-cp -r $REPO_PATH/drafts/diagram/* drafts/diagram/
+cp -rf $REPO_PATH/drafts/diagram/* drafts/diagram/
 
 # Commit and push latest version
 git add -A .
