@@ -22,18 +22,18 @@ pwd
 ls
 
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
-git config user.name  "Travis"
-git config user.email "travis@hydra-cg.com"
-ls
-
+ls -aux
 cd gh-pages
 pwd
 mkdir -p drafts/diagram/
+ls -aux
 
 # Update documents
 cp -rf $REPO_PATH/drafts/diagram/* drafts/diagram/
 
 # Commit and push latest version
+git config user.name  "Travis"
+git config user.email "travis@hydra-cg.com"
 git add -A .
 git status
 git commit -m "Update to $TRAVIS_COMMIT."
