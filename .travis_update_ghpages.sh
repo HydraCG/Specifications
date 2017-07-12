@@ -6,13 +6,12 @@ YELLOW=$'\e[1;33m'
 GREEN=$'\e[1;32m'
 RESET=$'\e[0m'
 
-
 # Only publish from the main repository's master branch
 REPO_NAME="HydraCG/Specifications"
-# if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-#   echo "This commit was made against $TRAVIS_BRANCH and not the master. Don't generate gh-pages."
-#   exit;
-# fi
+if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+  echo "This commit was made against $TRAVIS_BRANCH and not the master. Don't generate gh-pages."
+  exit;
+fi
 
 echo -e "${YELLOW}Updating gh-pages...${RESET}"
 
@@ -27,7 +26,6 @@ echo -e "${YELLOW}Cloning and updating GitHub repository${RESET}"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 cd gh-pages
 mkdir -p drafts/diagram/
-
 
 # Update documents
 cp -rf $REPO_PATH/drafts/diagram/* drafts/diagram/
