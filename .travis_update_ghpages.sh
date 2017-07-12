@@ -20,10 +20,9 @@ echo -e "${YELLOW}Generated files in $PWD/drafts/diagram${RESET}"
 ls drafts/diagram
 
 # Checkout the gh-pages branch
+echo -e "${YELLOW}Cloning and updating GitHub repository${RESET}"
 REPO_PATH=$PWD
 pushd $HOME
-
-echo -e "${YELLOW}Cloning and updating GitHub repository${RESET}"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 cd gh-pages
 mkdir -p drafts/diagram/
