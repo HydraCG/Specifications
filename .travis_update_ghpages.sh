@@ -11,7 +11,7 @@ REPO_NAME="HydraCG/Specifications"
 
 echo -e "${YELLOW}Updating gh-pages...${RESET}"
 
-echo -e "${YELLOW}Generated files in $PWD${RESET}"
+echo -e "${YELLOW}Generated files in $PWD/drafts/diagram${RESET}"
 ls drafts/diagram
 
 # Checkout the gh-pages branch
