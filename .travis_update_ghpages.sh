@@ -22,11 +22,10 @@ pwd
 ls
 
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
-ls -aux
 cd gh-pages
-pwd
 mkdir -p drafts/diagram/
-ls -aux
+pwd
+ls
 
 # Update documents
 cp -rf $REPO_PATH/drafts/diagram/* drafts/diagram/
@@ -37,6 +36,6 @@ git config user.email "travis@hydra-cg.com"
 git add -A .
 git status
 git commit -m "Update to $TRAVIS_COMMIT."
-git push -q origin gh-pages 2>&1 > /dev/null
+git push -q origin gh-pages
 
 popd
