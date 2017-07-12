@@ -4,12 +4,13 @@ set -o errexit -o nounset
 
 YELLOW=$'\e[1;33m'
 GREEN=$'\e[1;32m'
+RED=$'\e[1;31m'
 RESET=$'\e[0m'
 
 # Only publish from the main repository's master branch
 REPO_NAME="HydraCG/Specifications"
 if [ "$TRAVIS_REPO_SLUG" != "$REPO_NAME" ] || [ "$TRAVIS_BRANCH" != "master" ] || [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-  echo "This commit was made against $TRAVIS_BRANCH and not the master. Don't generate gh-pages."
+  echo -e "${RED}This commit was made against $TRAVIS_BRANCH and not the master. Don't update gh-pages.${RESET}"
   exit;
 fi
 
