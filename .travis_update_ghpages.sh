@@ -9,10 +9,9 @@ REPO_NAME="HydraCG/Specifications"
 #   exit;
 # fi
 
-echo "Updating gh-pages..."
+echo -e "${YELLOW}Updating gh-pages...${RESET}"
 
-echo "Generated files"
-pwd
+echo -e "${YELLOW}Generated files in $PWD${RESET}"
 ls drafts/diagram
 
 # Checkout the gh-pages branch
@@ -21,10 +20,12 @@ pushd $HOME
 pwd
 ls
 
+echo -e "\n${YELLOW}Checking out GitHub repository{RESET}"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/$REPO_NAME gh-pages
 cd gh-pages
 mkdir -p drafts/diagram/
-pwd
+
+echo -e "${YELLOW}Files in $PWD${RESET}"
 ls
 
 # Update documents
@@ -38,4 +39,5 @@ git status
 git commit -m "Update to $TRAVIS_COMMIT."
 git push -q origin gh-pages
 
+echo -e "${GREEN}Successfully updated gh-pages{RESET}"
 popd
