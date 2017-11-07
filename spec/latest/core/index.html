@@ -556,8 +556,9 @@
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
       itself have changed since they have been retrieved. A simple strategy
-      to try to recover from such an error is to reload the
-      <i>ApiDocumentation</i>.</p>
+      to avoid such an error without affecting performance is to deliver the 
+      <i>ApiDocumentation</i> with "Last-Modified" cache-info and require the 
+      client to revalidate.</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
   </section>
