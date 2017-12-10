@@ -37,7 +37,7 @@ in collection representations.
 
 The following examples illustrates a simple collection.
 
-```
+```json
 {
   "@context": "http://www.w3.org/ns/hydra/core",
   "@id": "http://api.example.com/an-issue/comments",
@@ -60,7 +60,7 @@ The following examples illustrates a simple collection.
 If a vocabulary that uses `rdfs:range`, a collection needs to be referenced
 indirectly to not confuse the client:
 
-```
+```json
 {
   "@context": "http://www.w3.org/ns/hydra/core",
   "@id": "/alice",

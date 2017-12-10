@@ -1,14 +1,15 @@
 # Hydra Reference Client Interface
 
 This document describes the interface of a yet-to-be-built reference client
-library for ReST APIs supporting the Hydra vocabulary. In the following we call 
+library for ReST APIs supporting the Hydra vocabulary. In the following we call
 that client library "Hydra client".
 
-The Hydra client works similar to a browser. You point it to a URL. The URL becomes the current resource. 
+The Hydra client works similar to a browser. You point it to a URL. The URL becomes the current resource.
 Then you interact with the controls of the representation.
 
-The examples show in pseudocode how a commandline interface application could use the Hydra client 
+The examples show in pseudo-code how a command line interface application could use the Hydra client
 for interaction with an API.
+
 
 ## Current Status
 
@@ -18,29 +19,32 @@ This document is in its early stages, a number of points are still under discuss
 * Should the Hydra client expose the uniform interface of the underlying protocol, e.g. by handing out information about the methods supported by a resource and by expecting the caller to understand their semantics and make use of that methods - e.g. by telling the caller that the methods GET, PATCH etc. are supported in the case of HTTP? Or should the Hydra client abstract the methods of the uniform interface away, posing the challenge that other protocols may have different method semantics than HTTP and that it might not always be clear how to map from the abstraction method to a concrete protocol method (e.g. CoAP has a restricted set of methods).
 * There may be multiple affordances in a given representation that match a given linked data predicate. Consider a representation which contains a list of items where each item has the same predicate whose value is a URL pointing to some related resource (addresses of friends). Another example is a representation which happens to use a certain predicate in several places (address of a location, billing address, delivery address). Obviously the predicate alone is not sufficient for a client to work with a related resource, rather it seems that the caller of the Hydra client needs to be able to determine the context where a predicate occurs. How much context is needed for that? How can the client enable the caller to determine that context, also considering the `ApiDocumentation`?
 
+
 ## Find API entrypoint for website
 
 The Hydra vocabulary has a special mechanism to discover API entrypoints.
 
 ```
 hydraClient.gotoEntrypoint(website)
-print hydraClient.representation 
+print hydraClient.representation
 // the API entrypoint is now the current representation
 ```
+
 
 ## Retrieve a resource from URI
 
 ### Using uniform interface
 
-Assuming that `apiurl` is known as the API's entrypoint and that it is a 
-[schema:FoodEstablishment](http://schema.org/FoodEstablishment) which offers a menu from which users 
+Assuming that `apiurl` is known as the API's entrypoint and that it is a
+[schema:FoodEstablishment](http://schema.org/FoodEstablishment) which offers a menu from which users
 can choose food items. The menu information is not embedded in the
-`FoodEstablishment` representation, 
-rather there is only a link to the menu. I.e. the `FoodEstablishment` representation 
-has a control to retrieve the menu. 
+`FoodEstablishment` representation,
+rather there is only a link to the menu. I.e. the `FoodEstablishment` representation
+has a control to retrieve the menu.
 
-The following code assumes that the client is aware of the uniform interface of the underlying protocol. 
+The following code assumes that the client is aware of the uniform interface of the underlying protocol.
 In the example below the client knows that it uses the uniform interface of HTTP.
+
 ```
 hydraClient.setLocation(apiurl);
 // apiurl is now the current representation
@@ -51,15 +55,16 @@ if(menu && menu.methods["GET"])
     hydraClient.execute("GET", menu.href)
     print hydraClient.representation
     hydraClient.back()
-    if(menu.methods["GET"].supportsMediaType("application/pdf")) 
+    if(menu.methods["GET"].supportsMediaType("application/pdf"))
         hydraClient.execute("GET", menu.href, {"Accept": application/pdf"})
         saveFile(hydraClient.representation, "menu.pdf")
         hydraClient.back()
-        // download pdf without making it the current resource 
+        // download pdf without making it the current resource
         hydraClient.download("GET", menu.href, {"Accept": application/pdf"}, "menu.pdf")
 ```
 
-## Sending a Request Body
+
+## Sending a request payload
 
 Assuming that the resource at `producturl` has a [schema:orderedItem](http://schema.org/orderedItem) control:
 
@@ -74,7 +79,7 @@ if(ordered && ordered.methods["POST"])
         print "expects " + expectation.kind // "expects body"
         data[expectation.kind] = {}
         forEach(expectedProperty in expectation.properties)
-            print "enter " + expectedProperty.property + 
+            print "enter " + expectedProperty.property +
                 "[default " + expectedProperty.defaultValue + "]" +
                 expectedProperty.required ? "(*)" : ""
             input value
@@ -83,13 +88,14 @@ if(ordered && ordered.methods["POST"])
     print hydraClient.representation
 ```
 
-## Working with IRI Templates
+## Working with IRI templates
 
-> URI Templates provide a mechanism for abstracting a space of resource identifiers such that the variable 
+> URI Templates provide a mechanism for abstracting a space of resource identifiers such that the variable
 parts can be easily identified and described.
 -- rfc6570
 
 The resulting URI identifies a resource that may support all methods of the uniform interface.
+
 
 ### Retrieving Resource from IRI Template
 
@@ -106,7 +112,7 @@ if(search && search.methods["GET"])
         print "expects " + expectation.kind // "expects uritemplate"
         data[expectation.kind] = {}
         forEach(expectedProperty in expectation.properties)
-            print "enter " + expectedProperty.property + 
+            print "enter " + expectedProperty.property +
                 "[default" + expectedProperty.defaultValue + "]" +
                 expectedProperty.required ? "(*)" : ""
             input value
@@ -116,7 +122,8 @@ if(search && search.methods["GET"])
     print hydraClient.representation
 ```
 
-### Sending a Request Body to IRI Template
+
+### Sending a request payload to an IRI template
 
 ```
 hydraClient.setLocation(producturl);
@@ -129,13 +136,12 @@ if(ordered && ordered.methods["POST"])
         print "expects" + expectation.kind
         data[expectation.kind] = {}
         forEach(expectedProperty in expectation.properties)
-            print "enter " + expectedProperty.property + 
+            print "enter " + expectedProperty.property +
                 "[default " + expectedProperty.defaultValue + "]" +
                 expectedProperty.required ? "(*)" : ""
             input value
             data[expectation.kind][expectation.variable] = value
-    uri = ordered.expandTemplate(data["uritemplate"])    
+    uri = ordered.expandTemplate(data["uritemplate"])
     hydraClient.execute("POST", uri, headers, data["body"])
     print hydraClient.representation
 ```
- 
