@@ -856,53 +856,6 @@
       -->
     </pre>
   </section>
-  
-  <section>
-    <h3>Collection members' link template</h3>
-	
-	<p>In some circumstances it is useful to give a direct access to collection's
-	  members by providing an instruction on how to construct an URL by the client.
-	  This URL then can be used either to obtain member's details or to update it,
-	  i.e. as a result of some batch processing. In order to support this scenario
-	  Hydra introduces <i>memberTemplate</i> link that directly binds an owning
-	  <i>Collection</i> with the <i>IriTemplate</i>.</p>
-
-	<pre class="example nohighlight" data-transform="updateExample"
-         title="Collection with a direct access to it's members via an IRI template member link.">
-      <!--
-      {
-        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@id": "http://api.example.com/users",
-        "@type": "Collection",
-        "totalItems": "329",
-        "member": [
-          ####... a subset of the members of the Collection ...####
-        ],
-		"memberTemplate": {
-		  "@type": "IriTemplate",
-		  "template": "http://api.example/com/users{?userName}",
-		  "variableRepresentation": "hydra:BasicRepresentation",
-		  "mapping": {
-		    "@type": "IriTemplateMapping",
-			"variable": "userName",
-			"property": "http://vocab.example.com/userName",
-			"required": true
-		  },
-		  "operation": {
-		    "@type": "Operation",
-			"method": "PUT",
-			"expects": "http://vocab.example.com/User"
-		  }
-		}
-      }
-      -->
-    </pre>
-
-	<p>In the example above, the API exposes a direct access to the collection of 
-	  users by providing an IRI template that expects a user name property making 
-	  it a fully functional link. There is also an operation declared that enables 
-	  client to update a given user with an HTTP <i>PUT</i> method.</p>
-  </section>
 
   <section>
     <h3>Description of HTTP Status Codes and Errors</h3>
