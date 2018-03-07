@@ -34,8 +34,6 @@
     "operation": "hydra:operation",
     "Collection": "hydra:Collection",
     "member": { "@id": "hydra:member", "@type": "@id" },
-    "manages": { "@id": "hydra:manages", "@type": "@id" },
-    "subject": { "@id": "hydra:subject", "@type": "@id" },
     "search": "hydra:search",
     "freetextQuery": "hydra:freetextQuery",
     "view": { "@id": "hydra:view", "@type": "@id" },
@@ -169,7 +167,7 @@
       "@id": "hydra:property",
       "@type": "rdf:Property",
       "label": "property",
-      "comment": "A property, either supported by a class or described by a collection",
+      "comment": "A property",
       "range": "rdf:Property",
       "vs:term_status": "testing"
     },
@@ -300,27 +298,6 @@
       "subClassOf": "hydra:Resource",
       "label": "Collection",
       "comment": "A collection holding references to a number of related resources.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:collection",
-      "@type": "hydra:Link",
-      "label": "collection",
-      "comment": "Allows to link multiple collections to an owning resource.",
-      "domain": "hydra:Collection",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:manages",
-      "label": "manages",
-      "comment": "Semantics of each member provided by the collection.",
-      "domain": "hydra:Collection",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:subject",
-      "label": "subject",
-      "comment": "Provides details on on the resource being a subject in relation described by the collection.",
       "vs:term_status": "testing"
     },
     {
