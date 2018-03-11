@@ -34,8 +34,6 @@
     "operation": "hydra:operation",
     "Collection": "hydra:Collection",
     "member": { "@id": "hydra:member", "@type": "@id" },
-    "manages": { "@id": "hydra:manages", "@type": "@id" },
-    "subject": { "@id": "hydra:subject", "@type": "@id" },
     "search": "hydra:search",
     "freetextQuery": "hydra:freetextQuery",
     "view": { "@id": "hydra:view", "@type": "@id" },
