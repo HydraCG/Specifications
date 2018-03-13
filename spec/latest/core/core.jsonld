@@ -43,7 +43,7 @@
     "last": { "@id": "hydra:last", "@type": "@id" },
     "next": { "@id": "hydra:next", "@type": "@id" },
     "previous": { "@id": "hydra:previous", "@type": "@id" },
-    "memberTemplate": { "@id": "hydra:memberTemplate", "@type": "@id" },
+    "memberTemplate": "hydra:memberTemplate",
     "Link": "hydra:Link",
     "TemplatedLink": "hydra:TemplatedLink",
     "IriTemplate": "hydra:IriTemplate",
@@ -391,7 +391,7 @@
       "@id": "hydra:memberTemplate",
       "@type": "rdf:Property",
       "label": "collection member IRI template",
-      "comment": "An IRI template of a collection's member.",
+      "comment": "A IRI template to directly access collection members.",
       "range": "hydra:IriTemplate",
       "domain": "hydra:Collection",
       "vs:term_status": "testing"
