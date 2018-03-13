@@ -10,7 +10,9 @@ var postProc = function() {
         return;
     }
 
-    $.getJSON('core.jsonld', function(vocab) {
+    fetch('core.jsonld').then(function(response) {
+        return response.json();
+    }).then(function (vocab) {
         var options = { "base": "http://www.w3.org/ns/hydra/" };
         var context = {
             "hydra": "http://www.w3.org/ns/hydra/core#",
@@ -111,7 +113,7 @@ var postProc = function() {
             classOverview += '<ul>';
             $('#vocabulary-overview').append(classOverview);
         });
-    }).fail(function(jqxhr) {
+    }).catch(function(error) {
         alert("Can't load the vocabulary.");
     });
 };
