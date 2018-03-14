@@ -389,7 +389,7 @@
     },
     {
       "@id": "hydra:memberTemplate",
-      "@type": "rdf:Property",
+      "@type": "hydra:TemplatedLink",
       "label": "collection member IRI template",
       "comment": "A IRI template to directly access collection members.",
       "range": "hydra:IriTemplate",
