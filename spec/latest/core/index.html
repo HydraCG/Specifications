@@ -859,14 +859,14 @@
   
   <section>
     <h3>Collection member link template</h3>
-	
-	<p>In some circumstances it is useful to give a direct access to a collection's
-	  members by providing an instruction on how to construct an URL to the client.
-	  This URL then can be used either to obtain member's details or to update it.
-      In order to support this scenario Hydra introduces <i>memberTemplate</i> property
+
+    <p>In some circumstances it is useful to give a direct access to a collection's
+      members by providing an instruction on how to construct an URL to the client.
+      This URL then can be used either to obtain member's details or to update it.
+      In order to support this scenario Hydra provides the <i>memberTemplate</i> property
       to describe the URL structure of collection members with an <i>IriTemplate</i>.</p>
 
-	<pre class="example nohighlight" data-transform="updateExample"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Collection with a direct access to its members via an IRI template">
       <!--
       {
@@ -897,7 +897,7 @@
       -->
     </pre>
 
-	<p>In the example above, the API describes how to directly access a member of the
+    <p>In the example above, the API describes how to directly access a member of the
       <i>/users</i> collection through an IRI template requiring the user name.
       There is also an operation that tels a client that it can use HTTP put on
       those resources.</p>
