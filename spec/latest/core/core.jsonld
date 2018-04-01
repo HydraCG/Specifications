@@ -34,6 +34,9 @@
     "operation": "hydra:operation",
     "Collection": "hydra:Collection",
     "member": { "@id": "hydra:member", "@type": "@id" },
+    "manages": { "@id": "hydra:manages", "@type": "@id" },
+    "subject": { "@id": "hydra:subject", "@type": "@vocab" },
+    "object": { "@id": "hydra:object", "@type": "@vocab" },
     "search": "hydra:search",
     "freetextQuery": "hydra:freetextQuery",
     "view": { "@id": "hydra:view", "@type": "@id" },
@@ -297,6 +300,33 @@
       "subClassOf": "hydra:Resource",
       "label": "Collection",
       "comment": "A collection holding references to a number of related resources.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:collection",
+      "@type": "hydra:Link",
+      "label": "collection",
+      "comment": "Collections somehow related to this resource.",
+      "domain": "hydra:Collection",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:manages",
+      "label": "manages",
+      "comment": "Semantics of each member provided by the collection.",
+      "domain": "hydra:Collection",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:subject",
+      "label": "subject",
+      "comment": "The subject.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:object",
+      "label": "object",
+      "comment": "The object.",
       "vs:term_status": "testing"
     },
     {
