@@ -560,6 +560,17 @@
       <i>ApiDocumentation</i>.</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
+
+    <p>Hydra allows also to document both <i>ApiDocumentation</i> and
+      hypermedia controls with human-readable descriptions by applying
+      <i>hydra:title</i> and <i>hydra:description</i> (as shown in the
+      previous examples above). The former states a name of such a
+      decorated element that could be displayed to a human, the latter
+      provides it's description to be presented to that human i.e. as a hint.</p>
+
+    <p>Mentioned <i>hydra:title</i> and <i>hydra:description</i> SHOULD
+      override standard <i>rdfs:label</i> and <i>rdfs:comment</i> and presented
+      to human if provided.</p>
   </section>
 
   <section>
