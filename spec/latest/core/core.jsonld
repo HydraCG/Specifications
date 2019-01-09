@@ -113,6 +113,7 @@
       "label": "apiDocumentation",
       "comment": "A link to the API documentation",
       "range": "hydra:ApiDocumentation",
+      "domain": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -407,6 +408,7 @@
       "label": "search",
       "comment": "A IRI template that can be used to query a collection.",
       "range": "hydra:IriTemplate",
+      "domain": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -415,6 +417,7 @@
       "label": "freetext query",
       "comment": "A property representing a freetext query.",
       "range": "xsd:string",
+      "domain": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
