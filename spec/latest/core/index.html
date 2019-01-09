@@ -555,9 +555,12 @@
 
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
-      itself have changed since they have been retrieved. A simple strategy
-      to try to recover from such an error is to reload the
-      <i>ApiDocumentation</i>.</p>
+      itself have changed since they have been retrieved. Also operation details
+      like <i>hydra:returns</i> or <i>hydra:statusCodes</i> may vary at runtime,
+      thus these interpreted at runtime. A simple strategy to try to recover from
+      such a situation is to reload the <i>ApiDocumentation</i> and redo all
+      operations that were based on the <i>ApiDocumentation</i> (or at least those
+      that lead to the current failure).</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
   </section>
