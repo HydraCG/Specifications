@@ -315,10 +315,11 @@
       to be dereferenced.</p>
 
     <p class="note">It is recommended to dereference resources that are
-      within API's domain. This may prevent possible issues with cross-site
-      scripting or obtaining non-information resources. Still, there is no formal
-      prohibition of dereferencing resources link with well-know
-      properties, e.g. <i>rdf:seeAlso</i>.</p>
+      within an API's domain. This may prevent possible issues with cross-site
+      scripting or obtaining resources which might have no meaning
+      to the client or the client would be unable to interprete.
+      Still, there is no formal prohibition of dereferencing resources
+      link with well-know properties, e.g. <i>rdf:seeAlso</i>.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using a property defined to be a hyperlink">
