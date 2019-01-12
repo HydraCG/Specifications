@@ -8,6 +8,7 @@
     "vs": "http://www.w3.org/2003/06/sw-vocab-status/ns#",
     "dc": "http://purl.org/dc/terms/",
     "cc": "http://creativecommons.org/ns#",
+    "schema": "http://schema.org/",
     "apiDocumentation": "hydra:apiDocumentation",
     "ApiDocumentation": "hydra:ApiDocumentation",
     "title": "hydra:title",
@@ -69,7 +70,8 @@
     "range": {"@id": "rdfs:range", "@type": "@vocab" },
     "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@vocab" },
     "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@vocab" },
-    "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" }
+    "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
+    "domainIncludes": { "@id": "schema:domainIncludes", "@type": "@id" }
   },
   "@id": "http://www.w3.org/ns/hydra/core",
   "@type": "owl:Ontology",
@@ -148,6 +150,7 @@
       "label": "possible status",
       "comment": "A status that might be returned by the Web API (other statuses should be expected and properly handled as well)",
       "range": "hydra:Status",
+      "domainIncludes": ["hydra:ApiDocumentation", "hydra:Operation"],
       "vs:term_status": "testing"
     },
     {
@@ -173,6 +176,7 @@
       "label": "property",
       "comment": "A property",
       "range": "rdf:Property",
+      "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
       "vs:term_status": "testing"
     },
     {
@@ -181,6 +185,7 @@
       "label": "required",
       "comment": "True if the property is required, false otherwise.",
       "range": "xsd:boolean",
+      "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
       "vs:term_status": "testing"
     },
     {
@@ -207,6 +212,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
+      "domainIncludes": ["hydra:Class", "hydra:Link"],
       "vs:term_status": "testing"
     },
     {
@@ -277,6 +283,13 @@
       "label": "title",
       "comment": "A title, often used along with a description.",
       "range": "xsd:string",
+      "domainIncludes": [
+        "hydra:ApiDocumentation",
+        "hydra:Status",
+        "hydra:Class",
+        "hydra:SupportedProperty",
+        "hydra:Operation",
+        "hydra:Link"],
       "vs:term_status": "testing"
     },
     {
@@ -286,6 +299,13 @@
       "label": "description",
       "comment": "A description.",
       "range": "xsd:string",
+      "domainIncludes": [
+        "hydra:ApiDocumentation",
+        "hydra:Status",
+        "hydra:Class",
+        "hydra:SupportedProperty",
+        "hydra:Operation",
+        "hydra:Link"],
       "vs:term_status": "testing"
     },
     {
