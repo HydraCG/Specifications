@@ -631,10 +631,11 @@
       used in responses from the API will dereference to their
       documentation.</p>
 
-    <p>Another case would involve an <i>ApiDocumentation</i> discover from
-      another Api response. There is no restriction on emitting an HTTP
-      <i>Link</i> header on every Api response, thus every response could be
-      used to discover <i>ApiDocumentation</i>.</p>
+    <p>In another scenario the <i>ApiDocumentation</i> would be discovered from
+      a bookmarked resource's representation. Api implementation SHOULD emit
+      the HTTP <i>Link</i> header on every Api response, making
+      the <i>ApiDocumentation</i> (and entry points it defines) discoverable
+      all the time.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Retrieving a Hydra API documentation from another Api response">
@@ -658,12 +659,6 @@
       }
       -->
     </pre>
-
-    <p class="note">It is possible to use a fallback behavior in case an
-      Api response does not present an HTTP <i>Link</i> header. In such a situation,
-      client may use <i>Host</i> HTTP header value that was used to receive a response
-      and obtain an HTTP <i>Link</i> header using an <i>Api discovery</i> mechanism
-      described <a href="#discovering-api">at the beginning of this section</a>.</p>
   </section>
 </section>
 
