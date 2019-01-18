@@ -294,9 +294,9 @@ PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
         that match the fragment's triple pattern selector.
         These triples SHOULD be ordered in some consistent way,
         such that Triple Pattern Fragments can be paged consistently.
-        Triples SHOULD NOT contain blank nodes
-        (if the original triples contain blank nodes,
-        they SHOULD be <a href="http://www.w3.org/TR/rdf11-concepts/#section-skolemization">skolemized</a>).
+        Data triples MUST NOT contain blank nodes;
+        if the original triples contain blank nodes,
+        they SHOULD be <a href="http://www.w3.org/TR/rdf11-concepts/#section-skolemization">skolemized</a>.
       </p>
       <p>
         If the RDF syntax supports multiple graphs,
