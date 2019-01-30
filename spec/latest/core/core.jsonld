@@ -59,6 +59,16 @@
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
+    "skip": "hydra:skip",
+    "take": "hydra:take",
+    "returnsHeader": "hydra:returnsHeader",
+    "expectsHeader": "hydra:expectsHeader",
+    "mediaType": "hydra:mediaType",
+    "MediaType": "hydra:MediaType",
+    "Header": "hydra:Header",
+    "HeaderTemplate": "hydra:HeaderTemplate",
+    "MediaTypedResource": "hydra:MediaTypedResource",
+    "CollectionSpecification": "hydra:CollectionSpecification",
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -240,7 +250,7 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -249,7 +259,7 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -428,7 +438,7 @@
     {
       "@id": "hydra:IriTemplate",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": ["hydra:Template", "hydra:Resource"],
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
       "vs:term_status": "testing"
@@ -485,7 +495,7 @@
       "@type": "rdf:Property",
       "label": "mapping",
       "comment": "A variable-to-property mapping of the IRI template.",
-      "domain": "hydra:IriTemplate",
+      "domain": "hydra:Template",
       "range": "hydra:IriTemplateMapping",
       "vs:term_status": "testing"
     },
@@ -504,6 +514,112 @@
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:target",
+      "@type": "rdf:Property",
+      "label": "invocation target",
+      "comment": "Explicit target of the invocation of the operation.",
+      "domain": "hydra:Operation",
+      "rangeIncludes": ["hydra:IriTemplate", "hydra:Resource"],
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:returnsHeader",
+      "@type": "rdf:Property",
+      "label": "returns header",
+      "comment": "Name of the header returned by the operation.",
+      "domain": "hydra:Operation",
+      "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:expectsHeader",
+      "@type": "rdf:Property",
+      "label": "expects header",
+      "comment": "Specification of the header expected by the operation.",
+      "domain": "hydra:Operation",
+      "rangeIncludes": ["hydra:Header", "hydra:HeaderTemplate"],
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:Template",
+      "@type": "rdfs:Class",
+      "label": "Template",
+      "comment": "Some abstract template.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:Header",
+      "@type": "rdfs:DataType",
+      "label": "Header",
+      "comment": "Specification of the header, including name and value(s).",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:HeaderTemplate",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Template",
+      "label": "Header template",
+      "comment": "Specification of the header template with variables to be replaced with actual values.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:name",
+      "@type": "rdf:Property",
+      "label": "name",
+      "comment": "Name of the header.",
+      "domain": "hydra:HeaderTemplate",
+      "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:MediaTypedResource",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "Resource with media type",
+      "comment": "Resource that has an RFC 6838 compliant media type specified.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:mediaType",
+      "@type": "rdf:Property",
+      "label": "media type",
+      "comment": "Points to the RFC 6838 compliant media type specification.",
+      "domain": "hydra:MediaTypedResource",
+      "range": "hydra:MediaType",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:MediaType",
+      "@type": "rdfs:DataType",
+      "label": "Media type",
+      "comment": "An RFC 6838 compliant media type specification.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:CollectionSpecification",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Collection",
+      "label": "Collection specification",
+      "comment": "Describes a collection returned by the operation.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:skip",
+      "@type": "rdf:Property",
+      "label": "skip",
+      "comment": "Instructs to skip N elements of the set.",
+      "range": "xsd:integer",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:take",
+      "@type": "rdf:Property",
+      "label": "take",
+      "comment": "Instructs to limit set only to N elements.",
+      "range": "xsd:integer",
       "vs:term_status": "testing"
     }
   ]
