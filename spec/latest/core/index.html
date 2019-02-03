@@ -555,9 +555,15 @@
 
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
-      itself have changed since they have been retrieved. A simple strategy
-      to try to recover from such an error is to reload the
-      <i>ApiDocumentation</i>.</p>
+      itself have changed since they have been retrieved. Also operation details
+      like <i>returns</i> or <i>possibleStatus</i> may vary at runtime,
+      which means client SHOULD verify received payloads at runtime.
+      A simple strategy to try to recover from such a situation is to reload
+      the <i>ApiDocumentation</i> and redo all pre-computations that were
+      based on the <i>ApiDocumentation</i> (or at least those that lead
+      to the current failure). Another, simpler approach would require
+      an application to show an error message with option to return
+      to a previous or home screen.</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
 
@@ -885,7 +891,7 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Status****",
-        ****"statusCode": 429****,
+        ****"possibleStatus": 429****,
         "title": "Too Many Requests",
         "description": "A maximum of 500 requests per hour and user is allowed.",
         ...
