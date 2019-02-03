@@ -967,6 +967,10 @@
       Hydra defines just one such subclass, namely the <i>Error</i> class.
       This provides an extensible framework to communicate error details to
       a client.</p>
+    
+    <p>Furthermore, a <i>Status</i> or <i>Error</i> returned by the server can also
+      be given an identifier. When dereferenced, the <i>Error</i> resource can provide
+      more detailed information or possible ways to resolve the problem, if applicable.<p/>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using Hydra's Error class to describe errors">
@@ -977,6 +981,7 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Error****",
+        "@id": "http://api.example.com/error-details/1234",
         "title": "An error occurred",
         "description": "Typically, a specialization of this class is used in practice.",
         ...
