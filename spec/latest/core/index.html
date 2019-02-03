@@ -586,7 +586,7 @@
   </section>
 
   <section>
-    <h3>Discovering a Hydra-powered Web API</h3>
+    <a name="discovering-api"></a><h3>Discovering a Hydra-powered Web API</h3>
 
     <p>The first step when trying to access a Web API is to find an entry
       point. Typically, this is done by looking for documentation on the
@@ -653,6 +653,35 @@
       using HTTP Link Headers is typically not necessary as the concepts
       used in responses from the API will dereference to their
       documentation.</p>
+
+    <p>In another scenario the <i>ApiDocumentation</i> would be discovered from
+      a bookmarked resource's representation. Api implementation SHOULD emit
+      the HTTP <i>Link</i> header on every Api response, making
+      the <i>ApiDocumentation</i> (and entry points it defines) discoverable
+      all the time.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Retrieving a Hydra API documentation from another Api response">
+      <!--
+      GET /api/items HTTP/1.1
+      Host: api.example.com
+      Accept: application/ld+json
+
+      ====================================
+
+      HTTP/1.1 200 OK
+      ...
+      Content-Type: application/ld+json
+      ****Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"****
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api/items",
+        "title": "Items collection",
+        ...
+      }
+      -->
+    </pre>
   </section>
 </section>
 
