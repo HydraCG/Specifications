@@ -314,6 +314,13 @@
       <code>comments</code> property in the following example is intended
       to be dereferenced.</p>
 
+    <p class="note">It is recommended to dereference resources that are
+      within an API's domain. This may prevent possible issues with cross-site
+      scripting or obtaining resources which might have no meaning
+      to the client or such that the client would be unable to interpret.
+      Still, there is no formal prohibition of dereferencing resources
+      linked with well-known properties, e.g. <i>rdf:seeAlso</i>.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using a property defined to be a hyperlink">
       <!--
