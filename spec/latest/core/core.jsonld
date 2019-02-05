@@ -70,7 +70,7 @@
     "MediaTypedResource": "hydra:MediaTypedResource",
     "CollectionSpecification": "hydra:CollectionSpecification",
     "Template": "hydra:Template",
-    "name": { "@id": "hydra:name", "@type": "xsd:string" },
+    "headerName": { "@id": "hydra:headerName", "@type": "xsd:string" },
     "target": { "@id": "hydra:target", "@type": "@id" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
@@ -569,9 +569,9 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:name",
+      "@id": "hydra:headerName",
       "@type": "rdf:Property",
-      "label": "name",
+      "label": "header name",
       "comment": "Name of the header.",
       "domain": "hydra:HeaderTemplate",
       "range": "xsd:string",
