@@ -59,6 +59,9 @@
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
+    "mediaType": { "@id": "hydra:mediaType", "@type": "hydra:MediaType" },
+    "MediaType": "hydra:MediaType",
+    "MediaTypedResource": "hydra:MediaTypedResource",
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -240,7 +243,7 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -249,7 +252,7 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
       "vs:term_status": "testing"
     },
     {
