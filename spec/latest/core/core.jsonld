@@ -59,6 +59,8 @@
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
+    "skip": { "@id": "hydra:skip", "@type": "xsd:integer" },
+    "take": { "@id": "hydra:take", "@type": "xsd:integer" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -504,6 +506,22 @@
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:skip",
+      "@type": "rdf:Property",
+      "label": "skip",
+      "comment": "Instructs to skip N elements of the set.",
+      "range": "xsd:integer",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:take",
+      "@type": "rdf:Property",
+      "label": "take",
+      "comment": "Instructs to limit set only to N elements.",
+      "range": "xsd:integer",
       "vs:term_status": "testing"
     }
   ]
