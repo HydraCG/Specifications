@@ -59,6 +59,8 @@
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
+    "CollectionSpecification": "hydra:CollectionSpecification",
+    "target": { "@id": "hydra:target", "@type": "@id" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -504,6 +506,23 @@
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:target",
+      "@type": "rdf:Property",
+      "label": "invocation target",
+      "comment": "Explicit target of the invocation of the operation.",
+      "domain": "hydra:Operation",
+      "rangeIncludes": ["hydra:IriTemplate", "hydra:Resource"],
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:CollectionSpecification",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Collection",
+      "label": "Collection specification",
+      "comment": "Describes a collection returned by the operation.",
       "vs:term_status": "testing"
     }
   ]
