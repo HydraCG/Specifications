@@ -508,6 +508,30 @@
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
       "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:MediaTypedResource",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "Resource with media type",
+      "comment": "Resource that has an RFC 6838 compliant media type specified.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:mediaType",
+      "@type": "rdf:Property",
+      "label": "media type",
+      "comment": "Points to the RFC 6838 compliant media type specification.",
+      "domain": "hydra:MediaTypedResource",
+      "range": "hydra:MediaType",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:MediaType",
+      "@type": "rdfs:DataType",
+      "label": "Media type",
+      "comment": "An RFC 6838 compliant media type specification.",
+      "vs:term_status": "testing"
     }
   ]
 }
