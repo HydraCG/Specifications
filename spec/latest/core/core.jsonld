@@ -61,6 +61,7 @@
     "variable": "hydra:variable",
     "skip": { "@id": "hydra:skip", "@type": "xsd:integer" },
     "take": { "@id": "hydra:take", "@type": "xsd:integer" },
+    "page": { "@id": "hydra:page" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -522,6 +523,13 @@
       "label": "take",
       "comment": "Instructs to limit set only to N elements.",
       "range": "xsd:integer",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:page",
+      "@type": "rdf:Property",
+      "label": "page",
+      "comment": "Instructs to provide a specific page of the collection.",
       "vs:term_status": "testing"
     }
   ]
