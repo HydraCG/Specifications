@@ -59,9 +59,10 @@
     "mapping": "hydra:mapping",
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
-    "skip": { "@id": "hydra:skip", "@type": "xsd:integer" },
-    "take": { "@id": "hydra:take", "@type": "xsd:integer" },
-    "page": { "@id": "hydra:page" },
+    "offset": { "@id": "hydra:offset", "@type": "xsd:nonNegativeInteger" },
+    "limit": { "@id": "hydra:limit", "@type": "xsd:nonNegativeInteger" },
+    "pageIndex": { "@id": "hydra:pageIndex", "@type": "xsd:nonNegativeInteger" },
+    "pageReference": { "@id": "hydra:pageReference" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -510,26 +511,33 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:skip",
+      "@id": "hydra:offset",
       "@type": "rdf:Property",
       "label": "skip",
       "comment": "Instructs to skip N elements of the set.",
-      "range": "xsd:integer",
+      "range": "xsd:nonNegativeInteger",
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:take",
+      "@id": "hydra:limit",
       "@type": "rdf:Property",
       "label": "take",
       "comment": "Instructs to limit set only to N elements.",
-      "range": "xsd:integer",
+      "range": "xsd:nonNegativeInteger",
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:page",
+      "@id": "hydra:pageIndex",
       "@type": "rdf:Property",
-      "label": "page",
-      "comment": "Instructs to provide a specific page of the collection.",
+      "label": "page index",
+      "comment": "Instructs to provide a specific page of the collection at a given index.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:pageReference",
+      "@type": "rdf:Property",
+      "label": "page reference",
+      "comment": "Instructs to provide a specific page reference of the collection.",
       "vs:term_status": "testing"
     }
   ]
