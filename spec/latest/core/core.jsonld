@@ -60,11 +60,7 @@
     "IriTemplateMapping": "hydra:IriTemplateMapping",
     "variable": "hydra:variable",
     "returnsHeader": { "@id": "hydra:returnsHeader", "@type": "xsd:string" },
-    "expectsHeader": { "@id": "hydra:expectsHeader", "@type": "xsd:string" }
-    "Header": "hydra:Header",
-    "HeaderTemplate": "hydra:HeaderTemplate",
-    "Template": "hydra:Template",
-    "headerName": { "@id": "hydra:headerName", "@type": "xsd:string" },
+    "expectsHeader": { "@id": "hydra:expectsHeader", "@type": "xsd:string" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -434,7 +430,7 @@
     {
       "@id": "hydra:IriTemplate",
       "@type": "hydra:Class",
-      "subClassOf": ["hydra:Template", "hydra:Resource"],
+      "subClassOf": "hydra:Resource",
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
       "vs:term_status": "testing"
@@ -445,6 +441,7 @@
       "label": "template",
       "comment": "A templated string with placeholders. The literal's datatype indicates the template syntax; if not specified, hydra:Rfc6570Template is assumed.",
       "seeAlso": "hydra:Rfc6570Template",
+      "domain": "hydra:IriTemplate",
       "vs:term_status": "testing"
     },
     {
@@ -491,7 +488,7 @@
       "@type": "rdf:Property",
       "label": "mapping",
       "comment": "A variable-to-property mapping of the IRI template.",
-      "domain": "hydra:Template",
+      "domain": "hydra:IriTemplate",
       "range": "hydra:IriTemplateMapping",
       "vs:term_status": "testing"
     },
@@ -527,37 +524,6 @@
       "label": "expects header",
       "comment": "Specification of the header expected by the operation.",
       "domain": "hydra:Operation",
-      "rangeIncludes": ["hydra:Header", "hydra:HeaderTemplate"],
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Template",
-      "@type": "rdfs:Class",
-      "label": "Template",
-      "comment": "Some abstract template.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Header",
-      "@type": "rdfs:DataType",
-      "label": "Header",
-      "comment": "Specification of the header, including name and value(s).",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:HeaderTemplate",
-      "@type": "rdfs:Class",
-      "subClassOf": "hydra:Template",
-      "label": "Header template",
-      "comment": "Specification of the header template with variables to be replaced with actual values.",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:headerName",
-      "@type": "rdf:Property",
-      "label": "header name",
-      "comment": "Name of the header.",
-      "domain": "hydra:HeaderTemplate",
       "range": "xsd:string",
       "vs:term_status": "testing"
     }
