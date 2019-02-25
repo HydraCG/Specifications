@@ -314,6 +314,13 @@
       <code>comments</code> property in the following example is intended
       to be dereferenced.</p>
 
+    <p class="note">It is recommended to dereference resources that are
+      within an API's domain. This may prevent possible issues with cross-site
+      scripting or obtaining resources which might have no meaning
+      to the client or such that the client would be unable to interpret.
+      Still, there is no formal prohibition of dereferencing resources
+      linked with well-known properties, e.g. <i>rdf:seeAlso</i>.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using a property defined to be a hyperlink">
       <!--
@@ -594,15 +601,31 @@
 
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
-      itself have changed since they have been retrieved. A simple strategy
-      to try to recover from such an error is to reload the
-      <i>ApiDocumentation</i>.</p>
+      itself have changed since they have been retrieved. Also operation details
+      like <i>returns</i> or <i>possibleStatus</i> may vary at runtime,
+      which means client SHOULD verify received payloads at runtime.
+      A simple strategy to try to recover from such a situation is to reload
+      the <i>ApiDocumentation</i> and redo all pre-computations that were
+      based on the <i>ApiDocumentation</i> (or at least those that lead
+      to the current failure). Another, simpler approach would require
+      an application to show an error message with option to return
+      to a previous or home screen.</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
+
+    <p>Hydra also allows enriching both <i>ApiDocumentation</i> and
+      hypermedia controls with human-readable descriptions by applying
+      <i>title</i> and <i>description</i> (as shown in the examples above).
+      The former states a name of such a decorated element that could
+      be displayed as a label. The latter provides its description
+      to be presented i.e. as a hint.</p>
+
+    <p>Aforementioned <i>title</i> and <i>description</i> SHOULD take precedence
+      over standard <i>rdfs:label</i> and <i>rdfs:comment</i>.</p>
   </section>
 
   <section>
-    <h3>Discovering a Hydra-powered Web API</h3>
+    <a name="discovering-api"></a><h3>Discovering a Hydra-powered Web API</h3>
 
     <p>The first step when trying to access a Web API is to find an entry
       point. Typically, this is done by looking for documentation on the
@@ -669,6 +692,52 @@
       using HTTP Link Headers is typically not necessary as the concepts
       used in responses from the API will dereference to their
       documentation.</p>
+
+    <p>In another scenario the <i>ApiDocumentation</i> would be discovered from
+      a bookmarked resource's representation. Api implementation SHOULD emit
+      the HTTP <i>Link</i> header on every Api response, making
+      the <i>ApiDocumentation</i> (and entry points it defines) discoverable
+      all the time.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Retrieving a Hydra API documentation from another Api response">
+      <!--
+      GET /api/items HTTP/1.1
+      Host: api.example.com
+      Accept: application/ld+json
+
+      ====================================
+
+      HTTP/1.1 200 OK
+      ...
+      Content-Type: application/ld+json
+      ****Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"****
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api/items",
+        "title": "Items collection",
+        ...
+      }
+      -->
+    </pre>
+  </section>
+
+  <section>
+    <h3>Api versions</h3>
+
+    <p>It is common to provide a separate API address after a breaking changes
+      update. This prevents current clients not to get broken as these may not
+      support these changes.</p>
+
+    <p>With hypermedia provided in each response payload, it may be unnecessary
+      to provide such an alternative API. This is due to fact the client follows
+      what the server provides and with proper margin for errors implemented
+      within that client, even breaking changes can be published on the fly.</p>
+
+    <p>Still, Hydra does neither have any special support for API versions, nor
+      prevents them. It's fully an implementers decision on if and how
+      to provide the API features.</p>
   </section>
 </section>
 
@@ -914,7 +983,7 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Status****",
-        ****"statusCode": 429****,
+        ****"possibleStatus": 429****,
         "title": "Too Many Requests",
         "description": "A maximum of 500 requests per hour and user is allowed.",
         ...
@@ -937,6 +1006,10 @@
       Hydra defines just one such subclass, namely the <i>Error</i> class.
       This provides an extensible framework to communicate error details to
       a client.</p>
+    
+    <p>Furthermore, a <i>Status</i> or <i>Error</i> returned by the server can also
+      be given an identifier. When dereferenced, the <i>Error</i> resource can provide
+      more detailed information or possible ways to resolve the problem, if applicable.<p/>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using Hydra's Error class to describe errors">
@@ -947,6 +1020,7 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Error****",
+        "@id": "http://api.example.com/error-details/1234",
         "title": "An error occurred",
         "description": "Typically, a specialization of this class is used in practice.",
         ...
