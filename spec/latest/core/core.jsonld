@@ -529,8 +529,10 @@
     {
       "@id": "hydra:pageIndex",
       "@type": "rdf:Property",
+      "subPropertyOf": "hydra:pageReference",
       "label": "page index",
       "comment": "Instructs to provide a specific page of the collection at a given index.",
+      "range": "xsd:nonNegativeInteger",
       "vs:term_status": "testing"
     },
     {
