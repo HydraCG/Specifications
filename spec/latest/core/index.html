@@ -989,6 +989,179 @@
       -->
     </pre>
   </section>
+
+  <section>
+    <h3>Defining constraints and declaring requirements</h3>
+
+    <p>There are various situations on which a server would like to
+      provide additional details on some constraints or additional
+      requirements. These would be applicable in various areas, like
+      strongly typed collection description or variable limitations.
+      This section describes concepts that can be used to achieve
+      these features.</p>
+
+    <section>
+      <h4>Operation body expectations/declarations</h4>
+
+      <p>Hydra allows to express both expected or returned body
+        description. The first and most common approach is to provide
+        a class IRI as a target of the <i>expects</i>/<i>returns</i>
+        predicates - this simply instructs the client that for a given
+        operation an RDF resource that is of the expressed type.
+        In case the expected body does not explicitly say it, server
+        MAY imply it on it's own.</p>
+
+      <p>Another approach is to provide a more robust description
+        with <i>specifies</i> predicate.</p>
+
+      <pre class="example nohighlight" data-transform="updateExample"
+           title="Robust description of the expected resource">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "/api/events",
+        "@type": "hydra:Collection",
+        "operations": [
+          {
+            "method": "POST",
+            "expects": {
+              "****specifies****": [
+                {
+                  "property": "rdf:type",
+                  "object": "schema:Event"
+                }
+              ]
+            }
+          }
+        ]
+        ...
+      }
+      -->
+      </pre>
+
+      <p>The example above is an equivalent of the `expects`: `schema:Event`
+        construct, but it is enabled for more detailed description in a
+        reification-like manner, where a subject of the specification is
+        a hypothetical resource being specified, <i>property</i> and
+        <i>object</i> are relation elements that the resource SHOULD be
+        compliant with. In case the expected resource does not contains
+        the specified statements, server MAY imply those from the specification
+        on it's own.</p>
+
+      <p>It is possible to build adequate constructs for <i>returns</i>
+        declaration.</p>
+
+      <p>As an alternative to RDF based resource specification, it is also
+        possible to provide a more generic resource description for non-RDF
+        Api communication. This can be achieved using a robust approach
+        in conjunction with <i>mediaType</i> predicate:</p>
+
+      <pre class="example nohighlight" data-transform="updateExample"
+           title="Robust description of the media type specified expected resource">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "/api/issues/1/attachments",
+        "@type": "hydra:Collection",
+        "operations": [
+          {
+            "method": "POST",
+            "expects": {
+              "specifies": [
+                {
+                  "****mediaType": "image/jpeg****"
+                }
+              ]
+            }
+          }
+        ]
+        ...
+      }
+      -->
+      </pre>
+
+      <p class="note">It is NOT recommended to describe non-RDF resources
+        with <i>property</i>/<i>object</i> predicates with values n.e. from
+        <i>HTTP in RDF</i> vocabulary. While such a description would provide detailed
+        information that n.e. a resource expected should have a header name
+        of a specific value, but this approach is indistinguishable from
+        actual RDF description of resources meeting some RDF pattern (n.e.
+        in case of meta-data of non-RDF resources).</p>
+    </section>
+
+    <section>
+      <h4>Strongly typed collections</h4>
+
+      <p>There are circumstances in which a collection should provide more
+        detailed description about it's members, n.e. by denoting the type
+        each member is of. This description can be provided on both
+        <i>Api documentation</i> level and on the actual collection's
+        hypermedia level with already described robust approach.</p>
+
+      <pre class="example nohighlight" data-transform="updateExample"
+           title="Strongly typed collection on API documentation level">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "/api?documentation",
+        "@type": "hydra:ApiDocumentation",
+        "supportedClass": [
+          {
+            "@id": "schema:Event",
+            "supportedOperation": [
+              {
+                "method": "GET",
+                "returns": {
+                  "specifies": [
+                    {
+                      "property": "****rdf:type****",
+                      "object": "****hydra:Collection****"
+                    },
+                    {
+                      "property": "****hydra:manages****",
+                      "object": [
+                        {
+                          "property": "****rdf:type****",
+                          "object": "****schema:Event****"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+        ...
+      }
+      -->
+      </pre>
+
+      <p>Please note the nested specification through <i>manages</i> predicate
+        (as this predicate is a sub-property of <i>specifies</i>).
+        Client SHOULD assume that the nested specification is applicable to
+        nested resources (resources available in that case in the collection).</p>
+
+      <pre class="example nohighlight" data-transform="updateExample"
+           title="Strongly typed collection on hypermedia level">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "/api/events",
+        "@type": "hydra:Collection",
+        "****manages****": [
+          {
+            "property": "****rdf:type****",
+            "object": "****schema:Event****"
+          }
+        ]
+        ...
+      }
+      -->
+      </pre>
+
+    </section>
+  </section>
 </section>
 
 <!-- <section>

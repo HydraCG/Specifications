@@ -37,8 +37,10 @@
     "collection": "hydra:collection",
     "member": { "@id": "hydra:member", "@type": "@id" },
     "manages": "hydra:manages",
+    "specifies": "hydra:specifies",
     "subject": { "@id": "hydra:subject", "@type": "@vocab" },
     "object": { "@id": "hydra:object", "@type": "@vocab" },
+    "mediaType": {"@id": "hydra:mediaType", "@type": "xsd:string" },
     "search": "hydra:search",
     "freetextQuery": "hydra:freetextQuery",
     "view": { "@id": "hydra:view", "@type": "@id" },
@@ -335,6 +337,7 @@
     },
     {
       "@id": "hydra:manages",
+      "subPropertyOf": "hydra:specifies",
       "label": "manages",
       "comment": "Semantics of each member provided by the collection.",
       "domain": "hydra:Collection",
@@ -530,6 +533,21 @@
       "label": "variable",
       "comment": "An IRI template variable",
       "domain": "hydra:IriTemplateMapping",
+      "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:specifies",
+      "@type": "rdf:Property",
+      "label": "specifies",
+      "comment": "A resource specification",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:mediaType",
+      "@type": "rdf:Property",
+      "label": "media type",
+      "comment": "Media type of the resource",
       "range": "xsd:string",
       "vs:term_status": "testing"
     }
