@@ -43,9 +43,10 @@ creating another issue.
 
 Unless it's a trivial change, we encourage the following workflow when submitting pull requests to the specification:
 
+1. Make sure there is an issue reported. If not, **report it first**.
 1. Create another PR to the [cookbook repository](https://github.com/HydraCG/gitbook).
-  * in tha PR show example snippets of relevant request/response payloads.
-  * if possible, provide some discussion which will be the basis for documentation pages.
-  * you may even want to show code snippets (pseudo-code is just fine) demonstrating the new or improved feature.
+   * in tha PR show example snippets of relevant request/response payloads.
+   * if possible, provide some discussion which will be the basis for documentation pages.
+   * you may even want to show code snippets (pseudo-code is just fine) demonstrating the new or improved feature.
 2. The cookbook PR will be used to brainstorm the solution to the problem.
 3. Once a satisfactory solution is found, please proceed with creating a pull request to the specification repository.
