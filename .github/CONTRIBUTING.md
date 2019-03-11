@@ -16,7 +16,7 @@ These are not strict rules.
 ### Getting in touch
 
 The best way to start contributing is to first spark some interest. This can be done by creating a GitHub issue
-(more on that below) but a quicker alternative is to reach out to the community through on of our channels.
+(more on that below) but a quicker alternative is to reach out to the community through on of our channels mentioned below.
 
 #### Mailing list
 
@@ -51,7 +51,7 @@ Unless it's a trivial change, we encourage the following workflow when submittin
 
 1. Make sure there is an issue reported. If not, **report it first**.
 1. Create another PR to the [cookbook repository](https://github.com/HydraCG/gitbook).
-   * in tha PR show example snippets of relevant request/response payloads.
+   * in the PR show example snippets of relevant request/response payloads.
    * if possible, provide some discussion which will be the basis for documentation pages.
    * you may even want to show code snippets (pseudo-code is just fine) demonstrating the new or improved feature.
 2. The cookbook PR will be used to brainstorm the solution to the problem.
