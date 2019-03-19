@@ -16,7 +16,7 @@ These are not strict rules.
 ### Getting in touch
 
 The best way to start contributing is to first spark some interest. This can be done by creating a GitHub issue
-(more on that below) but a quicker alternative is to reach out to the community through on of our channels mentioned below.
+(more on that below) but a quicker alternative is to reach out to the community through one of our channels mentioned below.
 
 #### Mailing list
 
