@@ -9,11 +9,11 @@ A clear and concise description of what is missing from Hydra.
 
 ## Hydra-agnostic example
 
-Without Hydra or JSON-LD in mind, please provide an example of client/server resource representations which are exchnaged but cannot be properly modeled with Hydra.
+Without Hydra or JSON-LD in mind, please provide an example of client/server resource representations which are exchanged but cannot be properly modeled with Hydra.
 
 ## Proposed solutions
 
-A deascription, or snippet, showing what extensions are necessary to describe the above using Hydra terms.
+A description, or snippet, showing what extensions are necessary to describe the above using Hydra terms.
 
 ## Alternative solutions
 
