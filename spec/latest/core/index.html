@@ -989,6 +989,26 @@
       -->
     </pre>
   </section>
+
+  <section>
+    <h3>Client initiated pagination</h3>
+
+    <p>There are situations when a client would like to provide a specific
+      collection limitations, i.e. by providing query-language like member
+      offset and limit or some specific page index and number of members
+      per page. This is doable with <i>offset</i>/<i>limit</i> or
+      <i>pageIndex</i>/<i>limit</i> predicates.</p>
+
+    <p>With those, it is possible to bind a template variables mapped
+      with externally obtained values (i.e. user interaction) the same way
+      as with other mappings.</p>
+
+    <p>While the predicates enlisted above accepts non-negative integer
+      numbers, there is also a possibility of providing a custom page
+      reference expressed via <i>pageReference</i> predicate. It is possible
+      to provide a custom page identifier (i.e. a GUID or a letter)
+      instead of a number.</p>
+  </section>
 </section>
 
 <!-- <section>
