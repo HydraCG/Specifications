@@ -64,6 +64,8 @@
     "limit": { "@id": "hydra:limit", "@type": "xsd:nonNegativeInteger" },
     "pageIndex": { "@id": "hydra:pageIndex", "@type": "xsd:nonNegativeInteger" },
     "pageReference": { "@id": "hydra:pageReference" },
+    "returnsHeader": { "@id": "hydra:returnsHeader", "@type": "xsd:string" },
+    "expectsHeader": { "@id": "hydra:expectsHeader", "@type": "xsd:string" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -567,6 +569,24 @@
       "@type": "rdf:Property",
       "label": "page reference",
       "comment": "Instructs to provide a specific page reference of the collection.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:returnsHeader",
+      "@type": "rdf:Property",
+      "label": "returns header",
+      "comment": "Name of the header returned by the operation.",
+      "domain": "hydra:Operation",
+      "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:expectsHeader",
+      "@type": "rdf:Property",
+      "label": "expects header",
+      "comment": "Specification of the header expected by the operation.",
+      "domain": "hydra:Operation",
+      "range": "xsd:string",
       "vs:term_status": "testing"
     }
   ]

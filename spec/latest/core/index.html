@@ -560,6 +560,45 @@
       -->
     </pre>
 
+    <p>In addition to expected/returned resources, it is also possible to
+      express similar features for headers with <i>returnsHeader</i> and
+      <i>expectsHeader</i> predicates which provides a simple set of header
+      names. Client SHOULD apply respective header semantics when creating
+      or receiving a request natural for the protocol in use.</p>
+
+    <pre class="example nohighlight" data-transform="returnsHeader"
+         title="Making a use of a returned header">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/#comments",
+        "@type": "Link",
+        "supportedOperation": [
+          {
+            "@type": "Operation",
+            "method": "POST",
+            ****"expects": "http://api.example.com/doc/#Comment",
+            "returns": "http://api.example.com/doc/#Comment",****
+            "returnsHeader": [
+              "Content-Type",
+              "Content-Length"],
+            "expectsHeader": [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+      -->
+
+      The example above enable an HTTP client to prepare a proper cross-site
+      pre-flight request so the server exposes enlisted headers for the client.
+      The client is also aware of the user authentication requirement necessary
+      for the operation invocation.
+    </pre>
+
+    <p>These are the simple example scenarios and possible usages are not
+      limited to those described above.</p>
+
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
       itself have changed since they have been retrieved. Also operation details
