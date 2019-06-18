@@ -450,7 +450,7 @@
     {
       "@id": "hydra:TemplatedLink",
       "@type": "hydra:Class",
-      "subClassOf": [ "hydra:Resource", "rdf:Property" ],
+      "subClassOf": [ "hydra:Resource", "hydra:Link", "rdf:Property" ],
       "label": "Templated Link",
       "comment": "A templated link.",
       "vs:term_status": "testing"
