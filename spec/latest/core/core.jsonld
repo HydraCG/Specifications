@@ -77,7 +77,8 @@
     "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@vocab" },
     "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@vocab" },
     "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
-    "domainIncludes": { "@id": "schema:domainIncludes", "@type": "@id" }
+    "domainIncludes": { "@id": "schema:domainIncludes", "@type": "@id" },
+    "rangeIncludes": { "@id": "schema:rangeIncludes", "@type": "@id" }
   },
   "@id": "http://www.w3.org/ns/hydra/core",
   "@type": "owl:Ontology",
