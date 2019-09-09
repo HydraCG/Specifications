@@ -253,7 +253,8 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
+      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
@@ -262,7 +263,8 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
+      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
