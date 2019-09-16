@@ -218,7 +218,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
-      "domainIncludes": ["hydra:Class", "hydra:Link"],
+      "domainIncludes": ["hydra:Class", "hydra:Link", "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -295,7 +295,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -311,7 +312,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -450,7 +452,7 @@
     {
       "@id": "hydra:TemplatedLink",
       "@type": "hydra:Class",
-      "subClassOf": [ "hydra:Resource", "hydra:Link", "rdf:Property" ],
+      "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Templated Link",
       "comment": "A templated link.",
       "vs:term_status": "testing"
