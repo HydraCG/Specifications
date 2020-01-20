@@ -219,7 +219,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
-      "domainIncludes": ["hydra:Class", "hydra:Link"],
+      "domainIncludes": ["hydra:Class", "hydra:Link", "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -298,7 +298,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -314,7 +315,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
