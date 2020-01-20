@@ -77,7 +77,8 @@
     "subClassOf": { "@id": "rdfs:subClassOf", "@type": "@vocab" },
     "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@vocab" },
     "seeAlso": { "@id": "rdfs:seeAlso", "@type": "@id" },
-    "domainIncludes": { "@id": "schema:domainIncludes", "@type": "@id" }
+    "domainIncludes": { "@id": "schema:domainIncludes", "@type": "@id" },
+    "rangeIncludes": { "@id": "schema:rangeIncludes", "@type": "@id" }
   },
   "@id": "http://www.w3.org/ns/hydra/core",
   "@type": "owl:Ontology",
@@ -218,7 +219,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
-      "domainIncludes": ["hydra:Class", "hydra:Link"],
+      "domainIncludes": ["hydra:Class", "hydra:Link", "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -253,7 +254,8 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
+      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
@@ -262,7 +264,8 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "hydra:Class",
+      "range": "hydra:Resource",
+      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
@@ -295,7 +298,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
@@ -311,7 +315,8 @@
         "hydra:Class",
         "hydra:SupportedProperty",
         "hydra:Operation",
-        "hydra:Link"],
+        "hydra:Link",
+        "hydra:TemplatedLink"],
       "vs:term_status": "testing"
     },
     {
