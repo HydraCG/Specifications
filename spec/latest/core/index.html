@@ -601,6 +601,14 @@
       for the operation invocation.
     </pre>
 
+    <p>To wrap up everything altogether, it is also possible to attach atomic
+      operations supported by, well, supported property itself. This might
+      come in handy for scenarios, when resource can be partially modified.
+      It can be achieved by adding a <i>supportedOperation</i> to the
+      intermediate structure mentioned earlier, <i>SupportedProperty</i>.
+      This way prevents from leaking API specific features from the API itself
+      to i.e. externally defined properties.</p>
+
     <p>These are the simple example scenarios and possible usages are not
       limited to those described above.</p>
 
