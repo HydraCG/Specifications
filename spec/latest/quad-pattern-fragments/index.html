@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quad Pattern Fragments</title>
+  <meta charset="utf-8">
+  <script type="text/javascript">
+//<![CDATA[
+try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"7a809e2e415290636d5fa46aba62bbdc",petok:"6686e96e5a7fee1055df040677f9609064adcbc3-1443682853-1800",zone:"hydra-cg.com",rocket:"0",apps:{"ga_key":{"ua":"UA-42071981-1","ga_bs":"1"}}}];!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=e9627cd26a/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
+//]]>
+</script>
+<script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+  <script type="text/javascript" src="http://www.hydra-cg.com/spec/js/respec-w3c-extensions.js" class="remove"></script>
+  <script class="remove">
+    var respecConfig = {
+        specStatus: "unofficial",
+        shortName: "qp-fragments",
+        subtitle: "A low-cost, queryable Linked Data Fragments interface supporting quads",
+        copyrightStart: "2020",
+        additionalCopyrightHolders: 'Copyright © ' + new Date().getFullYear() + ' the Contributors to the Quad Pattern Fragments Specification, published by the <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.',
+        wg: "Hydra W3C Community Group",
+        wgURI: "http://www.w3.org/community/hydra/",
+        wgPublicList: "public-linked-data-fragments",
+        editors: [{
+          name: "Ruben Taelman",
+		  url: "https://rubensworks.net",
+          company: "Ghent University – imec",
+          companyURL: "https://www.ugent.be/ea/idlab/en",
+        }],
+        authors: [{
+          name: "Ruben Taelman",
+		  url: "http://rubensworks.net",
+          company: "Ghent University – imec",
+          companyURL: "https://www.ugent.be/ea/idlab/en",
+        }],
+        edDraftURI: "http://www.hydra-cg.com/spec/latest/quad-pattern-fragments/",
+        maxTocLevel: 2,
+        localBiblio: localBibliography,
+    };
+  </script>
+  <style>
+    body { max-width: 900px; margin: 0 auto; }
+    dd ul { margin: 0 0 .5em; }
+    dl.triple dt { float: left; clear: left; width: 6em; }
+  </style>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-42071981-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+/* ]]> */
+</script>
+</head>
+<body>
+	
+  <section id="abstract">
+    <p>
+		This document specifies the <em>Quad Pattern Fragments</em> interface as an extension to the <em>Triple Pattern Fragments</em> [[!HYDRA-TPF]] interface.
+		A Quad Pattern Fragment is a more general form of a Triple Pattern Fragment which contains a collection of quads instead of triples.
+		These quads match the quad pattern identifying the Quad Pattern Fragment.
+		This fragment contains at least the same metadata as Triple Pattern Fragments and a more generalized form of controls to find all other Quad Pattern Fragments of the dataset.
+    </p>
+  </section>
+
+
+  <section id="sotd">
+    <p>
+      This specification was published by the
+      <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a>. It is
+      not a W3C Standard nor is it on the W3C Standards Track. Please note that under the
+      <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+      there is a limited opt-out and other conditions apply. Learn more about
+      <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.
+    </p>
+    <p>
+      To participate in the development of this specification, please join the
+      <a href="http://www.w3.org/community/hydra/">Hydra W3C Community Group</a>. If
+      you have questions, want to suggest a feature, or raise an issue, please send a mail to the
+      <a href="http://lists.w3.org/Archives/Public/public-hydra/">public-linked-data-fragments@w3.org mailing list</a>.
+    </p>
+  </section>
+
+  <section id="introduction" class="informative">
+    <h2>Introduction</h2>
+    <section>
+      <h3>Extension to Triple Pattern Fragments</h3>
+	 	 <p>
+      	The <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/">Triple Pattern Fragments</a> interface allows for triple retrieval based on triple patterns.
+		A Triple Pattern Fragment contains those triples of a dataset that match a specific triple pattern, together with a set of metadata.
+		Quad Pattern Fragments is an extension to this by not only allowing triple patterns to be used as <a href="http://www.hydra-cg.com/spec/latest/linked-data-fragments/">Linked Data Fragments</a> selector, but also quad patterns by which a collection of matching quads can be retrieved from the dataset.
+		</p>
+		<p>	
+		By allowing quad patterns to be used as selector, quads become the replacement of triples as a unit of information.
+		Since <a href="#bib-RDF">RDF 1.1</a>, named graphs can be used to group triples so that their context can be used as a resource.
+		These named graphs are useful to group certain triples in different graphs or to say something about one or more triples.
+		</p>
+		<p>	
+		This extension is designed such that clients which are only supporting Triple Pattern Fragments can still interpret and use the data, controls and metadata from Quad Pattern Fragments servers for backwards-compatibility, but they will not see the graph information.
+		The inverse is true as well, clients supporting Quad Pattern Fragments must still be able to interpret and use the data, controls and metadata from Triple Pattern Fragments servers.
+		</p>
+    </section>
+    <section>
+      <h3>Aim, scope, and intended audience</h3>
+      <p>
+        The goal of a <em>Quad Pattern Fragments</em> server-side interface
+        is to provide low-cost access to Linked Data,
+        while enabling efficient live querying over datasets that contain named graphs on the client side.
+      <p>
+        This document defines <em>Quad Pattern Fragments</em>,
+        a <a href="http://www.hydra-cg.com/spec/latest/linked-data-fragments/">Linked Data Fragments</a> type,
+        by specifying their representation and effect on the application state.
+        This allows to publish and consume Linked Data
+        through a Quad Pattern Fragments interface.
+      </p>
+      <p>
+        This document is intended for people who want to implement
+        a client or server of Quad Pattern Fragments,
+        for those who want to understand how such clients or servers work,
+		or for people who want to publish RDF data containing graphs.
+      </p>
+    </section>
+    <section>
+      <h3>Document conventions</h3>
+      <p>
+        We write triples and quads in this document
+        in the <a href="http://www.w3.org/TR/trig/">TriG RDF syntax</a> [[!TRIG]]
+        using the following namespace prefixes:
+      </p>
+<pre><code>PREFIX rdf:   &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX hydra: &lt;http://www.w3.org/ns/hydra/core#&gt;
+PREFIX void:  &lt;http://rdfs.org/ns/void#&gt;
+PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX sd:    &lt;http://www.w3.org/ns/sparql-service-description#&gt;
+</code></pre>
+		<p>
+			When we talk about quads, this includes regular triples which are present in the default <a href="#bib-RDF">RDF</a> graph.
+		</p>
+    </section>
+  </section>
+
+  <section id="conformance">
+  </section>
+
+  <section>
+    <h2>Document type</h2>
+    <section class="informative">
+      <h2>Overview</h2>
+	  <p>
+		  The two client-server interface components by which <a href="#bib-LINKED-DATA">Linked Data</a> interfaces are determined are:
+	  </p>
+      <ul>
+        <li>What kind of <em>requests</em> can clients make?</li>
+        <li>
+          With what kind of <em>responses</em> do servers reply,
+          or in other words, what <em>document types</em> do they use?
+        </li>
+      </ul>
+	  <p>
+		  <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/">Triple Pattern Fragments</a> formulates the following answer to this:
+      <ul>
+        <li>Clients can ask for a <em>triple pattern</em>.</li>
+        <li>To each <em>triple pattern</em> request,
+            servers respond with a <em>Triple Pattern Fragment</em>.</li>
+      </ul>
+  	  </p>
+	  <p>
+		   This answer is adapted by <em>Quad Pattern Fragments</em> as follows:
+	  </p>
+      <ul>
+        <li>Clients can ask for a <em>quad pattern</em>.</li>
+        <li>To each <em>quad pattern</em> request,
+            servers respond with a <em>Quad Pattern Fragment</em>.</li>
+      </ul>
+	  <p>
+		  For the scope of this specification, we consider quads as an extension of triples with a fourth element declaring a <a href="#bib-RDF">RDF</a> named graph.
+		  We consider a triple as a quad with as named graph the <dfn data-dfn-type="dfn" id="dfn-default-graph">default graph</dfn>.
+	  </p>
+	  <p>
+	  	A quad pattern request returns a Quad Pattern Fragment containing all quads that are present in the interface's dataset matching the pattern, together with metadata and hypermedia controls.
+		Just as with <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/">Triple Pattern Fragments</a>, Quad Pattern Fragments are precisely defined using the <a href="#bib-HYDRA-LDF">Linked Data Fragments</a> conceptual framework in the remainder of this section.
+	  </p>
+      <p>
+		Quad Pattern Fragments are protocol-independent.
+		All fragments contain hypermedia controls through which clients can learn how to interact with the interface through a certain protocol.
+		Once the client has one Quad Pattern Fragment, it can determine how to use the entire interface.
+      </p>
+    </section>
+    <section>
+      <h2>Definition</h2>
+      <p>
+        A <dfn>Quad Pattern Fragment</dfn> is a Linked Data Fragment [[!HYDRA-LDF]] of a dataset with the following characteristics:
+      </p>
+      <dl>
+        <dt>data</dt>
+        <dd>
+          A Quad Pattern Fragment MUST contain
+          all quads of the dataset that match a given quad pattern
+          “<code>?subject ?predicate ?object ?graph.</code>”,
+        </dd>
+        <dd>
+          A Quad Pattern Fragment MAY additionally contain other data quads.
+        </dd>
+        <dt>metadata</dt>
+        <dd>
+          A Quad Pattern Fragment MUST contain one or more quads
+          that express the estimated total number of matches for the quad pattern.
+        </dd>
+        <dd>
+          A Quad Pattern Fragment MAY contain additional metadata.
+        </dd>
+        <dt>hypermedia controls</dt>
+        <dd>
+          A Quad Pattern Fragment MUST contain hypermedia controls
+          that allow to retrieve any other Quad Pattern Fragment of the same dataset.
+          This MUST either be provided as a form
+          that allows to choose subject, predicate, object, and graph of the selector's graph pattern,
+		  or as a form that allows to choose subject, predicate, and object of the selector's graph pattern in the default graph.
+		  In the latter case we can simply speak of a Triple Pattern Fragment, this means that every Triple Pattern Fragment is also a Quad Pattern Fragment.
+        </dd>
+        <dd>
+          A Quad Pattern Fragment MAY contain additional hypermedia controls.
+		  The IRIs of data, metadata, and control quads entities SHOULD be dereferenceable.
+        </dd>
+      </dl>
+      <p>
+        A Quad Pattern Fragment of a dataset is fully determined and identified by its <dfn>quad pattern selector</dfn>.
+		This selector consists of four components <code>subject</code>, <code>predicate</code>, <code>object</code>, and <code>graph</code> [[!RDF11-CONCEPTS]].
+        The <code>subject</code> MUST either be a variable or an IRI;
+        the <code>predicate</code> MUST either be a variable or an IRI;
+        the <code>object</code> MUST either be a variable, an IRI, or a literal;
+		the <code>graph</code> MUST either be a variable or an IRI;
+        These components MUST NOT be blank nodes.
+      </p>
+
+      <p>
+		  The above constraints define the document type of Quad Pattern Fragments.
+		  The following sections <a href="#data"></a>, <a href="#metadata"></a>, and <a href="#controls"></a> explain this in more detail.
+		  Quad Pattern Fragments SHOULD be paged, as detailed in <a href="#paging"></a>.
+      </p>
+
+      <p>
+		  Quad Pattern Fragments are not bound to a specific syntax because different methods can be used to represent its data, metadata, and controls.
+		  The server MUST, however, support at least one RDF-based representation that SHOULD allow for quads to be represented.
+		  This representation MAY instead also allow for just triples to be represented.
+		  For allowing clients to correctly parse requests Quad Pattern Fragments, servers MUST indicate the correct MIME type when responding with those fragments.
+      </p>
+      <p>
+        For RDF syntaxes without named graph support
+        (such as <a href="http://www.w3.org/TR/turtle/">Turtle</a>
+        or <a href="http://www.w3.org/TR/n-triples/">N-Triples</a>),
+        the data, metadata, and controls SHOULD be serialized to the same graph, quad graphs MUST be truncated.
+		This means that all quads will be present in the default graph.
+		The interface MAY return an error response stating that the requested serialization format is not supported.
+        For RDF syntaxes with multiple graph support
+        (such as <a href="http://www.w3.org/TR/json-ld/">JSON-LD</a>,
+        <a href="http://www.w3.org/TR/trig/">TriG</a>
+        or <a href="http://www.w3.org/TR/n-quads/">N-Quads</a>),
+        the data MUST be serialized to their respective graphs
+        and the metadata and controls MUST be serialized to one or multiple non-default graphs.
+      </p>
+	  <p>
+		  When the above constraints are taken into account, every Quad Pattern Fragment can be interpreted as a Triple Pattern Fragment for backwards-compatibility with TPF-clients and each Triple Pattern Fragment can still be interpreted as a Quad Pattern Fragment for backwards-compatibility with TPF-servers.
+	  </p>
+      <p>
+		  A <dfn>Quad Pattern Fragments server</dfn> is a <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#server">Triple Pattern Fragments server</a> that provides access to Quad Pattern Fragments, a generalization of Triple Pattern Fragments.
+      </p>
+      <p>
+		  The dataset that is made available through a Quad Pattern Fragments server MUST follow the document type as defined in <a href="#document-type"></a> next to the dataset requirements defined by <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#server">Triple Pattern Fragments</a>.
+      </p>
+    </section>
+
+    <section id="data">
+      <h3>Data</h3>
+      <p>
+		A Quad Pattern Fragment contains all quads of a dataset that matches the fragment's quad pattern selector.
+		These quads SHOULD be consistently ordened such that Quad Pattern Fragments can be paged consistently.
+		Quads SHOULD NOT contain blank nodes, instead these blank nodes SHOULD be <a href="http://www.w3.org/TR/rdf11-concepts/#section-skolemization">skolemized</a>.
+      </p>
+      <p>
+		If the RDF syntax does not support multiple graphs,
+		data quads SHOULD be converted to triples by truncating their graph.
+		Otherwise, the MAY return an error response stating that the requested serialization format is not supported.
+		In case of an HTTP [[RFC7230]] implementation, this SHOULD be an HTTP 406 [[RFC2616]] error.
+        If the RDF syntax supports multiple graphs,
+        data quads MUST be serialized to their respective graph.
+      </p>
+    </section>
+
+    <section id="metadata">
+      <h3>Metadata</h3>
+      <p>
+		Each Quad Pattern Fragment and Quad Pattern Fragment page MUST contain an estimate of the total number of quads matching this fragment's selector.
+        This MUST be expressed as a triple in the metadata graph with the following components:
+      </p>
+      <dl class="triple">
+        <dt>subject</dt>
+        <dd>the IRI of the fragment</dd>
+        <dt>predicate</dt>
+        <dd>the <code>void:triples</code> predicate</dd>
+        <dt>object</dt>
+        <dd>an integer literal expressing the estimated total number of matching triples</dd>
+      </dl>
+      <p>
+        The estimate MUST be a non-negative, finite, integer number with the following properties:
+      </p>
+      <ul>
+        <li>If no quads match the selector, the estimate MUST be zero.</li>
+        <li>If one or more quads match the selector, the estimate MUST NOT be zero.</li>
+        <li>The estimate SHOULD be as close as possible to the actual number of matches.</li>
+        <li>
+          If the number of matching quads is smaller than the number of items per page,
+          the estimate SHOULD be exactly the number of matching triples.
+        </li>
+      </ul>
+      <p>
+        The metadata MAY additionally contain variations of the above triple.
+        For instance,
+        it is RECOMMENDED to add a triple with the same subject and object
+        and the <code>hydra:totalItems</code> predicate.
+      </p>
+	  
+      <p>
+		Each Quad Pattern Fragment and Quad Pattern Fragment page MUST contain a triple in the metadata graph declaring the default graph of the interface's dataset if this default graph contains at least one triple.
+		Each Quad Pattern Fragment and Quad Pattern Fragment page MAY contain a triple in the metadata graph declaring the default graph of the interface's dataset if this default graph is empty.
+        This MUST be expressed as a triple with the following components:
+      </p>
+      <dl class="triple">
+        <dt>subject</dt>
+        <dd>the IRI of the dataset</dd>
+        <dt>predicate</dt>
+        <dd>the <code>sd:defaultGraph</code> predicate</dd>
+        <dt>object</dt>
+        <dd>a URI refering to the default graph of the interface's dataset.</dd>
+      </dl>
+
+      <p>
+        If the RDF syntax supports named graphs,
+        metadata triples MUST be serialized to a non-default graph.
+        This non-default graph MUST be explicitly related to the Quad Pattern Fragment using the <code>foaf:primaryTopic</code> predicate,
+        so clients can interpret what resource this metadata belongs to. This relating triple MUST be present in metadata graph.
+        This graph SHOULD be the same as the graph containing the hypermedia controls.
+      </p>
+    </section>
+
+    <section id="controls">
+      <h3>Hypermedia controls</h3>
+      <p>
+		Each Quad Pattern Fragment and Quad Pattern Fragment page MUST contain a hypermedia control through which the IRI of any other Quad Pattern Fragment of the same dataset can be generated.
+      </p>
+      <p>
+		This control MUST either be in function of the four input parameters <var>subject</var>, <var>predicate</var>, <var>object</var>, and <var>graph</var>, or in function of the three input parameters <var>subject</var>, <var>predicate</var>, and <var>object</var>.
+		In the latter it is simply a Triple Pattern Fragment control where the graph parameter is assumed to be empty.
+		Each of these parameters can either be a variable, a constant IRI, or (in the case of <var>object</var>) a constant literal.
+		The output of this function MUST be the IRI of the dataset's Quad Pattern Fragments whose identifying selector has the given parameter values.
+      </p>
+      <p>
+        This control MUST be expressed as a form in the
+        <a href="http://www.hydra-cg.com/spec/latest/core/">Hydra Core Vocabulary</a> [[!HYDRA-CORE]]
+        using triples in the controls graph.
+		This structure MUST either be as the <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/">Triple Pattern Fragments</a> control form or as the following:
+      </p>
+<pre><code>&lt;http://example.org/example#controls&gt;
+      {
+        &lt;http://example.org/example#dataset&gt;
+        void:subset &lt;http://example.org/example?s=http%3A%2F%2Fexample.org%2Ftopic&gt;;
+        &lt;http://example.org/example#controls&gt;
+        foaf:primaryTopic &lt;http://example.org/example#dataset&gt;;
+        hydra:search [
+            hydra:template "http://example.org/example{?s,p,o,g}";
+            hydra:mapping  [ hydra:variable "s"; hydra:property rdf:subject ],
+                           [ hydra:variable "p"; hydra:property rdf:predicate ],
+                           [ hydra:variable "o"; hydra:property rdf:object ],
+                           [ hydra:variable "g"; hydra:property sd:graph ]
+        ].
+      }</code></pre>
+      <p>
+        The above snippet assumes the dataset IRI is
+        <code>http://example.org/example#dataset</code>,
+		the controls graph is <code>http://example.org/example#controls</code>,
+        the fragment (or fragment page) IRI is
+        <code>http://example.org/example?s=http%3A%2F%2Fexample.org%2Ftopic</code>,
+        and the IRI template [[!RFC6570]] to retrieve Quad Pattern Fragments of the dataset is
+        <code>http://example.org/example{?s,p,o,g}</code>.
+        It also assumes that the parameter names of
+        <var>subject</var>, <var>predicate</var>, <var>object</var>, and <var>graph</var>
+        are respectively <code>s</code>, <code>p</code>, <code>o</code>, and <code>g</code>.
+		This dataset IRI, fragment (or fragment page) IRI, template and mapping MUST be adjusted for each fragments server to have a fitting configuration.
+		The control form MUST be attached to the <em>dataset</em> since the form filters the dataset, and not the fragment.
+		The <em>fragment</em> MUST be declared as a subset of the dataset such that their relation becomes apparent.
+      </p>
+      <p>
+		  These hypermedia controls generally accept strings as input.
+		  The conversion of IRIs, literals, and variables to strings is specified by <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#controls">Triple Pattern Fragments</a>.
+      </p>
+
+      <p>
+        If the RDF syntax supports multiple graphs,
+        control triples MUST be serialized to a non-default graph.
+        This non-default graph MUST be explicitly related to the Quad Pattern Fragment using the <code>foaf:primaryTopic</code> predicate,
+        so clients can interpret what resource this metadata belongs to. This relating triple must be present in controls graph.
+        This graph SHOULD be the same as the graph containing the metadata
+      </p>
+	  
+	  <p>
+		  Clients that use these controls MAY omit any of the parameters. A control parameter that is not present MUST have the same effect as that parameter being the empty string, they MUST be seen as a wildcard being able to match any value for that parameter.
+	  </p>
+	  
+	  <aside class="example" title="Interpretation of omitted control parameters">
+		  <p>
+		  	The following IRI's have the same interpretation, they select all possible quads matching the quad pattern <code>{ a ?p b c }</code>.
+			They are based on the controls from <a href="#controls"></a>.
+			<ul>
+				<li><code>http://example.org/dataset?s=a&p=&o=b&g=c</code></li>
+				<li><code>http://example.org/dataset?s=a&o=b&g=c"</code></li>
+			</ul>
+		  </p>
+	  </aside>
+	  
+	  <p class="note">
+		  Not providing the graph parameter or giving it an empty string value selects quads with any named graph, i.e., triples from all possible graphs in the dataset.
+		  To be able to select triples from the default graph, its IRI must be entered as value in the graph parameter, which is identified as metadata by the <code>sd:defaultGraph</code> predicate.
+	  </p>
+	  
+    </section>
+
+    <section id="paging">
+      <h3>Paging</h3>
+      <p>
+        Quad Pattern Fragments SHOULD be paged to avoid overly large responses.
+        A <dfn title="Quad Pattern Fragment page">page</dfn> of a Quad Pattern Fragment
+        has the same characteristics as a <a href="http://www.hydra-cg.com/spec/latest/triple-pattern-fragments/#paging">Triple Pattern Fragment page</a>.
+      </p>
+    </section>
+  </section>
+</body>
+</html>
