@@ -1017,6 +1017,67 @@
       }
       -->
     </pre>
+
+    <p>Due to fact that hydra is on top of an RDF, which is effectively a graph,
+      it may happen that a related resource (the one on the right-hand side of the
+      relation) may not be fully described in the resource's payload. In case of
+      an <i>IriTemplate</i> a client could find out a related resource should be
+      a resource carrying a <i>template</i> predicate, but no additional
+      description is available. These rules should be considered when working with
+      <i>IriTemplate</i>s (and other hypermedia resources in general):
+    </p>
+
+    <ul>
+      <li>in case of a right-hand side related hypermedia resource does not have all
+        the necessary statements for which it is a subject, client SHOULD look in the
+        API documentation for more details.</li>
+      <li>in case the mentioned resource after consulting an API documentation still
+        does not have all the necessary statements for which it is a subject and both
+        mentioned resource's Url and Url of the initially obtained resource has the
+        same scheme and authority (by means of RFC 3986 sections 3.1 and 3.2), client
+        SHOULD dereference that Url</li>
+      <li>in case the mentioned resource still does not have all the necessary
+        statements for which it is a subject, client SHOULD either ignore whole
+        statement (i.e. for display purposes) or throw an exception (i.e. an
+        Iri template is about to be resolved and dereferenced)</li>
+    </ul>
+
+    <p>Example of each of the situations are as follows:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="IriTemplate details extraction">
+      <!--
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+      Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "http://api.example.com/people",
+          "@type": "hydra:Collection",
+          "api:personByName": "api:PersonByNameTemplate"
+        }, {
+          "@id": "http://api.example.com/events",
+          "@type": "hydra:Collection",
+          "api:eventByName": "api:EventByNameTemplate"
+        }
+      }
+
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "api:PersonByNameTemplate",
+          "@type": "hydra:IriTemplate",
+          "template": "http://api.example.com/people/{name}",
+          ...
+        }]
+      }
+      -->
+    </pre>
   </section>
 
   <section>
