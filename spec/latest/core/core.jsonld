@@ -194,7 +194,7 @@
       "range": "xsd:boolean",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
       "vs:term_status": "testing"
-`    },
+    },
     {
       "@id": "hydra:readable",
       "@type": "rdf:Property",
