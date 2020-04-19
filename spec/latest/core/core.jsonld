@@ -98,7 +98,7 @@
       "subClassOf": "rdfs:Resource",
       "label": "Hydra Resource",
       "comment": "The class of dereferenceable resources.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Class",
@@ -106,7 +106,7 @@
       "subClassOf": [ "hydra:Resource", "rdfs:Class" ],
       "label": "Hydra Class",
       "comment": "The class of Hydra classes. Hydra classes and their instances are dereferenceable resources.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Link",
@@ -114,7 +114,7 @@
       "subClassOf": [ "hydra:Resource", "rdf:Property" ],
       "label": "Link",
       "comment": "The class of properties representing links.",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:apiDocumentation",
@@ -123,7 +123,7 @@
       "comment": "A link to the API documentation",
       "range": "hydra:ApiDocumentation",
       "domain": "hydra:Resource",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:ApiDocumentation",
@@ -131,7 +131,7 @@
       "subClassOf": "hydra:Resource",
       "label": "ApiDocumentation",
       "comment": "The Hydra API documentation class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:entrypoint",
@@ -140,7 +140,7 @@
       "comment": "A link to main entry point of the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Resource",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:supportedClass",
@@ -149,7 +149,7 @@
       "comment": "A class known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Class",
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:possibleStatus",
@@ -184,7 +184,7 @@
       "comment": "A property",
       "range": "rdf:Property",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
-      "vs:term_status": "stable"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:required",
@@ -193,8 +193,8 @@
       "comment": "True if the property is required, false otherwise.",
       "range": "xsd:boolean",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
-      "vs:term_status": "stable"
-    },
+      "vs:term_status": "testing"
+`    },
     {
       "@id": "hydra:readable",
       "@type": "rdf:Property",
