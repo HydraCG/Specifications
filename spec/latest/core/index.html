@@ -601,6 +601,28 @@
       for the operation invocation.
     </pre>
 
+    <p>To wrap up everything altogether, it is also possible to attach atomic
+      operations supported by, well, supported property itself. This might
+      come in handy for scenarios, when resource can be partially modified.
+      It can be achieved with two approaches, both having advantages and
+      disadvantages.</p>
+
+    <p>First approach would involve adding a <i>supportedOperation</i> to the
+      intermediate structure of <i>SupportedProperty</i>.
+      This way prevents from leaking API specific features from the API itself
+      to i.e. externally defined properties. Data aggregators won't assume that
+      each instance with a given property could have such an operation.</p>
+
+    <p>Another approach would require the API to elevate a specific property
+      to <i>Link</i>, which can accept a <i>supportedOperation</i>. This
+      is more intuitive in APIs operating with internally used vocabularies
+      where assumption that every instance with that very specific property
+      has the operation attached available.</p>
+
+    <p>Direct usage of <i>supportedOperation</i> on <i>rdf:Property</i>
+      without elevating it to the <i>Link</i> SHOULD NOT be implemented as clients
+      may not discover such a construct correctly.</p>
+
     <p>These are the simple example scenarios and possible usages are not
       limited to those described above.</p>
 
