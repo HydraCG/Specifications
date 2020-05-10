@@ -545,6 +545,36 @@
       "vs:term_status": "testing"
     },
     {
+      "@id": "hydra:resolveRelativeTo",
+      "@type": "rdf:Property",
+      "label": "relative Uri resolution",
+      "domain": "hydra:IriTemplate",
+      "range": "hydra:BaseUriSource",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:BaseUriSource",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "Base Uri source",
+      "comment": "Provides a base abstract for base Uri source for Iri template resolution.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:Rfc3986Based",
+      "@type": "hydra:BaseUriSource",
+      "label": "RFC 3986 based",
+      "comment": "States that the base Uri should be established using RFC 3986 algorithm.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:LinkContext",
+      "@type": "hydra:BaseUriSource",
+      "label": "Link context",
+      "comment": "States that the base Uri should be established via a link context.",
+      "vs:term_status": "testing"
+    },
+    {
       "@id": "hydra:offset",
       "@type": "rdf:Property",
       "label": "skip",

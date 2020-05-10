@@ -1039,6 +1039,44 @@
       }
       -->
     </pre>
+
+    <p>Iri expansion should be performed with respect to the specification
+      behind the iri template type (which is RFC 6570 by default), and the
+      product of this process SHOULD be an Iri. In may happen that this
+      product is a relative Uri. In such a case client by default SHOULD
+      stick to RFC 3986. It is due to fact that most RDF serialization
+      allowing other that absolute Iris will behave that way and the result
+      of Iri template expansion should be compliant. Still, it may be
+      preferred to use other base Uri for the expansion process, which
+      makes a <i>resolveRelativeTo</i> term useful. It allows to switch the
+      Iri template expansion algorithm so the base Uri is established using
+      current link context, which is a subject of the relation pointing to
+      <i>IriTemplate</i> instance. In case that subject is a relative Uri,
+      default behavior SHOULD be used as fallback.</p>
+
+    <p>The example below allows to hook the product of an Iri template
+      expansion to the <i>http://api.example.com/an-issue/</i> resource
+      as it's base Uri, which further enables the <i>some:operation</i> to
+      be moved to i.e. Api documentation level rather to inline it.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Custom base Uri resolution for an Iri template">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/an-issue/",
+        "@type": "Collection",
+        "some:operation": {
+          "@type": "IriTemplate",
+          "template": "/{id}",
+          "resolveRelativeTo": "LinkContext",
+          "variable": "id",
+          "mapping": {...}
+        }
+      }
+      -->
+    </pre>
   </section>
 
   <section>
