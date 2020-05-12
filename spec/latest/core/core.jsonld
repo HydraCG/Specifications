@@ -545,7 +545,7 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:resolveRelativeTo",
+      "@id": "hydra:resolveRelativeUsing",
       "@type": "rdf:Property",
       "label": "relative Uri resolution",
       "domain": "hydra:IriTemplate",
@@ -561,17 +561,17 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:Rfc3986Based",
+      "@id": "hydra:Rfc3986",
       "@type": "hydra:BaseUriSource",
       "label": "RFC 3986 based",
-      "comment": "States that the base Uri should be established using RFC 3986 algorithm.",
+      "comment": "States that the base Uri should be established using RFC 3986 reference resolution algorithm specified in section 5.",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:LinkContext",
       "@type": "hydra:BaseUriSource",
       "label": "Link context",
-      "comment": "States that the base Uri should be established via a link context.",
+      "comment": "States that the link's context IRI, as defined in RFC 5988, should be used as the base Uri",
       "vs:term_status": "testing"
     },
     {
