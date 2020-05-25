@@ -1040,24 +1040,22 @@
       -->
     </pre>
 
-    <p>Iri expansion should be performed with respect to the specification
-      behind the iri template type (which is RFC 6570 by default), and the
-      product of this process SHOULD be an Iri. In may happen that this
-      product is a relative Uri. In such a case client by default SHOULD
-      stick to RFC 3986. It is due to fact that most RDF serialization
-      allowing other that absolute Iris will behave that way and the result
-      of Iri template expansion should be compliant. Still, it may be
-      preferred to use other base Uri for the expansion process, which
+    <p>IRI expansion should be performed with respect to the specification
+      behind the IRI template type (RFC 6570 by default), and the product
+      of this process SHOULD be an IRI. When the produced IRI is relative,
+      a case client SHOULD stick to RFC 3986 sections 5.1.3 and 5.1.4 to be compatible
+      with most RDF serializations that support relative IRIs. Still, it may be
+      preferred to use another base URI for the expansion process, which
       makes a <i>resolveRelativeTo</i> term useful. It allows to switch the
-      Iri template expansion algorithm so the base Uri is established using
-      current link context, which is a subject of the relation pointing to
-      <i>IriTemplate</i> instance. In case that subject is a relative Uri,
+      IRI template expansion algorithm so the base URI is established using
+      current link context, which is a subject of the relation pointing to an
+      <i>IriTemplate</i> instance. In case that subject is a relative URI,
       default behavior SHOULD be used as fallback.</p>
 
-    <p>The example below allows to hook the product of an Iri template
-      expansion to the <i>http://api.example.com/an-issue/</i> resource
-      as it's base Uri, which further enables the <i>some:operation</i> to
-      be moved to i.e. Api documentation level rather to inline it.</p>
+    <p>The example below allows to make the product of an IRI template
+      expansion relative to the <i>http://api.example.com/an-issue/</i> resource
+      by using it as its base URI, which further enables the <i>some:operation</i> to
+      be moved to i.e. API documentation level rather to inline it.</p>
 
     <pre class="example nohighlight"
          data-transform="updateExample"
