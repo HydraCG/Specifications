@@ -571,7 +571,7 @@
       names. Client SHOULD apply respective header semantics when creating
       or receiving a request natural for the protocol in use.</p>
 
-    <pre class="example nohighlight" data-transform="returnsHeader"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Making a use of a returned header">
       <!--
       {
@@ -594,12 +594,12 @@
         ]
       }
       -->
+    </pre>
 
-      The example above enable an HTTP client to prepare a proper cross-site
+    <p>The example above enable an HTTP client to prepare a proper cross-site
       pre-flight request so the server exposes enlisted headers for the client.
       The client is also aware of the user authentication requirement necessary
-      for the operation invocation.
-    </pre>
+      for the operation invocation.</p>
 
     <p>To wrap up everything altogether, it is also possible to attach atomic
       operations supported by, well, supported property itself. This might
@@ -649,10 +649,64 @@
 
     <p>Aforementioned <i>title</i> and <i>description</i> SHOULD take precedence
       over standard <i>rdfs:label</i> and <i>rdfs:comment</i>.</p>
+
+    <p>There is one more feature related to how Linked Data works. Consider the
+      example below written in turtle syntax:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph">
+      <!--
+      # An example API documentation itself with all the standard bits
+      @base <http://some.app/> .
+      @prefix api: <http://some.api/> .
+      @prefix ex: <http://ontology.example/> .
+      @prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+      @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+      <api>
+        a hydra:ApiDocumentation ;
+        hydra:supportedClass api:ClassOne, api:ClassTwo .
+
+      # Anything else
+      ex:SomeType a rdfs:Class .
+      -->
+    </pre>
+
+    <p>and how it could be transformed with JSON-LD framing process:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph continued">
+      <!--
+      {
+        "@context": {  },
+        "@graph": [
+          {
+            "@id": "http://some.app/api",
+            "@type": "hydra:ApiDocumentation",
+            "hydra:supportedClass": [
+              {
+                "@id": "api:ClassTwo"
+              },
+              {
+                "@id": "api:ClassOne"
+              }
+            ]
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>As you can see, additional details about <i>ex:SomeType</i> went
+      missing, while this shouldn't happen. The fact that the IRI mentioned
+      is an <i>rdfs:Class</i> may be meaningful for a correct interpretation
+      of the received payload and this is a sole reason of why a Client
+      SHOULD NOT disregard other parts of the payload that are not directly
+      related to the API documentation or other hypermedia controls.</p>
   </section>
 
   <section>
-    <a name="discovering-api"></a><h3>Discovering a Hydra-powered Web API</h3>
+    <h3>Discovering a Hydra-powered Web API</h3>
 
     <p>The first step when trying to access a Web API is to find an entry
       point. Typically, this is done by looking for documentation on the
