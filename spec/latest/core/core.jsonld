@@ -97,15 +97,15 @@
       "@type": "hydra:Class",
       "subClassOf": "rdfs:Resource",
       "label": "Hydra Resource",
-      "comment": "The class of dereferenceable resources.",
+      "comment": "The class of dereferenceable resources by means a client can at least try to obtain a resource but it still should verify received payloads.",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Class",
       "@type": [ "hydra:Resource", "rdfs:Class" ],
-      "subClassOf": [ "hydra:Resource", "rdfs:Class" ],
+      "subClassOf": [ "rdfs:Class" ],
       "label": "Hydra Class",
-      "comment": "The class of Hydra classes. Hydra classes and their instances are dereferenceable resources.",
+      "comment": "The class of Hydra classes.",
       "vs:term_status": "testing"
     },
     {
@@ -148,7 +148,7 @@
       "label": "supported classes",
       "comment": "A class known to be supported by the Web API",
       "domain": "hydra:ApiDocumentation",
-      "range": "hydra:Class",
+      "range": "rdfs:Class",
       "vs:term_status": "testing"
     },
     {
@@ -165,14 +165,14 @@
       "@type": "hydra:Link",
       "label": "supported properties",
       "comment": "The properties known to be supported by a Hydra class",
-      "domain": "hydra:Class",
+      "domain": "rdfs:Class",
       "range": "hydra:SupportedProperty",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:SupportedProperty",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "Supported Property",
       "comment": "A property known to be supported by a Hydra class.",
       "vs:term_status": "testing"
@@ -219,7 +219,7 @@
       "label": "supported operation",
       "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
       "range": "hydra:Operation",
-      "domainIncludes": ["hydra:Class", "hydra:Link", "hydra:TemplatedLink", "hydra:SupportedProperty"],
+      "domainIncludes": ["rdfs:Class", "hydra:Class", "hydra:Link", "hydra:TemplatedLink", "hydra:SupportedProperty"],
       "vs:term_status": "testing"
     },
     {
@@ -234,7 +234,7 @@
     {
       "@id": "hydra:Operation",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "Operation",
       "comment": "An operation.",
       "vs:term_status": "testing"
@@ -254,8 +254,8 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "hydra:Resource",
-      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
+      "range": "rdfs:Resource",
+      "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
@@ -264,14 +264,14 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "hydra:Resource",
-      "rangeIncludes": ["hydra:Resource", "hydra:Class"],
+      "range": "rdfs:Resource",
+      "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Status",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "Status code description",
       "comment": "Additional information about a status code that might be returned.",
       "vs:term_status": "testing"
@@ -340,7 +340,7 @@
       "@type": "hydra:Link",
       "label": "collection",
       "comment": "Collections somehow related to this resource.",
-      "domain": "hydra:Resource",
+      "domain": "rdfs:Resource",
       "range": "hydra:Collection",
       "vs:term_status": "testing"
     },
@@ -369,7 +369,7 @@
       "label": "member",
       "comment": "A member of the collection",
       "domain": "hydra:Collection",
-      "range": "hydra:Resource",
+      "range": "rdfs:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -377,8 +377,8 @@
       "@type": "hydra:Link",
       "label": "view",
       "comment": "A specific view of a resource.",
-      "domain": "hydra:Resource",
-      "range": "hydra:Resource",
+      "domain": "rdfs:Resource",
+      "range": "rdfs:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -463,7 +463,7 @@
     {
       "@id": "hydra:IriTemplate",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
       "vs:term_status": "testing"
@@ -499,7 +499,7 @@
     {
       "@id": "hydra:VariableRepresentation",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "VariableRepresentation",
       "comment": "A representation specifies how to serialize variable values into strings.",
       "vs:term_status": "testing"
@@ -530,7 +530,7 @@
     {
       "@id": "hydra:IriTemplateMapping",
       "@type": "hydra:Class",
-      "subClassOf": "hydra:Resource",
+      "subClassOf": "rdfs:Resource",
       "label": "IriTemplateMapping",
       "comment": "A mapping from an IRI template variable to a property.",
       "vs:term_status": "testing"
