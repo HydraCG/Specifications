@@ -251,7 +251,6 @@
       "label": "expects",
       "comment": "The information expected by the Web API.",
       "domain": "hydra:Operation",
-      "range": "rdfs:Resource",
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "vs:term_status": "testing"
     },
@@ -261,7 +260,6 @@
       "label": "returns",
       "comment": "The information returned by the Web API on success",
       "domain": "hydra:Operation",
-      "range": "rdfs:Resource",
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "vs:term_status": "testing"
     },
@@ -364,7 +362,6 @@
       "label": "member",
       "comment": "A member of the collection",
       "domain": "hydra:Collection",
-      "range": "rdfs:Resource",
       "vs:term_status": "testing"
     },
     {
@@ -372,8 +369,6 @@
       "@type": "hydra:Link",
       "label": "view",
       "comment": "A specific view of a resource.",
-      "domain": "rdfs:Resource",
-      "range": "rdfs:Resource",
       "vs:term_status": "testing"
     },
     {
