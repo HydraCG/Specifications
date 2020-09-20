@@ -571,7 +571,7 @@
       names. Client SHOULD apply respective header semantics when creating
       or receiving a request natural for the protocol in use.</p>
 
-    <pre class="example nohighlight" data-transform="returnsHeader"
+    <pre class="example nohighlight" data-transform="updateExample"
          title="Making a use of a returned header">
       <!--
       {
@@ -594,12 +594,12 @@
         ]
       }
       -->
+    </pre>
 
-      The example above enable an HTTP client to prepare a proper cross-site
+    <p>The example above enable an HTTP client to prepare a proper cross-site
       pre-flight request so the server exposes enlisted headers for the client.
       The client is also aware of the user authentication requirement necessary
-      for the operation invocation.
-    </pre>
+      for the operation invocation.</p>
 
     <p>To wrap up everything altogether, it is also possible to attach atomic
       operations supported by, well, supported property itself. This might
@@ -649,10 +649,64 @@
 
     <p>Aforementioned <i>title</i> and <i>description</i> SHOULD take precedence
       over standard <i>rdfs:label</i> and <i>rdfs:comment</i>.</p>
+
+    <p>There is one more feature related to how Linked Data works. Consider the
+      example below written in turtle syntax:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph">
+      <!--
+      # An example API documentation itself with all the standard bits
+      @base <http://some.app/> .
+      @prefix api: <http://some.api/> .
+      @prefix ex: <http://ontology.example/> .
+      @prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+      @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+      <api>
+        a hydra:ApiDocumentation ;
+        hydra:supportedClass api:ClassOne, api:ClassTwo .
+
+      # Anything else
+      ex:SomeType a rdfs:Class .
+      -->
+    </pre>
+
+    <p>and how it could be transformed with JSON-LD framing process:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph continued">
+      <!--
+      {
+        "@context": {  },
+        "@graph": [
+          {
+            "@id": "http://some.app/api",
+            "@type": "hydra:ApiDocumentation",
+            "hydra:supportedClass": [
+              {
+                "@id": "api:ClassTwo"
+              },
+              {
+                "@id": "api:ClassOne"
+              }
+            ]
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>As you can see, additional details about <i>ex:SomeType</i> went
+      missing, while this shouldn't happen. The fact that the IRI mentioned
+      is an <i>rdfs:Class</i> may be meaningful for a correct interpretation
+      of the received payload and this is a sole reason of why a Client
+      SHOULD NOT disregard other parts of the payload that are not directly
+      related to the API documentation or other hypermedia controls.</p>
   </section>
 
   <section>
-    <a name="discovering-api"></a><h3>Discovering a Hydra-powered Web API</h3>
+    <h3>Discovering a Hydra-powered Web API</h3>
 
     <p>The first step when trying to access a Web API is to find an entry
       point. Typically, this is done by looking for documentation on the
@@ -1040,6 +1094,79 @@
       -->
     </pre>
 
+    <p>Due to fact that hydra is on top of an RDF, which is a graph,
+      it may happen that a related resource (an object of the relation)
+      may not be fully described in the resource's payload. In case of
+      an <i>IriTemplate</i> expected as a related resource, client may
+      discover no additional statements describing it. These rules should
+      be considered when working with <i>IriTemplate</i>s (and other
+      hypermedia resources in general):
+    </p>
+
+    <ul>
+      <li>in case of an object expected to be a hypermedia resource does not have all
+        the necessary statements for which it is a subject, client SHOULD look in the
+        API documentation for more details</li>
+      <li>in case the mentioned object, after consulting an API documentation, still
+        does not have all the necessary statements for which it is a subject and both
+        mentioned object's Url and Url of the initially obtained resource has the
+        same scheme and authority (by means of RFC 3986 sections 3.1 and 3.2), client
+        SHOULD dereference that Url. If the resource does not have the same scheme and
+        authority the client MAY choose to derefernce it (for example if the resource
+        originates from another API well-known to the client)</li>
+      <li>in case the mentioned object, still does not have all the necessary
+        statements for which it is a subject (i.e. de-referencing it failed
+        or statements are missing), client SHOULD either ignore whole
+        statement (i.e. for display purposes) or throw an exception (i.e. an
+        Iri template is about to be resolved and de-referenced)</li>
+    </ul>
+
+    <p>Example of each of the situations are as follows:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="IriTemplate details extraction">
+      <!--
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+      Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "http://api.example.com/people",
+          "@type": "hydra:Collection",
+          "api:personByName": "api:PersonByNameTemplate"
+        }, {
+          "@id": "http://api.example.com/events",
+          "@type": "hydra:Collection",
+          "api:eventByName": "api:EventByNameTemplate"
+        }
+      }
+
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "api:PersonByNameTemplate",
+          "@type": "hydra:IriTemplate",
+          "template": "http://api.example.com/people/{name}",
+          ...
+        }]
+      }
+      -->
+    </pre>
+
+    <p>where</p>
+
+    <ul>
+      <li>resource <i>http://api.example.com/people</i> should have an <i>IriTemplate</i> available
+        as there is a complete definition of the template available at <i>http://api.example.com/doc/</i>.</li>
+      <li>resource <i>http://api.example.com/events</i> should not have an Iri template exposed as there
+        are no additional details available, neither in the initial resources' payload nor in the API documentation.</li>
+    </ul>
+
     <p>IRI expansion should be performed with respect to the specification
       behind the IRI template type (RFC 6570 by default), and the product
       of this process SHOULD be an IRI. When the produced IRI is relative,
@@ -1075,7 +1202,7 @@
       }
       -->
     </pre>
-  </section>
+</section>
 
   <section>
     <h3>Description of HTTP Status Codes and Errors</h3>
