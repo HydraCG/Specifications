@@ -1093,6 +1093,79 @@
       }
       -->
     </pre>
+
+    <p>Due to fact that hydra is on top of an RDF, which is a graph,
+      it may happen that a related resource (an object of the relation)
+      may not be fully described in the resource's payload. In case of
+      an <i>IriTemplate</i> expected as a related resource, client may
+      discover no additional statements describing it. These rules should
+      be considered when working with <i>IriTemplate</i>s (and other
+      hypermedia resources in general):
+    </p>
+
+    <ul>
+      <li>in case of an object expected to be a hypermedia resource does not have all
+        the necessary statements for which it is a subject, client SHOULD look in the
+        API documentation for more details</li>
+      <li>in case the mentioned object, after consulting an API documentation, still
+        does not have all the necessary statements for which it is a subject and both
+        mentioned object's Url and Url of the initially obtained resource has the
+        same scheme and authority (by means of RFC 3986 sections 3.1 and 3.2), client
+        SHOULD dereference that Url. If the resource does not have the same scheme and
+        authority the client MAY choose to derefernce it (for example if the resource
+        originates from another API well-known to the client)</li>
+      <li>in case the mentioned object, still does not have all the necessary
+        statements for which it is a subject (i.e. de-referencing it failed
+        or statements are missing), client SHOULD either ignore whole
+        statement (i.e. for display purposes) or throw an exception (i.e. an
+        Iri template is about to be resolved and de-referenced)</li>
+    </ul>
+
+    <p>Example of each of the situations are as follows:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="IriTemplate details extraction">
+      <!--
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+      Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "http://api.example.com/people",
+          "@type": "hydra:Collection",
+          "api:personByName": "api:PersonByNameTemplate"
+        }, {
+          "@id": "http://api.example.com/events",
+          "@type": "hydra:Collection",
+          "api:eventByName": "api:EventByNameTemplate"
+        }
+      }
+
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "api:PersonByNameTemplate",
+          "@type": "hydra:IriTemplate",
+          "template": "http://api.example.com/people/{name}",
+          ...
+        }]
+      }
+      -->
+    </pre>
+
+    <p>where</p>
+
+    <ul>
+      <li>resource <i>http://api.example.com/people</i> should have an <i>IriTemplate</i> available
+        as there is a complete definition of the template available at <i>http://api.example.com/doc/</i>.</li>
+      <li>resource <i>http://api.example.com/events</i> should not have an Iri template exposed as there
+        are no additional details available, neither in the initial resources' payload nor in the API documentation.</li>
+    </ul>
   </section>
 
   <section>
