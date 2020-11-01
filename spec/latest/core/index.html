@@ -905,9 +905,9 @@
   </section>
 
   <section>
-    <h4>"Manages block"</h4>
+    <h4>Member assertions</h4>
 
-    <p>A <i>memberAssertion</i> block is a way to declare additional, implicit statements about
+    <p>A <i>memberAssertion</i> is a way to declare additional, implicit statements about
       members of a <a href="#collections">collection</a>. Statements which may otherwise
       be missing from the respective member resources inlined in a collection's
       representation.</p>
@@ -944,9 +944,9 @@
       -->
     </pre>
 
-    <p>A <i>memberAssertion</i> block MUST use two and only two of the <code>subject</code>, <code>property</code>
-      and <code>object</code> predicates. There MAY be more than one such blocks,
-      each expressing different relations between the collection members and other resources.</p>
+    <p>A <i>memberAssertion</i> MUST use two and only two of the <code>subject</code>, <code>property</code>
+      and <code>object</code> predicates. There <code>memberAssertion</code> predicate MAY have more than one
+      such blocks, each expressing different relations between the collection members and other resources.</p>
 
     <p class="note">It's important to point out that the <code>subject</code>, <code>property</code>
       and <code>object</code> predicates are defined within the Hydra namespace and are not

@@ -348,7 +348,7 @@
     },
     {
       "@id": "hydra:memberAssertion",
-      "label": "manages",
+      "label": "member assertion",
       "comment": "Semantics of each member provided by the collection.",
       "domain": "hydra:Collection",
       "vs:term_status": "testing"
