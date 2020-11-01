@@ -31,6 +31,7 @@
     "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
     "Error": "hydra:Error",
+    "errorCode": "hydra:errorCode",
     "Resource": "hydra:Resource",
     "operation": "hydra:operation",
     "Collection": "hydra:Collection",
@@ -319,6 +320,15 @@
       "subClassOf": "hydra:Status",
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:errorCode",
+      "@type": "rdf:Property",
+      "subPropertyOf": "hydra:statusCode",
+      "label": "error code",
+      "comment": "The HTTP status code that is considered an error",
+      "domain": "hydra:Error",
       "vs:term_status": "testing"
     },
     {
