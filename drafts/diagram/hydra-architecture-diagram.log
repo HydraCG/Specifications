@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2020.10.28)  28 OCT 2020 05:35
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2020.11.2)  2 NOV 2020 22:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -634,8 +634,8 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 ] (./hydra-architecture-diagram.aux) ) 
 Here is how much of TeX's memory you used:
  10083 strings out of 495029
- 193125 string characters out of 6181522
- 250962 words of memory out of 5000000
+ 193125 string characters out of 6181523
+ 250963 words of memory out of 5000000
  13114 multiletter control sequences out of 15000+600000
  7199 words of font info for 20 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
