@@ -1250,8 +1250,48 @@
       be given an identifier. When dereferenced, the <i>Error</i> resource can provide
       more detailed information or possible ways to resolve the problem, if applicable.<p/>
 
+    <p>Finally, server SHOULD provide error descriptions using an [[!RFC7807]] standard.
+      by using a <i>application/problem+json</i> response. When doing so server also MUST provide
+      an additional header pointing to either built-in Hydra <i>http://www.w3.org/ns/hydra/error</i>
+      context or any JSON-LD context that maps terms <i>type</i>, <i>title</i>, <i>detail</i>
+      and <i>instance</i> same way as the standard one.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
-         title="Using Hydra's Error class to describe errors">
+         title="RFC-7807 compatible error description">
+      <!--
+      HTTP/1.1 400 Bad Request
+      Content-Type: application/problem+json
+      Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#context"
+
+      {
+        "type": "https://example.com/probs/out-of-credit",
+        "@type": "http://www.w3.org/ns/hydra/core#Error",
+        "title": "You do not have enough credit.",
+        "detail": "Your current balance is 30, but that costs 50.",
+        "instance": "/account/12345/msgs/abc",
+        "balance": 30,
+        "accounts": ["/account/12345",
+                     "/account/67890"]
+      }
+      -->
+    </pre>
+
+    <p>While the built-in context makes the response fully compatible with the mentioned specification,
+      properties not defined in the standard Hydra's error context won't be visible for Hydra aware processor.
+      To overcome this, it is possible to declare an own context pointed the same way, that would combine standard
+      Hydra's error context and an additional JSON-LD context with either the <i>@vocab</i> or custom property mappings
+      telling the processor on how to interpret those custom error properties.</p>
+
+    <p>Resources provided may have an additional hint pointing to an <i>Error</i> type like in the example
+      above, but it is not mandatory to do so as all resources described with <i>application/problem+json</i>
+      are considered errors.</p>
+
+    <p>It is worth to mention that the <i>http://www.w3.org/ns/hydra/error</i> context does not map
+      the <i>status</i> property. It is due to possible discrepancies that may occur between actual status returned
+      and the status provided within the payload.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Non RFC-7807 compliant error description using raw Hydra JSON-LD representation.">
       <!--
       HTTP/1.1 400 Bad Request
       Content-Type: application/ld+json
@@ -1266,35 +1306,6 @@
       }
       -->
     </pre>
-
-    <p>It is also possible to provide an [[!RFC7807]] compatible</a> error description.
-      To do so, server can provide a <i>application/problem+json</i> response. Server also
-      MUST provide an additional header pointing to <i>http://www.w3.org/ns/hydra/error</i> context.</p>
-
-    <pre class="example nohighlight" data-transform="updateExample"
-         title="RFC-7807 compatible error description">
-      <!--
-      HTTP/1.1 400 Bad Request
-      Content-Type: application/problem+json
-      Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#context"
-
-      {
-        "type": "https://example.com/probs/out-of-credit",
-        "title": "You do not have enough credit.",
-        "detail": "Your current balance is 30, but that costs 50.",
-        "instance": "/account/12345/msgs/abc",
-        "balance": 30,
-        "accounts": ["/account/12345",
-                     "/account/67890"]
-      }
-      -->
-    </pre>
-
-    <p>While this approach makes the response fully compatible with the mentioned specification,
-      properties not defined in the standard Hydra's error context won't be visible for Hydra aware processor.
-      To overcome this, it is possible to declare own context pointed the same way, that would combine standard
-      Hydra's error context and an additional JSON-LD context with either the <i>@vocab</i> or custom property mappings
-      telling the processor on how to interpret those custom error properties.</p>
   </section>
 
   <section>

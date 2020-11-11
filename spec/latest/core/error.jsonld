@@ -1,11 +1,9 @@
 {
   "@context": {
-    "hydra": "http://www.w3.org/ns/hydra/core#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "type": "@type",
-    "title": "hydra:title",
-    "detail": "hydra:description",
-    "status": "hydra:errorCode",
+    "title": "rdfs:label",
+    "detail": "rdfs:comment",
     "instance": { "@id": "rdfs:seeAlso", "@type": "@id" }
   }
 }
