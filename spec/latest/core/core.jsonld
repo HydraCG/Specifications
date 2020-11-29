@@ -15,7 +15,7 @@
     "description": "hydra:description",
     "entrypoint": { "@id": "hydra:entrypoint", "@type": "@id" },
     "supportedClass": { "@id": "hydra:supportedClass", "@type": "@vocab" },
-    "Class": "hydra:Class",
+    "Class": "hydra:Class","@id": "hydra:Status",
     "supportedProperty": { "@id": "hydra:supportedProperty", "@type": "@id" },
     "SupportedProperty": "hydra:SupportedProperty",
     "property": { "@id": "hydra:property", "@type": "@vocab" },
@@ -283,10 +283,10 @@
       "@id": "hydra:statusCode",
       "@type": "rdf:Property",
       "label": "status code",
-      "comment": "The HTTP status code. It is not recommended to provide this predicate in direct responses.",
+      "comment": "The HTTP status code. It is fully optional and it may happen to be different to actual status code received.",
       "domain": "hydra:Status",
       "range": "xsd:integer",
-      "vs:term_status": "archaic"
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:title",
