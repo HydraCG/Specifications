@@ -1253,8 +1253,8 @@
     <p>Finally, the server SHOULD provide error descriptions using an [[!RFC7807]] standard
       by using an <i>application/problem+json</i> response. When doing so, the server also MUST provide
       an additional header pointing to either the built-in Hydra <i>http://www.w3.org/ns/hydra/error</i>
-      context or any JSON-LD context that maps the terms <i>type</i>, <i>title</i>, <i>detail</i>
-      and <i>instance</i> the same way as the standard one.</p>
+      context or any JSON-LD context that maps the terms <i>type</i>, <i>title</i>, <i>detail</i>,
+      <i>status</i> and <i>instance</i> the same way as the standard one.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="RFC-7807 compatible error description">
@@ -1279,16 +1279,15 @@
     <p>While the built-in context makes the response fully compatible with the mentioned specification,
       properties not defined in the standard Hydra's error context won't be visible for Hydra aware processors.
       To overcome this, it is possible to declare a custom context pointed the same way, that would combine standard
-      Hydra's error context and an additional JSON-LD context with either the <i>@vocab</i> or custom property mappings
-      telling the processor on how to interpret those custom error properties.</p>
+      Hydra's standard error context and an additional JSON-LD context with either the <i>@vocab</i>
+      or custom property mappings telling the processor on how to interpret those custom error properties.</p>
 
     <p>Resources provided may have an additional hint pointing to an <i>Error</i> type like in the example
       above, but it is not mandatory to do so as all resources described with <i>application/problem+json</i>
       are considered errors.</p>
 
-    <p>It is worth to mention that the <i>status</i> property is optional and while it should be the same as the
-      actual status received with the response, it may happen (i.e. due to proxy behavior) it will differ to the one
-      received from the protocol layer.</p>
+    <p>It is worth to mention that it may happen (i.e. due to proxy behavior) the value of the <i>status</i> property
+      will differ to the one received from the protocol layer.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Non RFC-7807 compliant error description using raw Hydra JSON-LD representation.">

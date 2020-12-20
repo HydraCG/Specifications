@@ -15,7 +15,7 @@
     "description": "hydra:description",
     "entrypoint": { "@id": "hydra:entrypoint", "@type": "@id" },
     "supportedClass": { "@id": "hydra:supportedClass", "@type": "@vocab" },
-    "Class": "hydra:Class","@id": "hydra:Status",
+    "Class": "hydra:Class",
     "supportedProperty": { "@id": "hydra:supportedProperty", "@type": "@id" },
     "SupportedProperty": "hydra:SupportedProperty",
     "property": { "@id": "hydra:property", "@type": "@vocab" },
@@ -283,7 +283,7 @@
       "@id": "hydra:statusCode",
       "@type": "rdf:Property",
       "label": "status code",
-      "comment": "The HTTP status code. It is fully optional and it may happen to be different to actual status code received.",
+      "comment": "The HTTP status code. Please note it may happen this value will be different to actual status code received.",
       "domain": "hydra:Status",
       "range": "xsd:integer",
       "vs:term_status": "testing"
