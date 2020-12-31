@@ -68,6 +68,7 @@
     "pageReference": { "@id": "hydra:pageReference" },
     "returnsHeader": { "@id": "hydra:returnsHeader", "@type": "xsd:string" },
     "expectsHeader": { "@id": "hydra:expectsHeader", "@type": "xsd:string" },
+    "extension": { "@id": "hydra:extension", "@type": "@id" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
     "comment": "rdfs:comment",
     "label": "rdfs:label",
@@ -625,6 +626,13 @@
       "comment": "Specification of the header expected by the operation.",
       "domain": "hydra:Operation",
       "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:extension",
+      "@type": "rdf:Property",
+      "label": "extension",
+      "comment": "Hint on what kind of extensions are in use.",
       "vs:term_status": "testing"
     }
   ]

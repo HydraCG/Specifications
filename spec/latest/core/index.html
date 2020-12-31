@@ -1287,6 +1287,37 @@
       to provide a custom page identifier (i.e. a GUID or a letter)
       instead of a number.</p>
   </section>
+
+  <section>
+    <h3>Extensions</h3>
+    <p>While Hydra Core Vocabulary allows to address many usage scenarios,
+      not every aspect of API behavior can be covered with it. This
+      applies especially to querying, resource projection or data structure
+      description. This is due to fact that Hydra was meant to be as light
+      as possible forcing to drop some of the features out of it; scope.</p>
+
+    <p>That is why there is a possibility of hinting a client on what kind
+      of extensions may be found or used in the received payloads.
+      After discovering a <i>extension</i> predicate wherever in the payload,
+      client can assume additional details are available described with
+      additional vocabularies.</p>
+
+    <p>It is up to the used vocabulary how these additional details should be
+      interpreted and in case client does not recognize these extensions,
+      additional details should be ignored and base Hydra interpretation
+      should be in force.</p>
+
+    <p>Server SHOULD NOT use extensions to add statements that are in
+      contradiction to base Hydra interpretation so the client is not confused.
+      Server also SHOULD keep multiple extensions describing adequate
+      knowledge in line regarding their description (i.e. data structure
+      descriptions in various vocabularies should not cause differences).</p>
+
+    <p>Client can express it's preferences through the <i>PREFER</i> header
+      by pointing the preferred extensions via IRIs. Server SHOULD implement
+      that header according to [[!RFC7240]] and implementers should proceed
+      with caution.</p>
+  </section>
 </section>
 
 <!-- <section>
