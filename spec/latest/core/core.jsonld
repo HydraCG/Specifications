@@ -633,6 +633,7 @@
       "@type": "rdf:Property",
       "label": "extension",
       "comment": "Hint on what kind of extensions are in use.",
+      "domain": "hydra:ApiDocumentation",
       "vs:term_status": "testing"
     }
   ]

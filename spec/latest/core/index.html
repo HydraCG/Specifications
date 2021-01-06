@@ -1294,11 +1294,11 @@
       not every aspect of API behavior can be covered with it. This
       applies especially to querying, resource projection or data structure
       description. This is due to fact that Hydra was meant to be as light
-      as possible forcing to drop some of the features out of it; scope.</p>
+      as possible forcing to drop some of the features out of its scope.</p>
 
     <p>That is why there is a possibility of hinting a client on what kind
       of extensions may be found or used in the received payloads.
-      After discovering a <i>extension</i> predicate wherever in the payload,
+      After discovering a <i>extension</i> predicate in the API documentation,
       client can assume additional details are available described with
       additional vocabularies.</p>
 
@@ -1309,14 +1309,28 @@
 
     <p>Server SHOULD NOT use extensions to add statements that are in
       contradiction to base Hydra interpretation so the client is not confused.
-      Server also SHOULD keep multiple extensions describing adequate
+      Server SHOULD also keep multiple extensions describing adequate
       knowledge in line regarding their description (i.e. data structure
       descriptions in various vocabularies should not cause differences).</p>
 
-    <p>Client can express it's preferences through the <i>PREFER</i> header
-      by pointing the preferred extensions via IRIs. Server SHOULD implement
-      that header according to [[!RFC7240]] and implementers should proceed
-      with caution.</p>
+    <p>Client can express its preferences through the <i>PREFER</i> header
+      by pointing the preferred extensions via IRIs as on the example below.
+      The expectation of <i>hydra.extension</i> should be followed by a
+      semicolon which then should be followed by an <i>iri</i> parameter
+      expressed as an extension's IRI enclosed within a double quotes.
+      Multiple preferences can be expressed by providing multiple
+      <i>PREFER</i> header values.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Hydra client extension preference.">
+      <!--
+      GET http://api.example.com/api/people
+      Prefer: hydra.extension; iri="http://schema.org/"
+      -->
+    </pre>
+
+    <p>Server SHOULD implement <i>PREFER</i> header handling according to
+      the [[!RFC7240]] and implementers should proceed with caution.</p>
   </section>
 </section>
 
