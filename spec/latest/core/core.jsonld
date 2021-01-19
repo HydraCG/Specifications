@@ -283,7 +283,7 @@
       "@id": "hydra:statusCode",
       "@type": "rdf:Property",
       "label": "status code",
-      "comment": "The HTTP status code",
+      "comment": "The HTTP status code. Please note it may happen this value will be different to actual status code received.",
       "domain": "hydra:Status",
       "range": "xsd:integer",
       "vs:term_status": "testing"
