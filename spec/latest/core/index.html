@@ -314,6 +314,13 @@
       <code>comments</code> property in the following example is intended
       to be dereferenced.</p>
 
+    <p class="note">It is recommended to dereference resources that are
+      within an API's domain. This may prevent possible issues with cross-site
+      scripting or obtaining resources which might have no meaning
+      to the client or such that the client would be unable to interpret.
+      Still, there is no formal prohibition of dereferencing resources
+      linked with well-known properties, e.g. <i>rdf:seeAlso</i>.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
          title="Using a property defined to be a hyperlink">
       <!--
@@ -490,7 +497,7 @@
             ****"property"****: "#property", ####// The property####
             ****"required"****: true, ####// Is the property required in a request to be valid?####
             ****"readable"****: false, ####// Can the client retrieve the property's value?####
-            ****"writeable"****: true ####// Can the client change the property's value?####
+            ****"writable"****: true ####// Can the client change the property's value?####
           }
         ]
       }
@@ -528,6 +535,15 @@
       user has the permission to delete the resource. Otherwise, the link
       would simply be hidden in the representation.</p>
 
+    <p>Example shown below describes the operation's expected and returned
+      value as a dereferencable resource (an RDF resource of a given class),
+      but the vocabulary is not limited to only those originating
+      from RDF and is enabled to other types of resources.
+      Please note that in case of multiple either returned or expected types
+      provided, client SHOULD assume the set includes any of the types,
+      but not limited to those types and client SHOULD interpret received
+      payload at runtime for possible discrepancies.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
          title="Documenting the supported operations of link properties">
       <!--
@@ -553,13 +569,177 @@
       -->
     </pre>
 
+    <p>In addition to expected/returned resources, it is also possible to
+      express similar features for headers with <i>returnsHeader</i> and
+      <i>expectsHeader</i> predicates which provides a simple set of header
+      names. Client SHOULD apply respective header semantics when creating
+      or receiving a request natural for the protocol in use.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Making a use of a returned header">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/#comments",
+        "@type": "Link",
+        "supportedOperation": [
+          {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Comment",
+            "returns": "http://api.example.com/doc/#Comment",
+            ****"returnsHeader"****: [
+              "Content-Type",
+              "Content-Length"],
+            ****"expectsHeader"****: [
+              "Authorization"
+            ]
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>The example above enable an HTTP client to prepare a proper cross-site
+      pre-flight request so the server exposes enlisted headers for the client.
+      The client is also aware of the user authentication requirement necessary
+      for the operation invocation.</p>
+
+    <p>For more complex scenarios it is also possible to expand selected header
+      specification with both name and possible values, i.e. when defining
+      expected <i>Content-Type</i> values of resources that can be uploaded.
+      In case multiple possible values are provided, client SHOULD assume
+      that the set includes any of the values, but not limited to those values
+      and client SHOULD interpret received payload at runtime for possible
+      discrepancies.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Making a use of a expected header values">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/#comments",
+        "@type": "Link",
+        "supportedOperation": [
+          {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "returns": "http://api.example.com/doc/#Comment",
+            ****"returnsHeader"****: [
+              { "headerName": "Content-Type", "possibleHeaderValue": ["text/turtle", "application/ld+json"] }
+              "Content-Length"],
+            ****"expectsHeader"****: [
+              "Authorization",
+              { "headerName": "Content-Type", "possibleHeaderValue": ["image/gif", "image/png"] }]
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>To wrap up everything altogether, it is also possible to attach atomic
+      operations supported by, well, supported property itself. This might
+      come in handy for scenarios, when resource can be partially modified.
+      It can be achieved with two approaches, both having advantages and
+      disadvantages.</p>
+
+    <p>First approach would involve adding a <i>supportedOperation</i> to the
+      intermediate structure of <i>SupportedProperty</i>.
+      This way prevents from leaking API specific features from the API itself
+      to i.e. externally defined properties. Data aggregators won't assume that
+      each instance with a given property could have such an operation.</p>
+
+    <p>Another approach would require the API to elevate a specific property
+      to <i>Link</i>, which can accept a <i>supportedOperation</i>. This
+      is more intuitive in APIs operating with internally used vocabularies
+      where assumption that every instance with that very specific property
+      has the operation attached available.</p>
+
+    <p>Direct usage of <i>supportedOperation</i> on <i>rdf:Property</i>
+      without elevating it to the <i>Link</i> SHOULD NOT be implemented as clients
+      may not discover such a construct correctly.</p>
+
+    <p>These are the simple example scenarios and possible usages are not
+      limited to those described above.</p>
+
     <p>Keep in mind that operations specified in an <i>ApiDocumentation</i>
       may fail at runtime as either resources or the <i>ApiDocumentation</i>
-      itself have changed since they have been retrieved. A simple strategy
-      to try to recover from such an error is to reload the
-      <i>ApiDocumentation</i>.</p>
+      itself have changed since they have been retrieved. Also operation details
+      like <i>returns</i> or <i>possibleStatus</i> may vary at runtime,
+      which means client SHOULD verify received payloads at runtime.
+      A simple strategy to try to recover from such a situation is to reload
+      the <i>ApiDocumentation</i> and redo all pre-computations that were
+      based on the <i>ApiDocumentation</i> (or at least those that lead
+      to the current failure). Another, simpler approach would require
+      an application to show an error message with option to return
+      to a previous or home screen.</p>
 
     <p class="issue">Describe the various properties of an operation.</p>
+
+    <p>Hydra also allows enriching both <i>ApiDocumentation</i> and
+      hypermedia controls with human-readable descriptions by applying
+      <i>title</i> and <i>description</i> (as shown in the examples above).
+      The former states a name of such a decorated element that could
+      be displayed as a label. The latter provides its description
+      to be presented i.e. as a hint.</p>
+
+    <p>Aforementioned <i>title</i> and <i>description</i> SHOULD take precedence
+      over standard <i>rdfs:label</i> and <i>rdfs:comment</i>.</p>
+
+    <p>There is one more feature related to how Linked Data works. Consider the
+      example below written in turtle syntax:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph">
+      <!--
+      # An example API documentation itself with all the standard bits
+      @base <http://some.app/> .
+      @prefix api: <http://some.api/> .
+      @prefix ex: <http://ontology.example/> .
+      @prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+      @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+      <api>
+        a hydra:ApiDocumentation ;
+        hydra:supportedClass api:ClassOne, api:ClassTwo .
+
+      # Anything else
+      ex:SomeType a rdfs:Class .
+      -->
+    </pre>
+
+    <p>and how it could be transformed with JSON-LD framing process:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="RDF as a graph continued">
+      <!--
+      {
+        "@context": {  },
+        "@graph": [
+          {
+            "@id": "http://some.app/api",
+            "@type": "hydra:ApiDocumentation",
+            "hydra:supportedClass": [
+              {
+                "@id": "api:ClassTwo"
+              },
+              {
+                "@id": "api:ClassOne"
+              }
+            ]
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>As you can see, additional details about <i>ex:SomeType</i> went
+      missing, while this shouldn't happen. The fact that the IRI mentioned
+      is an <i>rdfs:Class</i> may be meaningful for a correct interpretation
+      of the received payload and this is a sole reason of why a Client
+      SHOULD NOT disregard other parts of the payload that are not directly
+      related to the API documentation or other hypermedia controls.</p>
   </section>
 
   <section>
@@ -630,6 +810,52 @@
       using HTTP Link Headers is typically not necessary as the concepts
       used in responses from the API will dereference to their
       documentation.</p>
+
+    <p>In another scenario the <i>ApiDocumentation</i> would be discovered from
+      a bookmarked resource's representation. Api implementation SHOULD emit
+      the HTTP <i>Link</i> header on every Api response, making
+      the <i>ApiDocumentation</i> (and entry points it defines) discoverable
+      all the time.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Retrieving a Hydra API documentation from another Api response">
+      <!--
+      GET /api/items HTTP/1.1
+      Host: api.example.com
+      Accept: application/ld+json
+
+      ====================================
+
+      HTTP/1.1 200 OK
+      ...
+      Content-Type: application/ld+json
+      ****Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"****
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api/items",
+        "title": "Items collection",
+        ...
+      }
+      -->
+    </pre>
+  </section>
+
+  <section>
+    <h3>Api versions</h3>
+
+    <p>It is common to provide a separate API address after a breaking changes
+      update. This prevents current clients not to get broken as these may not
+      support these changes.</p>
+
+    <p>With hypermedia provided in each response payload, it may be unnecessary
+      to provide such an alternative API. This is due to fact the client follows
+      what the server provides and with proper margin for errors implemented
+      within that client, even breaking changes can be published on the fly.</p>
+
+    <p>Still, Hydra does neither have any special support for API versions, nor
+      prevents them. It's fully an implementers decision on if and how
+      to provide the API features.</p>
   </section>
 </section>
 
@@ -640,7 +866,7 @@
     described somewhere in the beginning?</p>
 
   <section>
-    <h3>Collections</h3>
+    <h3 name="collections">Collections</h3>
 
     <p>In many situations, it makes sense to expose resources that reference
       a set of somehow related resources. Results of a search query or
@@ -658,7 +884,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         ****"@type": "Collection"****,
-        ****"totalItems": "4980"****,
+        ****"totalItems": 4980****,
         ****"member"****: [
           {
             "@id": "/comments/429"
@@ -695,7 +921,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/an-issue/comments",
         "@type": "Collection",
-        "totalItems": "4980",
+        "totalItems": 4980,
         "member": [
           ####... a subset of the members of the Collection ...####
         ],
@@ -713,6 +939,55 @@
 
     <p class="issue">Say that all these properties are optional? What about
       <i>first</i> and, perhaps more interestingly, <i>last</i>?</p>
+  </section>
+
+  <section>
+    <h4>Member assertions</h4>
+
+    <p>A <i>memberAssertion</i> is a way to declare additional, implicit statements about
+      members of a <a href="#collections">collection</a>. Statements which may otherwise
+      be missing from the respective member resources inlined in a collection's
+      representation.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Manages block describes relation with another resource">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/an-issue/comments",
+        "@type": "Collection",
+        ****"memberAssertion": {
+          "subject": "http://api.example.com/an-issue",
+          "property": "http://api.example.com/vocab#comment"
+        }****,
+        "member": [
+          {
+            "@id": "/comments/429"
+          }
+        ]
+      }
+      -->
+    </pre>
+
+    <p>In the above example, adding a <code>memberAssertion</code> node to the collection instructs the
+      client that every member of this collection is linked to the <code>subject</code>
+      by the <code>property</code>. It could be written as a SPARQL triple pattern below, where
+      <code>?m</code> would be substituted by each member of the collection.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample">
+      <!--
+      <http://api.example.com/an-issue> <http://api.example.com/vocab#comment> ?m
+      -->
+    </pre>
+
+    <p>A <i>memberAssertion</i> MUST use two and only two of the <code>subject</code>, <code>property</code>
+      and <code>object</code> predicates. There <code>memberAssertion</code> predicate MAY have more than one
+      such blocks, each expressing different relations between the collection members and other resources.</p>
+
+    <p class="note">It's important to point out that the <code>subject</code>, <code>property</code>
+      and <code>object</code> predicates are defined within the Hydra namespace and are not
+      <a href="https://www.w3.org/TR/rdf-schema/"><code>rdf</code></a> terms.</p>
   </section>
 
   <section>
@@ -855,7 +1130,116 @@
       }
       -->
     </pre>
-  </section>
+
+    <p>Due to fact that hydra is on top of an RDF, which is a graph,
+      it may happen that a related resource (an object of the relation)
+      may not be fully described in the resource's payload. In case of
+      an <i>IriTemplate</i> expected as a related resource, client may
+      discover no additional statements describing it. These rules should
+      be considered when working with <i>IriTemplate</i>s (and other
+      hypermedia resources in general):
+    </p>
+
+    <ul>
+      <li>in case of an object expected to be a hypermedia resource does not have all
+        the necessary statements for which it is a subject, client SHOULD look in the
+        API documentation for more details</li>
+      <li>in case the mentioned object, after consulting an API documentation, still
+        does not have all the necessary statements for which it is a subject and both
+        mentioned object's Url and Url of the initially obtained resource has the
+        same scheme and authority (by means of RFC 3986 sections 3.1 and 3.2), client
+        SHOULD dereference that Url. If the resource does not have the same scheme and
+        authority the client MAY choose to derefernce it (for example if the resource
+        originates from another API well-known to the client)</li>
+      <li>in case the mentioned object, still does not have all the necessary
+        statements for which it is a subject (i.e. de-referencing it failed
+        or statements are missing), client SHOULD either ignore whole
+        statement (i.e. for display purposes) or throw an exception (i.e. an
+        Iri template is about to be resolved and de-referenced)</li>
+    </ul>
+
+    <p>Example of each of the situations are as follows:</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="IriTemplate details extraction">
+      <!--
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+      Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "http://api.example.com/people",
+          "@type": "hydra:Collection",
+          "api:personByName": "api:PersonByNameTemplate"
+        }, {
+          "@id": "http://api.example.com/events",
+          "@type": "hydra:Collection",
+          "api:eventByName": "api:EventByNameTemplate"
+        }
+      }
+
+      HTTP/1.1 200 OK
+      Content-Type: application/ld+json
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@graph": [{
+          "@id": "api:PersonByNameTemplate",
+          "@type": "hydra:IriTemplate",
+          "template": "http://api.example.com/people/{name}",
+          ...
+        }]
+      }
+      -->
+    </pre>
+
+    <p>where</p>
+
+    <ul>
+      <li>resource <i>http://api.example.com/people</i> should have an <i>IriTemplate</i> available
+        as there is a complete definition of the template available at <i>http://api.example.com/doc/</i>.</li>
+      <li>resource <i>http://api.example.com/events</i> should not have an Iri template exposed as there
+        are no additional details available, neither in the initial resources' payload nor in the API documentation.</li>
+    </ul>
+
+    <p>IRI expansion should be performed with respect to the specification
+      behind the IRI template type (RFC 6570 by default), and the product
+      of this process SHOULD be an IRI. When the produced IRI is relative,
+      a case client SHOULD stick to RFC 3986 sections 5.1.3 and 5.1.4 to be compatible
+      with most RDF serializations that support relative IRIs. Still, it may be
+      preferred to use another base URI for the expansion process, which
+      makes a <i>resolveRelativeTo</i> term useful. It allows to switch the
+      IRI template expansion algorithm so the base URI is established using
+      current link context, which is a subject of the relation pointing to an
+      <i>IriTemplate</i> instance. In case that subject is a relative URI,
+      default behavior SHOULD be used as fallback.</p>
+
+    <p>The example below allows to make the product of an IRI template
+      expansion relative to the <i>http://api.example.com/an-issue/</i> resource
+      by using it as its base URI, which further enables the <i>some:operation</i> to
+      be moved to i.e. API documentation level rather to inline it.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Custom base Uri resolution for an Iri template">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/an-issue/",
+        "@type": "Collection",
+        "some:operation": {
+          "@type": "IriTemplate",
+          "template": "/{id}",
+          "resolveRelativeTo": "LinkContext",
+          "variable": "id",
+          "mapping": {...}
+        }
+      }
+      -->
+    </pre>
+</section>
 
   <section>
     <h3>Description of HTTP Status Codes and Errors</h3>
@@ -875,7 +1259,7 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Status****",
-        ****"statusCode": 429****,
+        ****"possibleStatus": 429****,
         "title": "Too Many Requests",
         "description": "A maximum of 500 requests per hour and user is allowed.",
         ...
@@ -899,8 +1283,51 @@
       This provides an extensible framework to communicate error details to
       a client.</p>
 
+    <p>Furthermore, a <i>Status</i> or <i>Error</i> returned by the server can also
+      be given an identifier. When dereferenced, the <i>Error</i> resource can provide
+      more detailed information or possible ways to resolve the problem, if applicable.<p/>
+
+    <p>Finally, the server SHOULD provide error descriptions using an [[!RFC7807]] standard
+      by using an <i>application/problem+json</i> response. When doing so, the server also MUST provide
+      an additional header pointing to either the built-in Hydra <i>http://www.w3.org/ns/hydra/error</i>
+      context or any JSON-LD context that maps the terms <i>type</i>, <i>title</i>, <i>detail</i>,
+      <i>status</i> and <i>instance</i> the same way as the standard one.</p>
+
     <pre class="example nohighlight" data-transform="updateExample"
-         title="Using Hydra's Error class to describe errors">
+         title="RFC-7807 compatible error description">
+      <!--
+      HTTP/1.1 400 Bad Request
+      Content-Type: application/problem+json
+      Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#context"
+
+      {
+        "type": "https://example.com/probs/out-of-credit",
+        "@type": "http://www.w3.org/ns/hydra/core#Error",
+        "title": "You do not have enough credit.",
+        "detail": "Your current balance is 30, but that costs 50.",
+        "instance": "/account/12345/msgs/abc",
+        "balance": 30,
+        "accounts": ["/account/12345",
+                     "/account/67890"]
+      }
+      -->
+    </pre>
+
+    <p>While the built-in context makes the response fully compatible with the mentioned specification,
+      properties not defined in the standard Hydra's error context won't be visible for Hydra aware processors.
+      To overcome this, it is possible to declare a custom context pointed the same way, that would combine standard
+      Hydra's standard error context and an additional JSON-LD context with either the <i>@vocab</i>
+      or custom property mappings telling the processor on how to interpret those custom error properties.</p>
+
+    <p>Resources provided may have an additional hint pointing to an <i>Error</i> type like in the example
+      above, but it is not mandatory to do so as all resources described with <i>application/problem+json</i>
+      are considered <i>hydra:Error</i>.</p>
+
+    <p>It is worth to mention that it may happen (i.e. due to proxy behavior) the value of the <i>status</i> property
+      will differ to the one received from the protocol layer.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Non RFC-7807 compliant error description using raw Hydra JSON-LD representation.">
       <!--
       HTTP/1.1 400 Bad Request
       Content-Type: application/ld+json
@@ -908,12 +1335,33 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@type": "****Error****",
+        "@id": "http://api.example.com/error-details/1234",
         "title": "An error occurred",
         "description": "Typically, a specialization of this class is used in practice.",
         ...
       }
       -->
     </pre>
+  </section>
+
+  <section>
+    <h3>Client initiated pagination</h3>
+
+    <p>There are situations when a client would like to provide a specific
+      collection limitations, i.e. by providing query-language like member
+      offset and limit or some specific page index and number of members
+      per page. This is doable with <i>offset</i>/<i>limit</i> or
+      <i>pageIndex</i>/<i>limit</i> predicates.</p>
+
+    <p>With those, it is possible to bind a template variables mapped
+      with externally obtained values (i.e. user interaction) the same way
+      as with other mappings.</p>
+
+    <p>While the predicates enlisted above accepts non-negative integer
+      numbers, there is also a possibility of providing a custom page
+      reference expressed via <i>pageReference</i> predicate. It is possible
+      to provide a custom page identifier (i.e. a GUID or a letter)
+      instead of a number.</p>
   </section>
 </section>
 
