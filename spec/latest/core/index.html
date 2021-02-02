@@ -403,8 +403,8 @@
       it thus makes sense to reduce the response size by leveraging a
       remote context that can easily be cached by a client.</p>
 
-    <p>It is worth to mention that due to fact that hydra is on top of
-      an RDF, which is a graph, it may happen that a related resource
+    <p>It is worth mentioning that due to the fact that Hydra is built on
+      RDF, which is a graph, it may happen that a related resource
       (an object of the relation) may not be fully described in the
       resource's payload. In several circumstances (i.e. payload terms
       defined in <i>API documentation</i> sa described in
@@ -412,23 +412,23 @@
       or <i>IriTemplate</i> expected as a related resource as described in
       <a href="#templated-links">Templated Links</a>) client may
       discover no additional statements describing it. These rules should
-      be considered by the client in those scenarios:
+      be considered by the client in following scenarios:
     </p>
 
     <ul>
       <li>in case of an object expected to be a hypermedia resource does not have all
-        the necessary statements for which it is a subject, client SHOULD look in the
+        the necessary statements for which it is a subject, the client SHOULD look in the
         <i>API documentation</i> for more details</li>
       <li>in case the mentioned object, after consulting an <i>API documentation</i>, still
         does not have all the necessary statements for which it is a subject and both
         mentioned object's Url and Url of the initially obtained resource has the
-        same scheme and authority (by means of [[!RFC3986]] sections 3.1 and 3.2), client
+        same scheme and authority (by means of [[!RFC3986]] sections 3.1 and 3.2), the client
         SHOULD de-reference that Url. If the resource does not have the same scheme and
         authority the client MAY choose to de-reference it (for example if the resource
         originates from another API well-known to the client)</li>
-      <li>in case the mentioned object, still does not have all the necessary
+      <li>in case the mentioned object still does not have all the necessary
         statements for which it is a subject (i.e. de-referencing it failed
-        or statements are missing), client SHOULD either ignore whole
+        or statements are missing), the client SHOULD either ignore the whole
         statement (i.e. for display purposes) or throw an exception (i.e. an
         <i>IriTemplate</i> is about to be resolved and de-referenced)</li>
     </ul>
@@ -480,8 +480,8 @@
     </ul>
 
     <p>Keep in mind that any resource described by any hypermedia control
-      may fail at runtime due to various reasons. Also operation details
-      like <i>returns</i> or <i>possibleStatus</i> may vary at runtime,
+      may fail at runtime due to various reasons. Operation details
+      such as <i>returns</i> or <i>possibleStatus</i> may also vary at runtime,
       which means client SHOULD always verify received payloads at runtime.
       </p>
   </section>
@@ -708,7 +708,7 @@
     <p>These are the simple example scenarios and possible usages are not
       limited to those described above.</p>
 
-    <p>Due to fact an <i>ApiDocumentation</i> as all other resources may fail
+    <p>Due to the fact an <i>ApiDocumentation</i> as all other resources may fail
       at runtime, it is important to take countermeasures.
       A simple strategy to try to recover from such a situation would be to reload
       the <i>ApiDocumentation</i> and redo all pre-computations that were
