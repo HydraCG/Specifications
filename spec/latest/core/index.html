@@ -1290,20 +1290,20 @@
 
   <section>
     <h3>Extensions</h3>
-    <p>While Hydra Core Vocabulary allows to address many usage scenarios,
-      not every aspect of API behavior can be covered with it. This
+    <p>While Hydra Core Vocabulary allows addressing many usage scenarios,
+      not every aspect of API behavior can be covered. This
       applies especially to querying, resource projection or data structure
-      description. This is due to fact that Hydra was meant to be as light
+      description. This is due to fact that Hydra is meant to be as light
       as possible forcing to drop some of the features out of its scope.</p>
 
     <p>That is why there is a possibility of hinting a client on what kind
       of extensions may be found or used in the received payloads.
-      After discovering a <i>extension</i> predicate in the API documentation,
+      After discovering an <i>extension</i> predicate in the API documentation,
       client can assume additional details are available described with
-      additional vocabularies.</p>
+      complementary vocabularies.</p>
 
-    <p>It is up to the used vocabulary how these additional details should be
-      interpreted and in case client does not recognize these extensions,
+    <p>It is up to the used vocabulary to define how these additional details should be
+      interpreted. In case client does not recognize these extensions,
       additional details should be ignored and base Hydra interpretation
       should be in force.</p>
 
@@ -1313,13 +1313,13 @@
       knowledge in line regarding their description (i.e. data structure
       descriptions in various vocabularies should not cause differences).</p>
 
-    <p>Client can express its preferences through the <i>PREFER</i> header
+    <p>Client can express its preferences through the <i>Prefer</i> HTTP header
       by pointing the preferred extensions via IRIs as on the example below.
-      The expectation of <i>hydra.extension</i> should be followed by a
-      semicolon which then should be followed by an <i>iri</i> parameter
-      expressed as an extension's IRI enclosed within a double quotes.
-      Multiple preferences can be expressed by providing multiple
-      <i>PREFER</i> header values.</p>
+      The client SHOULD use the <i>Prefer</i> HTTP header [[!RFC7240]] with
+      the <i>hydra.extension</i> preference as an <i>iri</i> attribute having
+      the IRI of the extension as value to hint the server about the extension
+      it supports. Multiple preferences can be expressed by providing multiple
+      <i>Prefer</i> header values.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Hydra client extension preference.">
@@ -1329,7 +1329,7 @@
       -->
     </pre>
 
-    <p>Server SHOULD implement <i>PREFER</i> header handling according to
+    <p>Server MUST implement <i>Prefer</i> header handling according to
       the [[!RFC7240]] and implementers should proceed with caution.</p>
   </section>
 </section>
