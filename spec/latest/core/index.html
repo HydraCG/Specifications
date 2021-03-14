@@ -691,9 +691,11 @@
       specification with both name and possible values, i.e. when defining
       expected <i>Content-Type</i> values of resources that can be uploaded.
       In case multiple possible values are provided, client SHOULD assume
-      that the set includes any of the values, but not limited to those values
-      and client SHOULD interpret received payload at runtime for possible
-      discrepancies.</p>
+      that the set includes any of the values, but not limited to those values.
+      In order to change that default behavior it is possible to use <i>closedSet</i>
+      predicate on the header specification indicating that the set of provided
+      values is, well, closed and no other values are available. In both case the client
+      SHOULD interpret received payload at runtime for possible discrepancies. </p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Making a use of a expected header values">
@@ -709,11 +711,11 @@
             "expects": "http://api.example.com/doc/#Upload",
             "returns": "http://api.example.com/doc/#Comment",
             ****"returnsHeader"****: [
-              { "headerName": "Content-Type", "possibleHeaderValue": ["text/turtle", "application/ld+json"] }
+              { "headerName": "Content-Type", "possibleValue": ["text/turtle", "application/ld+json"] }
               "Content-Length"],
             ****"expectsHeader"****: [
               "Authorization",
-              { "headerName": "Content-Type", "possibleHeaderValue": ["image/gif", "image/png"] }]
+              { "headerName": "Content-Type", "possibleValue": ["image/gif", "image/png"] }]
           }
         ]
       }
