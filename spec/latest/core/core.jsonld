@@ -634,6 +634,7 @@
       "label": "extension",
       "comment": "Hint on what kind of extensions are in use.",
       "domain": "hydra:ApiDocumentation",
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     }
   ]

@@ -1302,6 +1302,22 @@
       client can assume additional details are available described with
       complementary vocabularies.</p>
 
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Hydra client extension usage.">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/",
+        "@type": "ApiDocumentation",
+        "title": "The name of the API",
+        "description": "A short description of the API",
+        "entrypoint": "URL of the API's main entry point",
+        ****"extension": "http://www.w3.org/ns/shacl#"****,
+        ...
+      }
+      -->
+    </pre>
+
     <p>It is up to the used vocabulary to define how these additional details should be
       interpreted. In case client does not recognize these extensions,
       additional details should be ignored and base Hydra interpretation
@@ -1325,7 +1341,7 @@
          title="Hydra client extension preference.">
       <!--
       GET http://api.example.com/api/people
-      Prefer: hydra.extension; iri="http://schema.org/"
+      ****Prefer: hydra.extension; iri="http://schema.org/"****
       -->
     </pre>
 
