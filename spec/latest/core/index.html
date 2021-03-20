@@ -620,7 +620,11 @@
     <p>Example shown below describes the operation's expected and returned
       value as a dereferencable resource (an RDF resource of a given class),
       but the vocabulary is not limited to only those originating
-      from RDF and is enabled to other types of resources.</p>
+      from RDF and is enabled to other types of resources.
+      Please note that in case of multiple either returned or expected types
+      provided, client SHOULD assume the set includes any of the types,
+      but not limited to those types and client SHOULD interpret received
+      payload at runtime for possible discrepancies.</p>
 
     <pre class="example nohighlight" data-transform="updateExample"
          title="Documenting the supported operations of link properties">
@@ -664,12 +668,12 @@
           {
             "@type": "Operation",
             "method": "POST",
-            ****"expects": "http://api.example.com/doc/#Comment",
-            "returns": "http://api.example.com/doc/#Comment",****
-            "returnsHeader": [
+            "expects": "http://api.example.com/doc/#Comment",
+            "returns": "http://api.example.com/doc/#Comment",
+            ****"returnsHeader"****: [
               "Content-Type",
               "Content-Length"],
-            "expectsHeader": [
+            ****"expectsHeader"****: [
               "Authorization"
             ]
           }
@@ -682,6 +686,41 @@
       pre-flight request so the server exposes enlisted headers for the client.
       The client is also aware of the user authentication requirement necessary
       for the operation invocation.</p>
+
+    <p>For more complex scenarios it is also possible to expand selected header
+      specification with both name and possible values, i.e. when defining
+      expected <i>Content-Type</i> values of resources that can be uploaded.
+      In case multiple possible values are provided, client SHOULD assume
+      that the set includes any of the values, but not limited to those values.
+      In order to change that default behavior it is possible to use <i>closedSet</i>
+      predicate on the header specification indicating that the set of provided
+      values is, well, closed and no other values are available. In both case the client
+      SHOULD interpret received payload at runtime for possible discrepancies. </p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Making a use of a expected header values">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/#comments",
+        "@type": "Link",
+        "supportedOperation": [
+          {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "returns": "http://api.example.com/doc/#Comment",
+            ****"returnsHeader"****: [
+              { "headerName": "Content-Type", "possibleValue": ["text/turtle", "application/ld+json"] }
+              "Content-Length"],
+            ****"expectsHeader"****: [
+              "Authorization",
+              { "headerName": "Content-Type", "possibleValue": ["image/gif", "image/png"] }]
+          }
+        ]
+      }
+      -->
+    </pre>
 
     <p>To wrap up everything altogether, it is also possible to attach atomic
       operations supported by, well, supported property itself. This might

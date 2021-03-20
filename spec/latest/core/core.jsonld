@@ -68,6 +68,11 @@
     "pageReference": { "@id": "hydra:pageReference" },
     "returnsHeader": { "@id": "hydra:returnsHeader", "@type": "xsd:string" },
     "expectsHeader": { "@id": "hydra:expectsHeader", "@type": "xsd:string" },
+    "HeaderSpecification": "hydra:HeaderSpecification",
+    "headerName": "hydra:headerName",
+    "possibleValue": "hydra:possibleValue",
+    "closedSet": { "@id": "hydra:possibleValue", "@type": "xsd:boolean" },
+    "name": { "@id": "hydra:name", "@type": "xsd:string" },
     "extension": { "@id": "hydra:extension", "@type": "@id" },
     "isDefinedBy": { "@id": "rdfs:isDefinedBy", "@type": "@id" },
     "defines": { "@reverse": "rdfs:isDefinedBy" },
@@ -197,8 +202,8 @@
       "comment": "A property",
       "range": "rdf:Property",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
-       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-     "vs:term_status": "testing"
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
     },
     {
       "@id": "hydra:required",
@@ -681,7 +686,7 @@
       "label": "returns header",
       "comment": "Name of the header returned by the operation.",
       "domain": "hydra:Operation",
-      "range": "xsd:string",
+      "rangeIncludes": ["xsd:string", "hydra:HeaderSpecification"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
@@ -691,7 +696,45 @@
       "label": "expects header",
       "comment": "Specification of the header expected by the operation.",
       "domain": "hydra:Operation",
+      "rangeIncludes": ["xsd:string", "hydra:HeaderSpecification"],
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:HeaderSpecification",
+      "@type": "rdfs:Class",
+      "subClassOf": "hydra:Resource",
+      "label": "Header specification",
+      "comment": "Specifies a possible either expected or returned header values",
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:headerName",
+      "@type": "rdf:Property",
+      "label": "header name",
+      "comment": "Name of the header.",
+      "domain": "hydra:HeaderSpecification",
       "range": "xsd:string",
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:possibleValue",
+      "@type": "rdf:Property",
+      "label": "possible header value",
+      "comment": "Possible value of the header.",
+      "domain": "hydra:HeaderSpecification",
+      "range": "xsd:string",
+      "vs:term_status": "testing"
+    },
+    {
+      "@id": "hydra:closedSet",
+      "@type": "rdf:Property",
+      "label": "closed set",
+      "comment": "Determines whether the provided set of header values is closed or not.",
+      "domain": "hydra:HeaderSpecification",
+      "range": "xsd:boolean",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
