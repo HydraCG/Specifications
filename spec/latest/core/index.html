@@ -1332,6 +1332,67 @@
       to provide a custom page identifier (i.e. a GUID or a letter)
       instead of a number.</p>
   </section>
+
+  <section>
+    <h3>Extensions</h3>
+    <p>While Hydra Core Vocabulary allows addressing many usage scenarios,
+      not every aspect of API behavior can be covered. This
+      applies especially to querying, resource projection or data structure
+      description. This is due to fact that Hydra is meant to be as light
+      as possible forcing to drop some of the features out of its scope.</p>
+
+    <p>That is why there is a possibility of hinting a client on what kind
+      of extensions may be found or used in the received payloads.
+      After discovering an <i>extension</i> predicate in the API documentation,
+      client can assume additional details are available described with
+      complementary vocabularies.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Hydra client extension usage.">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/doc/",
+        "@type": "ApiDocumentation",
+        "title": "The name of the API",
+        "description": "A short description of the API",
+        "entrypoint": "URL of the API's main entry point",
+        ****"extension": "http://www.w3.org/ns/shacl#"****,
+        ...
+      }
+      -->
+    </pre>
+
+    <p>It is up to the used vocabulary to define how these additional details should be
+      interpreted. In case client does not recognize these extensions,
+      additional details should be ignored and base Hydra interpretation
+      should be in force.</p>
+
+    <p>Server SHOULD NOT use extensions to add statements that are in
+      contradiction to base Hydra interpretation so the client is not confused.
+      Server SHOULD also keep multiple extensions describing adequate
+      knowledge in line regarding their description (i.e. data structure
+      descriptions in various vocabularies should not cause differences).</p>
+
+    <p>Client can express its preferences through the <i>Prefer</i> HTTP header
+      by pointing the preferred extensions via IRIs as on the example below.
+      The client SHOULD use the <i>Prefer</i> HTTP header [[!RFC7240]] with
+      the <i>hydra.extension</i> preference as an <i>iri</i> attribute having
+      the IRI of the extension as value to hint the server about the extension
+      it supports. Multiple preferences can be expressed by providing multiple
+      <i>Prefer</i> header values.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Hydra client extension preference.">
+      <!--
+      GET http://api.example.com/api/people
+      ****Prefer: hydra.extension; iri="http://schema.org/"****
+      -->
+    </pre>
+
+    <p>Server MUST implement <i>Prefer</i> header handling according to
+      the [[!RFC7240]] and implementers should proceed with caution.</p>
+  </section>
 </section>
 
 <!-- <section>
