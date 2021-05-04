@@ -247,7 +247,7 @@
       "@id": "hydra:supportedOperation",
       "@type": "hydra:Link",
       "label": "supported operation",
-      "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link",
+      "comment": "An operation supported by instances of the specific Hydra class or the target of the Hydra link or IRI template.",
       "range": "hydra:Operation",
       "domainIncludes": ["rdfs:Class", "hydra:Class", "hydra:Link", "hydra:TemplatedLink", "hydra:SupportedProperty"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
