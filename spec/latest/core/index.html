@@ -1273,6 +1273,34 @@
       if applicable. This is due to fact the the server may want to put additional
       context to narrow the collection of viable values. Redefinition does not
       make the more general one obsolete though and and can be used as a fallback.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Supported property data source">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@type": "****ApiDocumentation",
+        "supportedClass": {
+          "@id": "schema:Event",
+          "supportedProperty": {
+            "property": "schema:actor",
+            "search": {
+              "template": "/api/user{?search}",
+              "mapping": {
+                "variable": "search",
+                "property": "freetextQuery"
+              }
+            }
+          }
+        },
+        ...
+      }
+      -->
+    </pre>
+
+    <p>The example above instructs a client that every resource of type
+      <i>schema:Event</i> has a property <i>schema:actor</i>, than when in need
+      client can obtain values using a search link provided.</p>
   </section>
 
   <section>
