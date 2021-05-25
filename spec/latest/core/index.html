@@ -1284,13 +1284,13 @@
           "@id": "schema:Event",
           "supportedProperty": {
             "property": "schema:actor",
-            "search": {
+            "****search": {
               "template": "/api/user{?search}",
               "mapping": {
                 "variable": "search",
                 "property": "freetextQuery"
               }
-            }
+            }****
           }
         },
         ...
@@ -1299,8 +1299,8 @@
     </pre>
 
     <p>The example above instructs a client that every resource of type
-      <i>schema:Event</i> has a property <i>schema:actor</i>, than when in need
-      client can obtain values using a search link provided.</p>
+      <i>schema:Event</i> can have a relation of <i>schema:actor</i>, the objects of which the
+      client can obtain using the search link provided.</p>
   </section>
 
   <section>
