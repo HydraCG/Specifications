@@ -1032,7 +1032,7 @@
 
     <pre class="example nohighlight"
          data-transform="updateExample"
-         title="Manages block describes relation with another resource">
+         title="Member assertion block describes relation with another resource">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -1069,6 +1069,29 @@
     <p class="note">It's important to point out that the <code>subject</code>, <code>property</code>
       and <code>object</code> predicates are defined within the Hydra namespace and are not
       <a href="https://www.w3.org/TR/rdf-schema/"><code>rdf</code></a> terms.</p>
+
+    <p>It is also possible to use <i>memberAssertion</i> predicate on the API documentation level,
+      by attaching this predicate to subclasses of the <i>Collection</i>, like in the example below:</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Member assertion block describes strongly typed collection">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api/documentation",
+        "@type": "ApiDocumentation",
+        "supportedClass": [api:User, api:UserCollection],
+        "api:UserCollection": {
+          "subClassOf": "Collection",
+          ****"memberAssertion": {
+            "property": "rdf:type",
+            "object": "http://api.example.com/api/documentation#User"
+          }****,
+        }
+      }
+      -->
+    </pre>
   </section>
 
   <section>

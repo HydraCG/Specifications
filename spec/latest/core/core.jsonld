@@ -388,7 +388,7 @@
       "@id": "hydra:memberAssertion",
       "label": "member assertion",
       "comment": "Semantics of each member provided by the collection.",
-      "domain": "hydra:Collection",
+      "domainIncludes": ["hydra:Collection", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
