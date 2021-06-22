@@ -1253,6 +1253,60 @@
 </section>
 
   <section>
+    <h3>Supported property data source</h3>
+
+    <p>There are circumstances in which an API would like to inform a client on
+      when to obtain values to feed data structures with details. Having all the
+      necessary components like supported property, collection and IRI templates,
+      it is possible to drive the client and direct it with links and operations
+      to the data sources.</p>
+
+    <p>It is doable by attaching either a <i>collection</i> or <i>search</i>
+      predicate to instance of <i>supportedProperty</i> or to <i>property</i>.
+      In such case client SHOULD use assume that the relation leads to
+      the collection of values compatible with the supported property's range
+      and can be used to feed data structures with the supported property.
+      It is recommended (but not mandatory) to use <i>freetextQuery</i>
+      variable mapping in case of the <i>search</i> predicate as it has a
+      well defined semantics and takes the burden of interpretation from
+      the client.</p>
+
+    <p>While it is possible to provide such links in both API documentation
+      and within the received payload, client SHOULD use the latter link first
+      if applicable. This is due to fact the the server may want to put additional
+      context to narrow the collection of viable values. Redefinition does not
+      make the more general one obsolete though and and can be used as a fallback.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Supported property data source">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@type": "****ApiDocumentation",
+        "supportedClass": {
+          "@id": "schema:Event",
+          "supportedProperty": {
+            "property": "schema:actor",
+            "****search": {
+              "template": "/api/user{?search}",
+              "mapping": {
+                "variable": "search",
+                "property": "freetextQuery"
+              }
+            }****
+          }
+        },
+        ...
+      }
+      -->
+    </pre>
+
+    <p>The example above instructs a client that every resource of type
+      <i>schema:Event</i> can have a relation of <i>schema:actor</i>, the objects of which the
+      client can obtain using the search link provided.</p>
+  </section>
+
+  <section>
     <h3>Description of HTTP Status Codes and Errors</h3>
 
     <p>HTTP status codes have well defined semantics and can be used to
