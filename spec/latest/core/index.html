@@ -1270,10 +1270,143 @@
       }
       -->
     </pre>
-    
+
     <p>When constructed, the IRI would effectively become similar to <code>http://api.example.com/an-issue/1234</code>,
-      with the relateive part <code>{id}</code> appended to the link context URL.</p>
-</section>
+      with the relative part <code>{id}</code> appended to the link context URL.</p>
+  </section>
+
+  <section>
+    <h3>IRI template operations</h3>
+
+    <p>There are circumstances in which client would like to perform an operation
+      not knowing the final IRI of the resource to be called. This case is especially
+      in force when working with collections - client may want to add a new
+      collection member, or it may need to provide more details while searching
+      with other protocol's method (i.e. POST instead of GET in case of an HTTP).</p>
+
+    <p>This is achievable by attaching a <i>supportedOperation</i> to the property
+      that connects a subject of that relation with its <i>IRI template</i>
+      as described in the previous part of this document. Please note that
+      client is still allowed to use the defined link and custom operation's
+      method is optional.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Operation with IRI template">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api-documentation",
+        "@type": "ApiDocumentation",
+        ****"api:search": {
+          "@type": "Link",
+          "rdfs:subClassOf": "search",
+          "supportedOperation": {
+            "@type": "SupportedOperation",
+            "method": "POST"
+          }****
+      }
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/issues",
+        "@type": "Collection",
+        ****"api:search": {
+          "@type": "IriTemplate",
+          "template": "/issues?search={name}",
+          "mapping": {...}****
+      }
+      -->
+    </pre>
+
+    <p>The example above allows client to either invoke an HTTP GET or POST
+      call on <i>http://api.example.com/issues?search=search_string</i> resource.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Operation with IRI template without link option">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api-documentation",
+        "@type": "ApiDocumentation",
+        ****"api:find": {
+          "supportedOperation": {
+            "@type": "SupportedOperation",
+            "method": "POST"
+          }****
+      }
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/issues",
+        "@type": "Collection",
+        ****"api:search": {
+          "@type": "IriTemplate",
+          "template": "/issues?find={name}",
+          "mapping": {...}****
+      }
+      -->
+    </pre>
+
+    <p>The example above allows client to invoke only an HTTP POST
+      call on <i>http://api.example.com/issues?find=search_string</i> resource as
+      the described relation of <i>find</i> is not a <i>Link</i>.</p>
+  </section>
+
+  <section>
+    <h3>Supported property data source</h3>
+
+    <p>There are circumstances in which an API would like to inform a client on
+      when to obtain values to feed data structures with details. Having all the
+      necessary components like supported property, collection and IRI templates,
+      it is possible to drive the client and direct it with links and operations
+      to the data sources.</p>
+
+    <p>It is doable by attaching either a <i>collection</i> or <i>search</i>
+      predicate to instance of <i>supportedProperty</i> or to <i>property</i>.
+      In such case client SHOULD use assume that the relation leads to
+      the collection of values compatible with the supported property's range
+      and can be used to feed data structures with the supported property.
+      It is recommended (but not mandatory) to use <i>freetextQuery</i>
+      variable mapping in case of the <i>search</i> predicate as it has a
+      well defined semantics and takes the burden of interpretation from
+      the client.</p>
+
+    <p>While it is possible to provide such links in both API documentation
+      and within the received payload, client SHOULD use the latter link first
+      if applicable. This is due to fact the the server may want to put additional
+      context to narrow the collection of viable values. Redefinition does not
+      make the more general one obsolete though and and can be used as a fallback.</p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Supported property data source">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@type": "****ApiDocumentation",
+        "supportedClass": {
+          "@id": "schema:Event",
+          "supportedProperty": {
+            "property": "schema:actor",
+            "****search": {
+              "template": "/api/user{?search}",
+              "mapping": {
+                "variable": "search",
+                "property": "freetextQuery"
+              }
+            }****
+          }
+        },
+        ...
+      }
+      -->
+    </pre>
+
+    <p>The example above instructs a client that every resource of type
+      <i>schema:Event</i> can have a relation of <i>schema:actor</i>, the objects of which the
+      client can obtain using the search link provided.</p>
+  </section>
 
   <section>
     <h3>Description of HTTP Status Codes and Errors</h3>
