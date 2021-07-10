@@ -1247,10 +1247,89 @@
       }
       -->
     </pre>
-    
+
     <p>When constructed, the IRI would effectively become similar to <code>http://api.example.com/an-issue/1234</code>,
-      with the relateive part <code>{id}</code> appended to the link context URL.</p>
-</section>
+      with the relative part <code>{id}</code> appended to the link context URL.</p>
+  </section>
+
+  <section>
+    <h3>IRI template operations</h3>
+
+    <p>There are circumstances in which client would like to perform an operation
+      not knowing the final IRI of the resource to be called. This case is especially
+      in force when working with collections - client may want to add a new
+      collection member, or it may need to provide more details while searching
+      with other protocol's method (i.e. POST instead of GET in case of an HTTP).</p>
+
+    <p>This is achievable by attaching a <i>supportedOperation</i> to the property
+      that connects a subject of that relation with its <i>IRI template</i>
+      as described in the previous part of this document. Please note that
+      client is still allowed to use the defined link and custom operation's
+      method is optional.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Operation with IRI template">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api-documentation",
+        "@type": "ApiDocumentation",
+        ****"api:search": {
+          "@type": "Link",
+          "rdfs:subClassOf": "search",
+          "supportedOperation": {
+            "@type": "SupportedOperation",
+            "method": "POST"
+          }****
+      }
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/issues",
+        "@type": "Collection",
+        ****"api:search": {
+          "@type": "IriTemplate",
+          "template": "/issues?search={name}",
+          "mapping": {...}****
+      }
+      -->
+    </pre>
+
+    <p>The example above allows client to either invoke an HTTP GET or POST
+      call on <i>http://api.example.com/issues?search=search_string</i> resource.</p>
+
+    <pre class="example nohighlight"
+         data-transform="updateExample"
+         title="Operation with IRI template without link option">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/api-documentation",
+        "@type": "ApiDocumentation",
+        ****"api:find": {
+          "supportedOperation": {
+            "@type": "SupportedOperation",
+            "method": "POST"
+          }****
+      }
+
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@id": "http://api.example.com/issues",
+        "@type": "Collection",
+        ****"api:search": {
+          "@type": "IriTemplate",
+          "template": "/issues?find={name}",
+          "mapping": {...}****
+      }
+      -->
+    </pre>
+
+    <p>The example above allows client to invoke only an HTTP POST
+      call on <i>http://api.example.com/issues?find=search_string</i> resource as
+      the described relation of <i>find</i> is not a <i>Link</i>.</p>
+  </section>
 
   <section>
     <h3>Supported property data source</h3>
