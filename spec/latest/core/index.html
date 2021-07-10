@@ -1032,7 +1032,7 @@
 
     <pre class="example nohighlight"
          data-transform="updateExample"
-         title="Member assertion block describes relation with another resource">
+         title="Member assertion describes relation with another resource">
       <!--
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -1071,14 +1071,19 @@
       <a href="https://www.w3.org/TR/rdf-schema/"><code>rdf</code></a> terms.</p>
 
     <p>It is also possible to use <i>memberAssertion</i> predicate on the API documentation level,
-      by attaching this predicate to subclasses of the <i>Collection</i>, like in the example below:</p>
+      by attaching this predicate to subclasses of the <i>Collection</i>, like in the example below.
+      Clients would understand that all members of collections which are instances of <i>api:UserCollections</i>
+      would in fact have <i>rdf:type api:User</i>.</p>
 
     <pre class="example nohighlight"
          data-transform="updateExample"
          title="Member assertion block describes strongly typed collection">
       <!--
       {
-        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@context": [
+          "http://www.w3.org/ns/hydra/context.jsonld",
+          { "api": "http://api.example.com/api/documentation#" }
+        ],
         "@id": "http://api.example.com/api/documentation",
         "@type": "ApiDocumentation",
         "supportedClass": [api:User, api:UserCollection],
@@ -1086,12 +1091,24 @@
           "subClassOf": "Collection",
           ****"memberAssertion": {
             "property": "rdf:type",
-            "object": "http://api.example.com/api/documentation#User"
+            "object": "api:User"
           }****,
         }
       }
       -->
     </pre>
+
+    <p>It is worth to mention that a strongly typed collection instance can have its own
+      member assertions. n such scenario, both <i>API documentation</i> level and instance
+      level assertions should be combined neither makes the other obsolete.</p>
+
+    <p>More complex scenario would involve a class hierarchy, in which each class can
+      carry additional member assertions compared to it's base class. To discover all
+      available member assertion blocks client SHOULD traverse whole class hierarchy
+      to gather all of the member assertions. In order to take such a burden from clients
+      it is strongly recommended to provide all member assertion blocks to be provided
+      on each class level including it's base class blocks so the client does not have
+      to perform this traversing behavior.</p>
   </section>
 
   <section>
