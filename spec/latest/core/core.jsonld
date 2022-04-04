@@ -554,7 +554,7 @@
       "label": "variable representation",
       "comment": "The representation format to use when expanding the IRI template.",
       "range": "hydra:VariableRepresentation",
-      "domain": ["hydra:IriTemplateMapping", "hydra:IriTemplate"],
+      "domainIncludes": ["hydra:IriTemplateMapping", "hydra:IriTemplate"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
