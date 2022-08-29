@@ -1208,7 +1208,8 @@
       {
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         ****"@type": "IriTemplate"****,
-        ****"template": "http://api.example.com/issues{?q}"****,
+        ****"template": "http://api.example.com/issues{?q,category}"****,
+		****"variableRepresentation": "ExplicitRepresentation"****,
         ****"mapping"****: [
           {
             ****"@type": "IriTemplateMapping"****,
@@ -1216,11 +1217,20 @@
             ****"property": "hydra:freetextQuery"****,
             ****"variableRepresentation": "BasicRepresentation"****,
             ****"required": true****
+          },
+          {
+             ****"@type": "IriTemplateMapping"****,
+             ****"variable": "category"****,
+             ****"property": "schema:category"****
           }
         ]
       }
       -->
     </pre>
+	
+	<p>In this example, the variable <i>category</i> will be serialised using the explicit representation,
+	  derived from the template itself. The variable <i>q</i> on the other hand will override that
+	  to use basic representation.</p>
 
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
