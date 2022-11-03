@@ -1196,7 +1196,7 @@
     <p>The example <i>Description of an IRI Template</i> that was already mentioned
       uses a <i>variableRepresentation</i> on the whole <i>IriTemplate</i>, but
       each mapped variable represented as an <i>IriTemplateMapping</i> can have
-      its own <i>variableRepresentation</i> declaration which MUST override
+      its own <i>variableRepresentation</i> declaration. It MUST override
       the declaration from the <i>IriTemplate</i> level for that very
       <i>IriTemplateMapping</i> as it takes precedence. The example below
       depicts such a situation:
@@ -1209,7 +1209,7 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         ****"@type": "IriTemplate"****,
         ****"template": "http://api.example.com/issues{?q,category}"****,
-		****"variableRepresentation": "ExplicitRepresentation"****,
+        ****"variableRepresentation": "ExplicitRepresentation"****,
         ****"mapping"****: [
           {
             ****"@type": "IriTemplateMapping"****,
