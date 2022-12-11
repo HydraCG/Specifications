@@ -1233,6 +1233,45 @@
       </dl>
     </aside>
 
+    <p>The example <i>Description of an IRI Template</i> that was already mentioned
+      uses a <i>variableRepresentation</i> on the whole <i>IriTemplate</i>, but
+      each mapped variable represented as an <i>IriTemplateMapping</i> can have
+      its own <i>variableRepresentation</i> declaration. It MUST override
+      the declaration from the <i>IriTemplate</i> level for that very
+      <i>IriTemplateMapping</i> as it takes precedence. The example below
+      depicts such a situation:
+    </p>
+
+    <pre class="example nohighlight" data-transform="updateExample"
+         title="Variable level representation">
+      <!--
+      {
+        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+        ****"@type": "IriTemplate"****,
+        ****"template": "http://api.example.com/issues{?q,category}"****,
+        ****"variableRepresentation": "ExplicitRepresentation"****,
+        ****"mapping"****: [
+          {
+            ****"@type": "IriTemplateMapping"****,
+            ****"variable": "q"****,
+            ****"property": "hydra:freetextQuery"****,
+            ****"variableRepresentation": "BasicRepresentation"****,
+            ****"required": true****
+          },
+          {
+             ****"@type": "IriTemplateMapping"****,
+             ****"variable": "category"****,
+             ****"property": "schema:category"****
+          }
+        ]
+      }
+      -->
+    </pre>
+	
+	<p>In this example, the variable <i>category</i> will be serialised using the explicit representation,
+	  derived from the template itself. The variable <i>q</i> on the other hand will override that
+	  to use basic representation.</p>
+
     <p>Similar to how Hydra's <i>Link</i> class allows the definition of
       properties that represent hyperlinks as described in
       <a class="sectionRef" href="#adding-affordances-to-representations"></a>,
