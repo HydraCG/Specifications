@@ -28,7 +28,7 @@
     "method": "hydra:method",
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
-	"availability": { "@id": "hydra:availability", "@type": "@vocab" },
+    "availability": { "@id": "hydra:availability", "@type": "@vocab" },
     "possibleStatus": { "@id": "hydra:possibleStatus", "@type": "@id" },
     "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
