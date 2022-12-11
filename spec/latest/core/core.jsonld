@@ -172,7 +172,7 @@
       "@id": "hydra:availability",
       "@type": "rdf:Property",
       "label": "availability",
-      "comment": "Availability of the operation explicitely stated",
+      "comment": "Availability of the operation explicitely stated.",
       "range": "hydra:Availability",
       "domain": "hydra:Operation",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
@@ -187,10 +187,10 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:Forbidden",
+      "@id": "hydra:Unavailable",
       "@type": "hydra:Availability",
-      "label": "Forbidden",
-      "comment": "States an operation previously announced is forbidden in current circumstances.",
+      "label": "Unavailable",
+      "comment": "States an operation previously announced is unavailable in current circumstances.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },

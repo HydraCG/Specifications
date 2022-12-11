@@ -752,7 +752,7 @@
       is up for the server to change that, and for the client to discover any 
       discrepancies compared against the API documentation in the runtime. Yet
       server may want to inform the client that at the very moment an operation is either 
-      <i>Forbidden</i> or <i>Unauthorized</i>. The latter MAY be used to notify 
+      <i>Unavailable</i> or <i>Unauthorized</i>. The latter MAY be used to notify 
       client that the user used to invoke the request that provides operation 
       availability information is currently not authorized for that very operation 
       to be invoked. The former on the other hand MAY be used to inform that
@@ -806,7 +806,7 @@
             "@type": "Operation",
             "method": "POST",
             "expects": "http://api.example.com/doc/#Upload",
-            "availability": "Forbidden"
+            "availability": "Unavailable"
           }
         ]
       }
@@ -814,7 +814,7 @@
     </pre>
 
     <p>In the example above the operation that expects an uploaded file became
-      <i>Forbidden</i>, while the one expecting a comment remains available as
+      <i>Unavailable</i>, while the one expecting a comment remains available as
       the <i>expects</i> predicate does not match any supported operations.
       It is still recommended to mark operations being subject for further
       restrictions with an Iri as from the client perspective this may be
