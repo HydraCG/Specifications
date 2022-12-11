@@ -648,6 +648,79 @@ Direct usage of [=supportedOperation=] on *rdf:Property*
 without elevating it to the [=Link=] SHOULD NOT be implemented as clients
 may not discover such a construct correctly.
 
+There are rare situations when some supported operations once announced in the
+API documentation should be retracted, i.e. to reflect current state of the 
+application or current user capabilities (or lack of them). It is doable
+with the [=availability=] predicate that can be added to the [=Operation=]
+itself. By default all operations are [=Available=] without limits and it
+is up for the server to change that, and for the client to discover any 
+discrepancies compared against the API documentation in the runtime. Yet
+server may want to inform the client that at the very moment an operation is either 
+[=Unavailable=] or <i>Unauthorized</i>. The latter MAY be used to notify 
+client that the user used to invoke the request that provides operation 
+availability information is currently not authorized for that very operation 
+to be invoked. The former on the other hand MAY be used to inform that
+the operation is currently unavailable and client SHOULD NOT invoke it.
+Server MAY also provide more custom reasons for which the operation is not
+available but it SHOULD provide at least one of the _Hydra_ built in reasons.
+
+Usage of the [=availability=] is restricted only to the [=Operation=]s
+and MUST NOT be used on [=SupportedOperation=]s. The [=availability=]
+predicate also MUST take precedence over a supported operation declaration.
+The operation that comes with [=availability=] predicate SHOULD be identified
+using any of the below enlisted methods:
+
+- Iri
+- exact match of a resource described by [=possibleStatus=], [=method=],
+	[=expects=], [=returns=] or combination of those.
+
+<div class="example" heading="Retracting operations - declaration of supported operations">
+<pre highlight="json-ld" line-highlight="9">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/#comments",
+	"@type": "Link",
+	"supportedOperation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload"
+		},
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Comment"
+		}
+	]
+}
+</pre>
+</div>
+<div class="example" heading="Retracting operations - matching">
+<pre highlight="json-ld" line-highlight="9-10">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/",
+	"@type": "Collection",
+	"operation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload",
+			"availability": "Unavailable"
+		}
+	]
+}
+</pre>
+</div>
+
+In the example above the operation that expects an uploaded file became
+[=Unavailable=], while the one expecting a comment remains available as
+the [=expects=] predicate does not match any supported operations.
+It is still recommended to mark operations being subject for further
+restrictions with an Iri as from the client perspective this may be
+easier to implement simple literal Iri comparison rather than to compare
+graphs of objects.
+
 Note: These are the simple example scenarios and possible usages are not
 limited to those described above.
 
@@ -1103,6 +1176,43 @@ representations as well as the result of expanding the IRI template
 
 </aside>
 
+The example <i>Description of an IRI Template</i> that was already mentioned
+uses a [=variableRepresentation=] on the whole [=IriTemplate=], but
+each mapped variable represented as an [=riTemplateMapping=] can have
+its own [=ariableRepresentation=] declaration. It MUST override
+the declaration from the [=IriTemplate=] level for that very
+[=IriTemplateMapping=] as it takes precedence. The example below
+depicts such a situation:
+
+<div class="example" heading="Variable level representation">
+<pre highlight="json-ld" line-highlight="3-19">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@type": "IriTemplate",
+	"template": "http://api.example.com/issues{?q,category}",
+	"variableRepresentation": "ExplicitRepresentation",
+	"mapping": [
+		{
+			"@type": "IriTemplateMapping",
+			"variable": "q",
+			"property": "hydra:freetextQuery",
+			"variableRepresentation": "BasicRepresentation",
+			"required": true
+		},
+		{
+			"@type": "IriTemplateMapping",
+			"variable": "category",
+			"property": "schema:category"
+		}
+	]
+}
+</pre>
+</div>
+
+In this example, the variable <i>category</i> will be serialised using the explicit representation,
+derived from the template itself. The variable <i>q</i> on the other hand will override that
+to use basic representation.
+
 Similar to how Hydra's [=Link=] class allows the definition of
 properties that represent hyperlinks as described in
 [[#adding-affordances-to-representations]], the [=TemplatedLink=] class
@@ -1112,11 +1222,11 @@ can be used to document available search interfaces.
 
 <div class="example" heading="The definition of Hydra's search property (extract)">
 <pre highlight="json-ld" line-highlight="3-4">
-    {
-        "@context": "http://www.w3.org/ns/hydra/context.jsonld",
-        "@id": "hydra:search",
-        "@type": "hydra:TemplatedLink"
-    }
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "hydra:search",
+	"@type": "hydra:TemplatedLink"
+}
 </pre>
 </div>
 
@@ -1540,6 +1650,18 @@ Classes {#classes}
 }
 </xmp>
 </div>
+
+## hydra:Availability ## {#class-Availability}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Availability">Availability</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Availability states when the operation can be invoked.</td>
+    </tr>
+</table>
 
 ## hydra:BaseUriSource ## {#class-BaseUriSource}
 <table class="def">
@@ -2244,6 +2366,43 @@ Properties {#properties}
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation"
+</xmp>
+</div>
+
+## hydra:availability ## {#property-availability}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:availability">availability&lrm;</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Availability of the operation explicitely stated.</td>
+    </tr>
+    <tr>
+        <th>Domain:</th>
+        <td>[=Operation=]</td>
+    </tr>
+    <tr>
+        <th>Range:</th>
+        <td>[=Availability=]</td>
+    </tr>
+</table>
+<div class="example" heading="hydra:availability">
+<xmp highlight="json-ld" line-highlight="10">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/",
+	"@type": "Collection",
+	"operation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload",
+			"availability": "Unavailable"
+		}
+	]
+}
 </xmp>
 </div>
 
@@ -5398,8 +5557,8 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
         <td>1</td>
     </tr>
     <tr>
-        <th>Domain:</th>
-        <td>[=IriTemplateMapping=]</td>
+        <th>Domain includes:</th>
+        <td>[=IriTemplateMapping=], [=IriTemplate=]</td>
     </tr>
     <tr>
         <th>Range:</th>
@@ -5407,7 +5566,7 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
     </tr>
 </table>
 <div class="example" heading="hydra:variableRepresentation">
-<xmp highlight="json-ld" line-highlight="35,41,47">
+<xmp highlight="json-ld" line-highlight="30,36">
 {
     "@context": "http://www.w3.org/ns/hydra/context.jsonld",
     "@id": "http://api.example.com/api/posts",
@@ -5437,24 +5596,23 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
     "search": {
         "template": "/api/posts{?search,limit,offset}",
         "resolveRelativeUsing": "hydra:Rfc3986",
+		"variableRepresentation": "hydra:BasicRepresentation",
         "mapping": [
             {
                 "variable": "search",
                 "property": "hydra:freetextQuery",
                 "required": true,
-                "variableRepresentation": "hydra:BasicRepresentation"
+                "variableRepresentation": "hydra:ExplicitRepresentation"
             },
             {
                 "variable": "limit",
                 "property": "hydra:limit",
-                "required": false,
-                "variableRepresentation": "hydra:BasicRepresentation"
+                "required": false
             },
             {
                 "variable": "offset",
                 "property": "hydra:offset",
-                "required": false,
-                "variableRepresentation": "hydra:BasicRepresentation"
+                "required": false
             }
         ]
     }
@@ -5614,6 +5772,38 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
 Named instances {#named-instances}
 ===============
 
+## hydra:Available ## {#instance-Available}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Available">Available</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>
+            States an operation is available for invocation.
+			This is a default operation availability.
+        </td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Available">
+<xmp highlight="json-ld" line-highlight="10">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/",
+	"@type": "Collection",
+	"operation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload",
+			"availability": "Available"
+		}
+	]
+}
+</xmp>
+</div>
+
 ## hydra:BasicRepresentation ## {#instance-BasicRepresentation}
 <table class="def">
     <tr>
@@ -5626,10 +5816,6 @@ Named instances {#named-instances}
             A representation that serializes just the lexical form of a variable value,
             but omits language and type information.
         </td>
-    </tr>
-    <tr>
-        <th>Sub-class of:</th>
-        <td>[=VariableRepresentation=]</td>
     </tr>
 </table>
 <div class="example" heading="hydra:BasicRepresentation">
@@ -5689,10 +5875,6 @@ Named instances {#named-instances}
             and type information and thus differentiating between IRIs and literals.
         </td>
     </tr>
-    <tr>
-        <th>Sub-class of:</th>
-        <td>[=VariableRepresentation=]</td>
-    </tr>
 </table>
 <div class="example" heading="hydra:ExplicitRepresentation">
 <xmp highlight="json-ld" line-highlight="35">
@@ -5750,10 +5932,6 @@ Named instances {#named-instances}
             States that the link's context IRI, as defined in RFC 5988, should be used
             as the base Uri.
         </td>
-    </tr>
-    <tr>
-        <th>Sub-class of:</th>
-        <td>[=BaseUriSource=]</td>
     </tr>
 </table>
 <div class="example" heading="hydra:LinkContext">
@@ -5816,10 +5994,6 @@ Named instances {#named-instances}
             as the base Uri.
         </td>
     </tr>
-    <tr>
-        <th>Sub-class of:</th>
-        <td>[=BaseUriSource=]</td>
-    </tr>
 </table>
 <div class="example" heading="hydra:LinkContext">
 <xmp highlight="json-ld" line-highlight="32">
@@ -5864,6 +6038,69 @@ Named instances {#named-instances}
             }
         ]
     }
+}
+</xmp>
+</div>
+
+## hydra:Unauthorized ## {#instance-Unauthorized}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Unauthorized">Unauthorized</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>
+            States an operation previously announced should not be invoked
+			as the current user is not authorized to invoke it.
+        </td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Unauthorized">
+<xmp highlight="json-ld" line-highlight="10">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/",
+	"@type": "Collection",
+	"operation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload",
+			"availability": "Unauthorized"
+		}
+	]
+}
+</xmp>
+</div>
+
+## hydra:Unavailable ## {#instance-Unavailable}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Unavailable">Unavailable</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>
+            States an operation previously announced is unavailable in current circumstances.
+        </td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Unavailable">
+<xmp highlight="json-ld" line-highlight="10">
+{
+	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
+	"@id": "http://api.example.com/doc/",
+	"@type": "Collection",
+	"operation": [
+		{
+			"@type": "Operation",
+			"method": "POST",
+			"expects": "http://api.example.com/doc/#Upload",
+			"availability": "Unavailable"
+		}
+	]
 }
 </xmp>
 </div>
@@ -5948,9 +6185,11 @@ Note: This section is non-normative.
 
 The authors would like to thank the following individuals for contributing
 their ideas and providing feedback for writing this specification:
-Arnau Siches, elf Pavlik, Karol Szczepański, Mark Baker, Martijn Faassen,
+Arnau Siches, elf Pavlik, Mark Baker, Martijn Faassen,
 Matthias Lehmann, Ruben Verborgh, Ryan J. McDonough, Sam Goto,
-Thomas Hoppe, Tomasz Pluskiewicz, @wasabiwimp (on GitHub).
+Thomas Hoppe, @wasabiwimp (on GitHub).
+
+Special thanks to Tomasz Pluskiewicz.
 
 The Hydra in JSON-LD {#vocab-jsonld}
 ====================================
