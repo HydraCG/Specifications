@@ -28,7 +28,12 @@
     "method": "hydra:method",
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
-    "availability": { "@id": "hydra:availability", "@type": "@vocab" },
+    "retractedOperation": { "@id": "hydra:retractedOperation", "@type": "@vocab" },
+	"reason": { "@id": "hydra:reason", "@type": "@vocab" },
+	"RetractedOperationSpecification": "hydra:RetractedOperationSpecification",
+	"UnavailabilityReason": "hydra:UnavailabilityReason",
+	"Unavailable": "hydra:Unavailable",
+	"Unauthorized": "hydra:Unauthorized",
     "possibleStatus": { "@id": "hydra:possibleStatus", "@type": "@id" },
     "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
@@ -168,27 +173,45 @@
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
+	{
+      "@id": "hydra:retractedOperation",
+	  "@type": "rdf:Property",
+	  "label": "retracted operation",
+	  "comment": "Retracts available operations.",
+	  "range": "hydra:RetractedOperationSpecification",
+	  "domain": "hydra:Resource",
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
+	}
+	{
+      "@id": "hydra:RetractedOperationSpecification",
+	  "@type": "hydra:Class",
+	  "label": "retracted operation specification",
+	  "comment": "Describes which and why an operation is retracted.",
+      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
+      "vs:term_status": "testing"
+	}
     {
-      "@id": "hydra:availability",
+      "@id": "hydra:reason",
       "@type": "rdf:Property",
-      "label": "availability",
-      "comment": "Availability of the operation explicitely stated.",
-      "range": "hydra:Availability",
-      "domain": "hydra:Operation",
+      "label": "reason",
+      "comment": "Reason of why the operation is retracted.",
+      "range": "hydra:UnavailabilityReason",
+      "domain": "hydra:RetractedOperationSpecification",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:Availability",
+      "@id": "hydra:UnavailabilityReason",
       "@type": "hydra:Class",
-      "label": "Availability",
-      "comment": "Availability states when the operation can be invoked.",
+      "label": "Unavailability reason",
+      "comment": "Provides reasons why the operation cannot be invoked.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
     {
       "@id": "hydra:Unavailable",
-      "@type": "hydra:Availability",
+      "@type": "hydra:UnavailabilityReason",
       "label": "Unavailable",
       "comment": "States an operation previously announced is unavailable in current circumstances.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
@@ -203,20 +226,12 @@
       "vs:term_status": "testing"
     },
     {
-      "@id": "hydra:Available",
-      "@type": "hydra:Availability",
-      "label": "Available",
-      "comment": "States an operation is available for invocation. This is a default operation availability.",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },
-    {
       "@id": "hydra:possibleStatus",
       "@type": "hydra:Link",
       "label": "possible status",
       "comment": "A status that might be returned by the Web API (other statuses should be expected and properly handled as well)",
       "range": "hydra:Status",
-      "domainIncludes": ["hydra:ApiDocumentation", "hydra:Operation"],
+      "domainIncludes": ["hydra:ApiDocumentation", "hydra:Operation", "hydra:RetractedOperationSpecification"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
@@ -319,7 +334,7 @@
       "@type": "rdf:Property",
       "label": "method",
       "comment": "The HTTP method.",
-      "domain": "hydra:Operation",
+      "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "range": "xsd:string",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
@@ -329,7 +344,7 @@
       "@type": "hydra:Link",
       "label": "expects",
       "comment": "The information expected by the Web API.",
-      "domain": "hydra:Operation",
+      "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
@@ -339,7 +354,7 @@
       "@type": "hydra:Link",
       "label": "returns",
       "comment": "The information returned by the Web API on success",
-      "domain": "hydra:Operation",
+      "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"

@@ -747,26 +747,27 @@
     <p>There are rare situations when some supported operations once announced in the
       API documentation should be retracted, i.e. to reflect current state of the 
       application or current user capabilities (or lack of them). It is doable
-      with the <i>availability<i> predicate that can be added to the <i>Operation</i>
-      itself. By default all operations are <i>Available</i> without limits and it
-      is up for the server to change that, and for the client to discover any 
-      discrepancies compared against the API documentation in the runtime. Yet
-      server may want to inform the client that at the very moment an operation is either 
-      <i>Unavailable</i> or <i>Unauthorized</i>. The latter MAY be used to notify 
-      client that the user used to invoke the request that provides operation 
-      availability information is currently not authorized for that very operation 
-      to be invoked. The former on the other hand MAY be used to inform that
-      the operation is currently forbidden and client SHOULD NOT invoke it.
-	  Server MAY also provide more custom reasons for which the operation is not
-	  available but it SHOULD provide at least one of the <i>Hydra</i> built in reasons.</p>
+      with the <i>retractedOperation<i> predicate that can be added to the reasorce
+	  the same way as the <i>operation</i> is. By default all operations are available
+	  without limits and it is up for the server to change that, and for the client
+	  to discover any discrepancies compared against the API documentation in the runtime.
+	  Yet server may want to inform the client that at the very moment an operation is either 
+      <i>Unavailable</i> or <i>Unauthorized</i> with a <i>reason</i> predicate.
+	  The latter MAY be used to notify client that the user used to invoke
+	  the request that provides operation availability information is currently
+	  not authorized for that very operation to be invoked. The former on the other hand
+	  MAY be used to inform that the operation is currently forbidden and client
+	  SHOULD NOT invoke it. Server MAY also provide more custom reasons for which
+	  the operation is not available but it SHOULD provide at least one of the
+	  <i>Hydra</i> built in reasons.</p>
 
-    <p>Usage of the <i>availability</i> is restricted only to the <i>Operation</i>s
-      and MUST NOT be used on <i>SupportedOperation</i>s. The <i>availability</i>
-      predicate also MUST take precedence over a supported operation declaration.
-      The operation that comes with <i>availability</i> predicate SHOULD be identified
+    <p>The <i>retractedOperation</i> MUST NOT be used in context of the <i>ApiDocumentation</i>.
+	  The <i>retractedOperation</i> predicate also MUST take precedence over both 
+	  <i>operation</i> and <i>supportedOperation</i> declaration and overrides them.
+      The operation that comes with <i>retractedOperation</i> predicate SHOULD be identified
       using any of the below enlisted methods:
       <ul>
-        <li>Iri</li>
+        <li>Iri by using <i>object</i> predicate</li>
         <li>exact match of a resource described by <i>possibleStatus</i>, <i>method</i>,
           <i>expects</i>, <i>returns</i> or combination of those.</li>
       </ul>
@@ -801,12 +802,12 @@
         "@context": "http://www.w3.org/ns/hydra/context.jsonld",
         "@id": "http://api.example.com/doc/",
         "@type": "Collection",
-        "operation": [
+        "retractedOperation": [
           {
             "@type": "Operation",
             "method": "POST",
             "expects": "http://api.example.com/doc/#Upload",
-            "availability": "Unavailable"
+            "reason": "Unavailable"
           }
         ]
       }
