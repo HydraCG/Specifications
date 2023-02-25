@@ -29,11 +29,11 @@
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
     "retractedOperation": { "@id": "hydra:retractedOperation", "@type": "@vocab" },
-	"reason": { "@id": "hydra:reason", "@type": "@vocab" },
-	"RetractedOperationSpecification": "hydra:RetractedOperationSpecification",
-	"UnavailabilityReason": "hydra:UnavailabilityReason",
-	"Unavailable": "hydra:Unavailable",
-	"Unauthorized": "hydra:Unauthorized",
+    "reason": { "@id": "hydra:reason", "@type": "@vocab" },
+    "RetractedOperationSpecification": "hydra:RetractedOperationSpecification",
+    "UnavailabilityReason": "hydra:UnavailabilityReason",
+    "Unavailable": "hydra:Unavailable",
+    "Unauthorized": "hydra:Unauthorized",
     "possibleStatus": { "@id": "hydra:possibleStatus", "@type": "@id" },
     "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
@@ -173,24 +173,24 @@
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
-	{
+    {
       "@id": "hydra:retractedOperation",
-	  "@type": "rdf:Property",
-	  "label": "retracted operation",
-	  "comment": "Retracts available operations.",
-	  "range": "hydra:RetractedOperationSpecification",
-	  "domain": "hydra:Resource",
+      "@type": "rdf:Property",
+      "label": "retracted operation",
+      "comment": "Retracts available operations.",
+      "range": "hydra:RetractedOperationSpecification",
+      "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
-	}
-	{
+    }
+    {
       "@id": "hydra:RetractedOperationSpecification",
-	  "@type": "hydra:Class",
-	  "label": "retracted operation specification",
-	  "comment": "Describes which and why an operation is retracted.",
+      "@type": "hydra:Class",
+      "label": "retracted operation specification",
+      "comment": "Describes which and why an operation is retracted.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
-	}
+    }
     {
       "@id": "hydra:reason",
       "@type": "rdf:Property",
