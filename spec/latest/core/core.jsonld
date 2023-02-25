@@ -28,7 +28,6 @@
     "method": "hydra:method",
     "expects": { "@id": "hydra:expects", "@type": "@vocab" },
     "returns": { "@id": "hydra:returns", "@type": "@vocab" },
-    "availability": { "@id": "hydra:availability", "@type": "@vocab" },
     "possibleStatus": { "@id": "hydra:possibleStatus", "@type": "@id" },
     "Status": "hydra:Status",
     "statusCode": "hydra:statusCode",
@@ -168,48 +167,6 @@
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
     },
-    {
-      "@id": "hydra:availability",
-      "@type": "rdf:Property",
-      "label": "availability",
-      "comment": "Availability of the operation explicitely stated.",
-      "range": "hydra:Availability",
-      "domain": "hydra:Operation",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Availability",
-      "@type": "hydra:Class",
-      "label": "Availability",
-      "comment": "Availability states when the operation can be invoked.",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Unavailable",
-      "@type": "hydra:Availability",
-      "label": "Unavailable",
-      "comment": "States an operation previously announced is unavailable in current circumstances.",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Unauthorized",
-      "@type": "hydra:Availability",
-      "label": "Unauthorized",
-      "comment": "States an operation previously announced should not be invoked as the current user is not authorized to invoke it.",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },
-    {
-      "@id": "hydra:Available",
-      "@type": "hydra:Availability",
-      "label": "Available",
-      "comment": "States an operation is available for invocation. This is a default operation availability.",
-      "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
-    },	
     {
       "@id": "hydra:possibleStatus",
       "@type": "hydra:Link",
