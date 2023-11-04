@@ -114,7 +114,7 @@
       "label": "Hydra Resource",
       "comment": "The class of dereferenceable resources by means a client can attempt to dereference; however, the received responses should still be verified.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Class",
@@ -123,7 +123,7 @@
       "label": "Hydra Class",
       "comment": "The class of Hydra classes.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Link",
@@ -132,7 +132,7 @@
       "label": "Link",
       "comment": "The class of properties representing links.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:apiDocumentation",
@@ -142,7 +142,7 @@
       "range": "hydra:ApiDocumentation",
       "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:ApiDocumentation",
@@ -151,7 +151,7 @@
       "label": "ApiDocumentation",
       "comment": "The Hydra API documentation class.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:entrypoint",
@@ -161,7 +161,7 @@
       "domain": "hydra:ApiDocumentation",
       "range": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:supportedClass",
@@ -171,7 +171,7 @@
       "domain": "hydra:ApiDocumentation",
       "range": "rdfs:Class",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:retractedOperation",
@@ -181,7 +181,7 @@
       "range": "hydra:RetractedOperationSpecification",
       "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:RetractedOperationSpecification",
@@ -189,7 +189,7 @@
       "label": "retracted operation specification",
       "comment": "Describes which and why an operation is retracted.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:reason",
@@ -199,7 +199,7 @@
       "range": "hydra:UnavailabilityReason",
       "domain": "hydra:RetractedOperationSpecification",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:UnavailabilityReason",
@@ -207,7 +207,7 @@
       "label": "Unavailability reason",
       "comment": "Provides reasons why the operation cannot be invoked.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Unavailable",
@@ -215,7 +215,7 @@
       "label": "Unavailable",
       "comment": "States an operation previously announced is unavailable in current circumstances.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Unauthorized",
@@ -223,7 +223,7 @@
       "label": "Unauthorized",
       "comment": "States an operation previously announced should not be invoked as the current user is not authorized to invoke it.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },    
     {
       "@id": "hydra:possibleStatus",
@@ -233,7 +233,7 @@
       "range": "hydra:Status",
       "domainIncludes": ["hydra:ApiDocumentation", "hydra:Operation", "hydra:RetractedOperationSpecification"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:supportedProperty",
@@ -243,7 +243,7 @@
       "domain": "rdfs:Class",
       "range": "hydra:SupportedProperty",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:SupportedProperty",
@@ -251,7 +251,7 @@
       "label": "Supported Property",
       "comment": "A property known to be supported by a Hydra class.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:property",
@@ -261,7 +261,7 @@
       "range": "rdf:Property",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:required",
@@ -271,7 +271,7 @@
       "range": "xsd:boolean",
       "domainIncludes": ["hydra:SupportedProperty", "hydra:IriTemplateMapping"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:readable",
@@ -281,7 +281,7 @@
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:writable",
@@ -291,7 +291,7 @@
       "domain": "hydra:SupportedProperty",
       "range": "xsd:boolean",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:writeable",
@@ -309,7 +309,7 @@
       "range": "hydra:Operation",
       "domainIncludes": ["rdfs:Class", "hydra:Class", "hydra:Link", "hydra:TemplatedLink", "hydra:SupportedProperty"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:operation",
@@ -319,7 +319,7 @@
       "domain": "hydra:Resource",
       "range": "hydra:Operation",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Operation",
@@ -327,7 +327,7 @@
       "label": "Operation",
       "comment": "An operation.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:method",
@@ -337,7 +337,7 @@
       "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "range": "xsd:string",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:expects",
@@ -347,7 +347,7 @@
       "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:returns",
@@ -357,7 +357,7 @@
       "domainIncludes": ["hydra:Operation", "hydra:RetractedOperationSpecification"],
       "rangeIncludes": ["rdfs:Resource", "hydra:Resource", "rdfs:Class", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Status",
@@ -365,7 +365,7 @@
       "label": "Status code description",
       "comment": "Additional information about a status code that might be returned.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:statusCode",
@@ -375,7 +375,7 @@
       "domain": "hydra:Status",
       "range": "xsd:integer",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:title",
@@ -394,7 +394,7 @@
         "hydra:TemplatedLink"
       ],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:description",
@@ -413,7 +413,7 @@
         "hydra:TemplatedLink"
       ],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Error",
@@ -422,7 +422,7 @@
       "label": "Error",
       "comment": "A runtime error, used to report information beyond the returned status code.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Collection",
@@ -431,7 +431,7 @@
       "label": "Collection",
       "comment": "A collection holding references to a number of related resources.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:collection",
@@ -440,7 +440,7 @@
       "comment": "Collections somehow related to this resource.",
       "range": "hydra:Collection",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:memberAssertion",
@@ -448,7 +448,7 @@
       "comment": "Semantics of each member provided by the collection.",
       "domainIncludes": ["hydra:Collection", "hydra:Class"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:manages",
@@ -463,14 +463,14 @@
       "label": "subject",
       "comment": "The subject.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:object",
       "label": "object",
       "comment": "The object.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:member",
@@ -479,7 +479,7 @@
       "comment": "A member of the collection.",
       "domain": "hydra:Collection",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:view",
@@ -487,7 +487,7 @@
       "label": "view",
       "comment": "A specific view of a resource.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:PartialCollectionView",
@@ -496,7 +496,7 @@
       "label": "PartialCollectionView",
       "comment": "A PartialCollectionView describes a partial view of a Collection. Multiple PartialCollectionViews can be connected with the next/previous properties to allow a client to retrieve all members of the collection.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:totalItems",
@@ -506,7 +506,7 @@
       "domain": "hydra:Collection",
       "range": "xsd:integer",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:first",
@@ -516,7 +516,7 @@
       "domain": "hydra:Resource",
       "range": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:last",
@@ -526,7 +526,7 @@
       "domain": "hydra:Resource",
       "range": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:next",
@@ -536,7 +536,7 @@
       "domain": "hydra:Resource",
       "range": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:previous",
@@ -546,7 +546,7 @@
       "domain": "hydra:Resource",
       "range": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:search",
@@ -556,7 +556,7 @@
       "range": "hydra:IriTemplate",
       "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:freetextQuery",
@@ -566,7 +566,7 @@
       "range": "xsd:string",
       "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:TemplatedLink",
@@ -575,7 +575,7 @@
       "label": "Templated Link",
       "comment": "A templated link.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:IriTemplate",
@@ -583,7 +583,7 @@
       "label": "IRI Template",
       "comment": "The class of IRI templates.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:template",
@@ -594,7 +594,7 @@
       "domain": "hydra:IriTemplate",
       "range": "hydra:Rfc6570Template",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Rfc6570Template",
@@ -604,7 +604,7 @@
       "seeAlso": "http://tools.ietf.org/html/rfc6570",
       "range": "xsd:string",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:variableRepresentation",
@@ -614,7 +614,7 @@
       "range": "hydra:VariableRepresentation",
       "domainIncludes": ["hydra:IriTemplateMapping", "hydra:IriTemplate"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:VariableRepresentation",
@@ -622,7 +622,7 @@
       "label": "VariableRepresentation",
       "comment": "A representation specifies how to serialize variable values into strings.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:BasicRepresentation",
@@ -630,7 +630,7 @@
       "label": "BasicRepresentation",
       "comment": "A representation that serializes just the lexical form of a variable value, but omits language and type information.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:ExplicitRepresentation",
@@ -638,7 +638,7 @@
       "label": "ExplicitRepresentation",
       "comment": "A representation that serializes a variable value including its language and type information and thus differentiating between IRIs and literals.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:mapping",
@@ -648,7 +648,7 @@
       "domain": "hydra:IriTemplate",
       "range": "hydra:IriTemplateMapping",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:IriTemplateMapping",
@@ -656,7 +656,7 @@
       "label": "IriTemplateMapping",
       "comment": "A mapping from an IRI template variable to a property.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:variable",
@@ -666,7 +666,7 @@
       "domain": "hydra:IriTemplateMapping",
       "range": "xsd:string",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:resolveRelativeUsing",
@@ -676,7 +676,7 @@
       "domain": "hydra:IriTemplate",
       "range": "hydra:BaseUriSource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:BaseUriSource",
@@ -685,7 +685,7 @@
       "label": "Base Uri source",
       "comment": "Provides a base abstract for base Uri source for Iri template resolution.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:Rfc3986",
@@ -693,7 +693,7 @@
       "label": "RFC 3986 based",
       "comment": "States that the base Uri should be established using RFC 3986 reference resolution algorithm specified in section 5.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:LinkContext",
@@ -701,7 +701,7 @@
       "label": "Link context",
       "comment": "States that the link's context IRI, as defined in RFC 5988, should be used as the base Uri.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:offset",
@@ -710,7 +710,7 @@
       "comment": "Instructs to skip N elements of the set.",
       "range": "xsd:nonNegativeInteger",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:limit",
@@ -719,7 +719,7 @@
       "comment": "Instructs to limit set only to N elements.",
       "range": "xsd:nonNegativeInteger",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:pageIndex",
@@ -729,7 +729,7 @@
       "comment": "Instructs to provide a specific page of the collection at a given index.",
       "range": "xsd:nonNegativeInteger",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:pageReference",
@@ -737,7 +737,7 @@
       "label": "page reference",
       "comment": "Instructs to provide a specific page reference of the collection.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:returnsHeader",
@@ -747,7 +747,7 @@
       "domain": "hydra:Operation",
       "rangeIncludes": ["xsd:string", "hydra:HeaderSpecification"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:expectsHeader",
@@ -757,7 +757,7 @@
       "domain": "hydra:Operation",
       "rangeIncludes": ["xsd:string", "hydra:HeaderSpecification"],
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:HeaderSpecification",
@@ -766,7 +766,7 @@
       "label": "Header specification",
       "comment": "Specifies a possible either expected or returned header values.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:headerName",
@@ -776,7 +776,7 @@
       "domain": "hydra:HeaderSpecification",
       "range": "xsd:string",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:possibleValue",
@@ -785,7 +785,7 @@
       "comment": "Possible value of the header.",
       "domain": "hydra:HeaderSpecification",
       "range": "xsd:string",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:closedSet",
@@ -795,7 +795,7 @@
       "domain": "hydra:HeaderSpecification",
       "range": "xsd:boolean",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     },
     {
       "@id": "hydra:extension",
@@ -804,7 +804,7 @@
       "comment": "Hint on what kind of extensions are in use.",
       "domain": "hydra:ApiDocumentation",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
-      "vs:term_status": "testing"
+      "vs:term_status": "stable"
     }
   ]
 }
