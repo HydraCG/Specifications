@@ -132,7 +132,7 @@ is `hydra`. The figure below illustrates the vocabulary
 (the figure’s goal is to show how Hydra is used rather than its precise
 definition).
 
-<img src="vocabulary.png" alt="The Hydra core vocabulary" />
+<img src="vocabulary.png" alt="The Hydra core vocabulary">
 
 An alphabetical index of the classes and properties of Hydra
 is given below. All the terms are hyperlinked to their detailed
@@ -648,6 +648,78 @@ Direct usage of [=supportedOperation=] on *rdf:Property*
 without elevating it to the [=Link=] SHOULD NOT be implemented as clients
 may not discover such a construct correctly.
 
+There are rare situations when some supported operations once announced in the
+API documentation should be retracted, i.e. to reflect current state of the 
+application or current user capabilities (or lack of them). It is doable
+with the [=retractedOperation=] predicate that can be added to the reasorce
+the same way as the [=operation=] is. By default all operations are available
+without limits and it is up for the server to change that, and for the client
+to discover any discrepancies compared against the API documentation in the runtime.
+Yet server may want to inform the client that at the very moment an operation is either 
+[=Unavailable=] or [=Unauthorized=] with a [=reason=] predicate.
+The latter MAY be used to notify client that the user used to invoke
+the request that provides operation availability information is currently
+not authorized for that very operation to be invoked. The former on the other hand
+MAY be used to inform that the operation is currently forbidden and client
+SHOULD NOT invoke it. Server MAY also provide more custom reasons for which
+the operation is not available but it SHOULD provide at least one of the
+_Hydra_ built in reasons.
+
+The [=retractedOperation=] MUST NOT be used in context of the [=ApiDocumentation=].
+The [=retractedOperation=] predicate also MUST take precedence over both 
+[=operation=] and [=supportedOperation=] declaration and overrides them.
+The operation that comes with [=retractedOperation=] predicate SHOULD be identified
+using any of the below enlisted methods:
+- Iri by using [=object=] predicate
+- exact match of a resource described by [=possibleStatus=], [=method=], [=expects=], [=returns=] or combination of those
+
+<div class="example" heading="Retracting operations - declaration of supported operations">
+<pre highlight="json-ld">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/#comments",
+    "@type": "Link",
+    "supportedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload"
+        },
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Comment"
+        }
+    ]
+}
+</pre>
+</div>
+<div class="example" heading="Retracting operations - matching">
+<pre highlight="json-ld">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unavailable"
+        }
+    ]
+}
+</pre>
+</div>
+
+In the example above the operation that expects an uploaded file became
+[=Unavailable=], while the one expecting a comment remains available as
+the [=expects=] predicate does not match any supported operations.
+It is still recommended to mark operations being subject for further
+restrictions with an Iri as from the client perspective this may be
+easier to implement simple literal Iri comparison rather than to compare
+graphs of objects.
+
 Note: These are the simple example scenarios and possible usages are not
 limited to those described above.
 
@@ -1105,8 +1177,8 @@ representations as well as the result of expanding the IRI template
 
 The example <i>Description of an IRI Template</i> that was already mentioned
 uses a [=variableRepresentation=] on the whole [=IriTemplate=], but
-each mapped variable represented as an [=riTemplateMapping=] can have
-its own [=ariableRepresentation=] declaration. It MUST override
+each mapped variable represented as an [=IriTemplateMapping=] can have
+its own [=variableRepresentation=] declaration. It MUST override
 the declaration from the [=IriTemplate=] level for that very
 [=IriTemplateMapping=] as it takes precedence. The example below
 depicts such a situation:
@@ -1114,24 +1186,24 @@ depicts such a situation:
 <div class="example" heading="Variable level representation">
 <pre highlight="json-ld" line-highlight="3-19">
 {
-	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
-	"@type": "IriTemplate",
-	"template": "http://api.example.com/issues{?q,category}",
-	"variableRepresentation": "ExplicitRepresentation",
-	"mapping": [
-		{
-			"@type": "IriTemplateMapping",
-			"variable": "q",
-			"property": "hydra:freetextQuery",
-			"variableRepresentation": "BasicRepresentation",
-			"required": true
-		},
-		{
-			"@type": "IriTemplateMapping",
-			"variable": "category",
-			"property": "schema:category"
-		}
-	]
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@type": "IriTemplate",
+    "template": "http://api.example.com/issues{?q,category}",
+    "variableRepresentation": "ExplicitRepresentation",
+    "mapping": [
+        {
+            "@type": "IriTemplateMapping",
+            "variable": "q",
+            "property": "hydra:freetextQuery",
+            "variableRepresentation": "BasicRepresentation",
+            "required": true
+        },
+        {
+            "@type": "IriTemplateMapping",
+            "variable": "category",
+            "property": "schema:category"
+        }
+    ]
 }
 </pre>
 </div>
@@ -1150,9 +1222,9 @@ can be used to document available search interfaces.
 <div class="example" heading="The definition of Hydra's search property (extract)">
 <pre highlight="json-ld" line-highlight="3-4">
 {
-	"@context": "http://www.w3.org/ns/hydra/context.jsonld",
-	"@id": "hydra:search",
-	"@type": "hydra:TemplatedLink"
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "hydra:search",
+    "@type": "hydra:TemplatedLink"
 }
 </pre>
 </div>
@@ -1370,7 +1442,7 @@ be given an identifier. When dereferenced, the [=Error=] resource
 can provide more detailed information or possible ways to resolve
 the problem, if applicable.
 
-Finally, the server SHOULD provide error descriptions using an [[!RFC7807]]
+Finally, the server SHOULD provide error descriptions using an [[!RFC9457]]
 standard by using an `application/problem+json` response. When doing so,
 the server also MUST provide an additional header pointing to either
 the built-in Hydra `http://www.w3.org/ns/hydra/error` context
@@ -2096,6 +2168,36 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
     </tr>
 </table>
 
+## hydra:RetractedOperationSpecification ## {#class-RetractedOperationSpecification}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:RetractedOperationSpecification">RetractedOperationSpecification</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Describes which and why an operation is retracted.</td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Status">
+<xmp highlight="json-ld" line-highlight="6,7,8,9,10,11">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unavailable"
+        }
+    ]
+}
+</xmp>
+</div>
+
+
 ## hydra:Status ## {#class-Status}
 <table class="def">
     <tr>
@@ -2251,6 +2353,26 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
     <tr>
         <th>Named instances:</th>
         <td>[=BasicRepresentation=], [=ExplicitRepresentation=]</td>
+    </tr>
+</table>
+
+## hydra:UnavailabilityReason ## {#class-UnavailabilityReason}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td>
+            <dfn export id="hydra:UnavailabilityReason">
+                UnavailabilityReason
+            </dfn>
+        </td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Provides reasons why the operation cannot be invoked.</td>
+    </tr>
+    <tr>
+        <th>Named instances:</th>
+        <td>[=Unavailable=], [=Unauthorized=]</td>
     </tr>
 </table>
 
@@ -2567,8 +2689,8 @@ Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDoc
         <td>The information expected by the Web API.</td>
     </tr>
     <tr>
-        <th>Domain:</th>
-        <td>[=Operation=]</td>
+        <th>Domain includes:</th>
+        <td>[=Operation=], [=RetractedOperationSpecification=]</td>
     </tr>
     <tr>
         <th>Range includes:</th>
@@ -3406,8 +3528,8 @@ Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDoc
         <td>The protocol method.</td>
     </tr>
     <tr>
-        <th>Domain:</th>
-        <td>[=Operation=]</td>
+        <th>Domain includes:</th>
+        <td>[=Operation=], [=RetractedOperationSpecification=]</td>
     </tr>
     <tr>
         <th>Range:</th>
@@ -3861,7 +3983,7 @@ Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDoc
     </tr>
     <tr>
         <th>Domain includes:</th>
-        <td>[=ApiDocumentation=], [=Operation=]</td>
+        <td>[=ApiDocumentation=], [=Operation=], [=RetractedOperationSpecification=]</td>
     </tr>
     <tr>
         <th>Range:</th>
@@ -4275,6 +4397,84 @@ Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDoc
 </xmp>
 </div>
 
+## hydra:reason ## {#property-reason}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:reason">reason</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Reason of why the operation is retracted.</td>
+    </tr>
+    <tr>
+        <th>Max cardinality:</th>
+        <td>1</td>
+    </tr>
+    <tr>
+        <th>Domain:</th>
+        <td>[=RetractedOperationSpecification=]</td>
+    </tr>
+    <tr>
+        <th>Range:</th>
+        <td>[=UnavailabilityReason=]</td>
+    </tr>
+</table>
+<div class="example" heading="hydra:reason">
+<xmp highlight="json-ld" line-highlight="10">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unavailable"
+        }
+    ]
+}
+</xmp>
+</div>
+
+## hydra:retractedOperation ## {#property-retractedOperation}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:retractedOperation">retractedOperation</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>Retracts available operations.</td>
+    </tr>
+    <tr>
+        <th>Domain:</th>
+        <td>[=Resource=]</td>
+    </tr>
+    <tr>
+        <th>Range:</th>
+        <td>[=RetractedOperationSpecification=]</td>
+    </tr>
+</table>
+<div class="example" heading="hydra:retractedOperation">
+<xmp highlight="json-ld" line-highlight="5">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unavailable"
+        }
+    ]
+}
+</xmp>
+</div>
+
 ## hydra:required ## {#property-required}
 <table class="def">
     <tr>
@@ -4490,8 +4690,8 @@ Link: <http://api.example.com/doc/>; rel="http://www.w3.org/ns/hydra/core#apiDoc
         <td>The information returned by the Web API on success.</td>
     </tr>
     <tr>
-        <th>Domain:</th>
-        <td>[=Operation=]</td>
+        <th>Domain includes:</th>
+        <td>[=Operation=], [=RetractedOperationSpecification=]</td>
     </tr>
     <tr>
         <th>Range includes:</th>
@@ -5474,7 +5674,7 @@ Link: <http://www.w3.org/ns/hydra/error>; rel="http://www.w3.org/ns/json-ld#cont
     "search": {
         "template": "/api/posts{?search,limit,offset}",
         "resolveRelativeUsing": "hydra:Rfc3986",
-		"variableRepresentation": "hydra:BasicRepresentation",
+        "variableRepresentation": "hydra:BasicRepresentation",
         "mapping": [
             {
                 "variable": "search",
@@ -5888,6 +6088,67 @@ Named instances {#named-instances}
 </xmp>
 </div>
 
+## hydra:Unavailable ## {#instance-Unavailable}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Unavailable">Unavailable</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>States an operation previously announced is unavailable in current circumstances.</td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Unavailable">
+<xmp highlight="json-ld" line-highlight="10">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unavailable"
+        }
+    ]
+}
+</xmp>
+</div>
+
+## hydra:Unauthorized ## {#instance-Unauthorized}
+<table class="def">
+    <tr>
+        <th>Name:</th>
+        <td><dfn export id="hydra:Unauthorized">Unauthorized</dfn></td>
+    </tr>
+    <tr>
+        <th>Summary:</th>
+        <td>
+            States an operation previously announced should not be invoked
+            as the current user is not authorized to invoke it.
+        </td>
+    </tr>
+</table>
+<div class="example" heading="hydra:Unauthorized">
+<xmp highlight="json-ld" line-highlight="10">
+{
+    "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+    "@id": "http://api.example.com/doc/",
+    "@type": "Collection",
+    "retractedOperation": [
+        {
+            "@type": "Operation",
+            "method": "POST",
+            "expects": "http://api.example.com/doc/#Upload",
+            "reason": "Unauthorized"
+        }
+    ]
+}
+</xmp>
+</div>
+
 Data types {#data-types}
 ==========
 
@@ -5996,9 +6257,9 @@ highlight: json-ld
 
 <pre class="biblio">
 {
-	"HydraCG": {
-		"href": "https://www.w3.org/community/hydra/",
-		"title": "Hydra W3C Community Group"
-	}
+    "HydraCG": {
+        "href": "https://www.w3.org/community/hydra/",
+        "title": "Hydra W3C Community Group"
+    }
 }
 </pre>
