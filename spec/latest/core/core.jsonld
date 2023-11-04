@@ -182,7 +182,7 @@
       "domain": "hydra:Resource",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
-    }
+    },
     {
       "@id": "hydra:RetractedOperationSpecification",
       "@type": "hydra:Class",
@@ -190,7 +190,7 @@
       "comment": "Describes which and why an operation is retracted.",
       "isDefinedBy": "http://www.w3.org/ns/hydra/core",
       "vs:term_status": "testing"
-    }
+    },
     {
       "@id": "hydra:reason",
       "@type": "rdf:Property",
