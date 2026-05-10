@@ -1,0 +1,8 @@
+version: "3"
+services:
+  bikeshed:
+    build:
+      context: .
+      dockerfile: bs.Dockerfile
+    volumes:
+    - ./core:/core
